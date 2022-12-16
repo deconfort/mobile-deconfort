@@ -5,7 +5,6 @@ import {
   Pressable,
   TouchableOpacity,
   Text,
-  ImageBackground,
   Alert,
 } from "react-native";
 import React, { useState } from "react";
@@ -76,11 +75,7 @@ export default function SingUp() {
 
   return (
     <View style={styles.contenedor}>
-      <ImageBackground
-        resizeMode="contain"
-        source={require("../../assets/map.png")}
-        style={styles.image}
-      >
+
         <Text style={styles.textTittle}>Create an account</Text>
         <TextInput
           style={styles.inputSignUp}
@@ -163,7 +158,7 @@ export default function SingUp() {
             Log In
           </Text>
         </Pressable>
-      </ImageBackground>
+ 
     </View>
   );
 }

@@ -1,15 +1,13 @@
 import {
   View,
   Text,
-  ImageBackground,
   StyleSheet,
   TextInput,
   TouchableOpacity,
   Pressable,
   Alert,
 } from "react-native";
-import React from "react";
-import { useState } from "react";
+import React, { useState } from "react";
 import usersActions from "../redux/actions/usersActions";
 import { useDispatch } from "react-redux";
 import { useNavigation } from "@react-navigation/native";
@@ -60,11 +58,7 @@ export default function Login() {
   return (
     <>
       <View style={styles.containerr}>
-        <ImageBackground
-          resizeMode="contain"
-          source={require("../../assets/map.png")}
-          style={styles.image}
-        >
+
           <Text style={styles.textTittle}>Welcome!</Text>
           <TextInput
             placeholder="Email"
@@ -105,7 +99,7 @@ export default function Login() {
               Sign Up
             </Text>
           </Pressable>
-        </ImageBackground>
+        
       </View>
     </>
   );

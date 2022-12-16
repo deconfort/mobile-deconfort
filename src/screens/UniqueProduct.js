@@ -5,7 +5,7 @@ import { TouchableOpacity } from 'react-native-gesture-handler'
 const UniqueProduct = (props) => {
   return (
     <View style={styles.container}>
-      <Image source={require('../../img/imagen.jpg')} style={styles.img}/>
+      <Image source={require('../img/imagen.jpg')} style={styles.img}/>
       <Text style={styles.title}>Name product</Text>
       <Text style={styles.detail}>
         With a new design home

@@ -2,7 +2,7 @@ import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import React, { useEffect, useState } from "react";
 import SingUp from "../screens/SingUp";
 import Login from "../screens/Login";
-import { Ionicons } from "@expo/vector-icons";
+import { Ionicons  } from "@expo/vector-icons";
 import ProfileScreen from "../screens/Profile";
 // import MyReactions from "../screens/MyReactions";
 import EditProfile from "../screens/EditProfile";
@@ -10,10 +10,16 @@ import AsyncStorage from "@react-native-async-storage/async-storage";
 import usersActions from "../redux/actions/usersActions";
 import { useDispatch, useSelector } from "react-redux";
 import Home from "../screens/Home";
+import Store from '../screens/Store'
+// import Forum from '../screens/Forum'
+// import Contact from '../screens/Contact'
+import Detail from "../screens/Detail";
+
 
 const Bottom = createBottomTabNavigator();
 
 const Navigator = () => {
+  
   let dispatch = useDispatch();
   const [reload, setReload] = useState(true);
   const { logged, token } = useSelector((state) => state.user);
@@ -36,7 +42,11 @@ const Navigator = () => {
           let iconName;
           if (route.name === "Home") {
             iconName = focused ? "home" : "home";
-          } else if (route.name === "Login") {
+          }else if (route.name === "Store") {
+            iconName = focused ? "grid" : "grid";
+          }else if (route.name === "Detail") {
+            iconName = focused ? "create-sharp" : "create-sharp";
+          }else if (route.name === "Login") {
             iconName = focused ? "enter" : "enter";
           } else if (route.name === "SignUp") {
             iconName = focused ? "person-add" : "person-add";
@@ -73,14 +83,38 @@ const Navigator = () => {
     >
       {!logged ? (
         <>
-          <Bottom.Screen name="Home" options={{ headerShown: false }}
+          <Bottom.Screen 
+          name="Home" 
+          options={{ headerShown: false }}
           component={Home} />
+
+          <Bottom.Screen
+            name="Store"
+            options={{ headerShown: false }}
+            component={Store}
+          />
+                    <Bottom.Screen
+            name="Detail"
+            options={{ headerShown: false }}
+            component={Detail}
+          />
 
           <Bottom.Screen
             name="Login"
             options={{ headerShown: false }}
             component={Login}
           />
+
+                    {/* <Bottom.Screen
+            name="Forum"
+            options={{ headerShown: false }}
+            component={Forum}
+          /> */}
+                    {/* <Bottom.Screen
+            name="Contact"
+            options={{ headerShown: false }}
+            component={Contact}
+          /> */}
           <Bottom.Screen
             name="SignUp"
             options={{ headerShown: false }}
@@ -120,6 +154,17 @@ const Navigator = () => {
             options={{ headerShown: false }}
             component={Home}
           />
+          <Bottom.Screen
+            name="Store"
+            options={{ headerShown: false }}
+            component={Store}
+          />
+                              <Bottom.Screen
+            name="Detail"
+            options={{ tabBarItemStyle: { display: "none" } }}
+            component={Detail}
+          />
+
         </>
       )}
     </Bottom.Navigator>
