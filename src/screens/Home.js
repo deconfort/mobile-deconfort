@@ -39,13 +39,16 @@ export default function Home(props) {
         </View>
         <View style={{ padding: 15 }}>
         <Card style={{ marginTop: 10 }}>
-            <Card.Cover style={{ padding: 10 }} source={{ uri: 'https://picsum.photos/700' }} />
+          <Text style={styles.text_card}>Bed Back</Text>
+            <Card.Cover style={{resizeMode: "contain",opacity:0.5 ,padding:10}} source={{ uri: 'https://crystalcomfort.co.uk/wp-content/uploads/2022/05/26019_watermarked-2.png' }} />
         </Card>
         <Card style={{ marginTop: 10 }}>
-            <Card.Cover style={{ padding: 10 }} source={{ uri: 'https://picsum.photos/700' }} />
+        <Text style={styles.text_card}>Cups</Text>
+            <Card.Cover style={{resizeMode: "contain",opacity:0.5, padding: 10 }} source={{ uri: 'https://i.pinimg.com/564x/bb/d1/8e/bbd18e239fc5930f21ffb1b6a627e55c.jpg' }} />
         </Card>
         <Card style={{ marginTop: 10 }}>
-            <Card.Cover style={{ padding: 10 }} source={{ uri: 'https://picsum.photos/700' }} />
+        <Text style={styles.text_card}>Outdoor</Text>
+            <Card.Cover style={{resizeMode: "contain",opacity:0.5, padding: 10 }} source={{ uri: 'https://brownjordanoutdoorkitchens.com/wp-content/uploads/2021/11/Birmingham-outdoor-kitchen.jpg' }} />
         </Card>
         </View>
         <View style={{ padding: 10 }}>
@@ -73,6 +76,16 @@ const styles = StyleSheet.create({
     width: "100%",
     height: 100,
     backgroundColor: "white",
+    
   },
-
+  text_card:{
+    position:'absolute',
+    fontSize:60,
+    color:'white',
+    textAlign:'center',
+    top:60,
+    backgroundColor:'black',
+    width:'100%',
+    
+  }
 });

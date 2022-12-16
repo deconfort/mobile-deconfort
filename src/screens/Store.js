@@ -17,7 +17,7 @@ const Filter = [
   "Blanckets",
 ];
 
-export default function Store() {
+export default function Store(props) {
 
   const { getProducts, getProductsFilter } = productAction;
   const {products} = useSelector((state) => state.products);
@@ -77,19 +77,19 @@ export default function Store() {
       </View>
       <View style={{ padding: 15 }}>
       {products.map((item) => {
+        
             return (
 
         <Card style={{ marginBottom: 20 }} >
-          <Card.Content >
+          <Card.Content>
             <Card.Cover source={{ uri: item.photo[0] }} />
             <Title >{item.name}</Title>
-            <Paragraph >{item.category}</Paragraph>
-            <Paragraph >{item.price}</Paragraph>
-            <Paragraph >{item.category}</Paragraph>
-
-          </Card.Content>
+            <Paragraph >Category: {item.category}</Paragraph>
+            <Paragraph >Price: {item.price}</Paragraph>
+          </Card.Content >
           <Card.Actions style={{ justifyContent: 'space-around' }}>
-            <Button>More info</Button>
+            <Button onPress={() => { props.navigation.navigate("Detail",{ idProduct: item._id }) }}>More info</Button>
+            
             <Button>❤</Button>
             <Button>Add to cart</Button>
           </Card.Actions>
