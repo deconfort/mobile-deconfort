@@ -2,7 +2,7 @@ import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import React, { useEffect, useState } from "react";
 import SingUp from "../screens/SingUp";
 import Login from "../screens/Login";
-import { Ionicons } from "@expo/vector-icons";
+import { Ionicons,FontAwesome5  } from "@expo/vector-icons";
 import ProfileScreen from "../screens/Profile";
 // import MyReactions from "../screens/MyReactions";
 import EditProfile from "../screens/EditProfile";
@@ -42,6 +42,8 @@ const Navigator = () => {
           let iconName;
           if (route.name === "Home") {
             iconName = focused ? "home" : "home";
+          }else if (route.name === "Store") {
+            iconName = focused ? "grid" : "grid";
           } else if (route.name === "Login") {
             iconName = focused ? "enter" : "enter";
           } else if (route.name === "SignUp") {
@@ -83,26 +85,26 @@ const Navigator = () => {
           component={Home} />
 
           <Bottom.Screen
+            name="Store"
+            options={{ headerShown: false }}
+            component={Store}
+          />
+          <Bottom.Screen
             name="Login"
             options={{ headerShown: false }}
             component={Login}
           />
 
-          <Bottom.Screen
-            name="Store"
-            options={{ headerShown: false }}
-            component={Store}
-          />
-                    <Bottom.Screen
+                    {/* <Bottom.Screen
             name="Forum"
             options={{ headerShown: false }}
             component={Forum}
-          />
-                    <Bottom.Screen
+          /> */}
+                    {/* <Bottom.Screen
             name="Contact"
             options={{ headerShown: false }}
             component={Contact}
-          />
+          /> */}
           <Bottom.Screen
             name="SignUp"
             options={{ headerShown: false }}

@@ -11,7 +11,7 @@ export default function Home(props) {
         source={require("../../assets/decomfortLogo.png")}
       ></Image>
       <View  >
-        <View style={{ flexDirection: "row", alignItems: "center" }}>
+        <View style={{ flexDirection: "row", alignItems: "center",marginTop:20 }}>
           <View style={{ flex: 1, height: 1, backgroundColor: "black" }} />
           <View>
             <Text style={{ width: 180, textAlign: "center" }}>Free EU shipping over 150€</Text>

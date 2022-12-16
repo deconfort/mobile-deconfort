@@ -79,7 +79,7 @@ export default function Store() {
       {products.map((item) => {
             return (
 
-        <Card >
+        <Card style={{ marginBottom: 20 }} >
           <Card.Content >
             <Card.Cover source={{ uri: item.photo[0] }} />
             <Title >{item.name}</Title>
