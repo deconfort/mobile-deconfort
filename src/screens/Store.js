@@ -88,8 +88,7 @@ export default function Store(props) {
             <Paragraph >Price: {item.price}</Paragraph>
           </Card.Content >
           <Card.Actions style={{ justifyContent: 'space-around' }}>
-            <Button onPress={() => { props.navigation.navigate("Detail",{ idProduct: item._id }) }}>More info</Button>
-            
+            <Button style={{ backgroundColor:'gray' }} mode="contained" onPress={() => { props.navigation.navigate("Detail",{ idProduct: item._id }) }}>More info</Button>
             <Button>❤</Button>
             <Button>Add to cart</Button>
           </Card.Actions>
@@ -110,7 +109,8 @@ const styles = StyleSheet.create({
   img: {
     marginTop: 30,
     width: "100%",
-    height: 70,
+    height: 150,
+    resizeMode:'stretch',
     backgroundColor: "white",
   },
   select: {

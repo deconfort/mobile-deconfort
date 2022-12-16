@@ -1,62 +1,33 @@
-import React, { useState,useEffect } from 'react'
+import React, { useState, useEffect } from "react";
 import { StyleSheet, Text, View, Image } from "react-native";
 import { TouchableOpacity } from "react-native-gesture-handler";
 import { Feather } from "@expo/vector-icons";
 import favoriteActions from "../redux/actions/favoriteActions";
 import apiUrl from "../../url";
 import axios from "axios";
-import { useNavigation } from '@react-navigation/native';
+import { useNavigation } from "@react-navigation/native";
 
-const Detail = ({route}) => {
+const Detail = ({ route }) => {
   let { updateFavorite } = favoriteActions;
-  const {idProduct} = route.params;
+  const { idProduct } = route.params;
   const [product, setProduct] = useState(null);
   const navigation = useNavigation();
   let [reload, setReload] = useState(true);
   let [number, setNumber] = useState(1);
 
- 
-
   async function getMyProduct() {
     try {
-      let res = await axios
-      .get(`${apiUrl}api/products/${idProduct}`)
+      let res = await axios.get(`${apiUrl}api/products/${idProduct}`);
       setProduct(res.data.response);
-      setReload(!reload)
+      setReload(!reload);
 
-
-    // eslint-disable-next-line
-  
-        
-    } catch (error) {
-        
-    }
-
+      // eslint-disable-next-line
+    } catch (error) {}
   }
   useEffect(() => {
     getMyProduct();
   }, [reload]);
 
-  
-
-// const hotel = async () => {
-//     try {
-//       const res = await axios.get(`${apiUrl}api/products/${idProduct}`);
-//       setProduct(res.data.response);
-//     } catch (error) {
-//       console.log(error);
-//     }
-//   };
-
-//   useEffect(() => {
-//     hotel();
-//   }, []);
-  
-
-
-
-
-  
   return (
     <View style={styles.container}>
       <View style={styles.header}>
@@ -79,27 +50,27 @@ const Detail = ({route}) => {
         </View>
       </View>
       <View>
-      {product && (
+        {product && (
           <>
-        <View style={styles.cont3}>
-        <Text style={{ fontSize:25, marginTop:10  }}>Product</Text>
-          <Text style={styles.title}>{product.name}</Text>
-          <Image source={{ uri: product.photo[0] }} style={styles.img} />
-          <Text style={{ fontSize:25  }}>Description</Text>
-          <Text style={styles.subtitle}>{product.description}</Text>
-          <Text style={styles.text}>Price $ {product.price}</Text>
-          
-          <View style={styles.cont1}>
-            <TouchableOpacity
-              onPress={() => props.navigation.navigate("Home")}
-              style={styles.btn}
-            >
-              <Text style={styles.btnText}>Add to cart</Text>
-            </TouchableOpacity>
-          </View>
-        </View>
-        </>
-      )}
+            <View style={styles.cont3}>
+              <Text style={{ fontSize: 25, marginTop: 10 }}>Product</Text>
+              <Text style={styles.title}>{product.name}</Text>
+              <Image source={{ uri: product.photo[0] }} style={styles.img} />
+              <Text style={{ fontSize: 25 }}>Description</Text>
+              <Text style={styles.subtitle}>{product.description}</Text>
+              <Text style={styles.text}>Price $ {product.price}</Text>
+
+              <View style={styles.cont1}>
+                <TouchableOpacity
+                  onPress={() => props.navigation.navigate("Home")}
+                  style={styles.btn}
+                >
+                  <Text style={styles.btnText}>Add to cart</Text>
+                </TouchableOpacity>
+              </View>
+            </View>
+          </>
+        )}
       </View>
     </View>
   );

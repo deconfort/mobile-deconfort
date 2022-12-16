@@ -95,7 +95,7 @@ const Navigator = () => {
           />
                     <Bottom.Screen
             name="Detail"
-            options={{ headerShown: false }}
+            options={{ tabBarItemStyle: { display: "none" } }}
             component={Detail}
           />
 
