@@ -10,10 +10,16 @@ import AsyncStorage from "@react-native-async-storage/async-storage";
 import usersActions from "../redux/actions/usersActions";
 import { useDispatch, useSelector } from "react-redux";
 import Home from "../screens/Home";
+import Store from '../screens/Store'
+import Forum from '../screens/Forum'
+import Contact from '../screens/Contact'
+
+
 
 const Bottom = createBottomTabNavigator();
 
 const Navigator = () => {
+  
   let dispatch = useDispatch();
   const [reload, setReload] = useState(true);
   const { logged, token } = useSelector((state) => state.user);
@@ -80,6 +86,22 @@ const Navigator = () => {
             name="Login"
             options={{ headerShown: false }}
             component={Login}
+          />
+
+          <Bottom.Screen
+            name="Store"
+            options={{ headerShown: false }}
+            component={Store}
+          />
+                    <Bottom.Screen
+            name="Forum"
+            options={{ headerShown: false }}
+            component={Forum}
+          />
+                    <Bottom.Screen
+            name="Contact"
+            options={{ headerShown: false }}
+            component={Contact}
           />
           <Bottom.Screen
             name="SignUp"
