@@ -5,7 +5,7 @@ const { getProducts, getProductsFilter, getOneProduct } = productAction;
 
 const initialState = {
   products: [],
-  value: "",
+  name: "",
   order: "",
   oneProduct: {}
 };

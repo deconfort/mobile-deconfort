@@ -1,5 +1,5 @@
 import { Image, ScrollView, StyleSheet, View } from "react-native";
-import React,{useEffect,useRef} from "react";
+import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import productAction from "../redux/actions/productAction";
 import SelectDropdown from "react-native-select-dropdown";
@@ -18,31 +18,21 @@ const Filter = [
 ];
 
 export default function Store(props) {
-
+  const [first, setfirst] = useState("");
   const { getProducts, getProductsFilter } = productAction;
-  const {products} = useSelector((state) => state.products);
+  const { products, name } = useSelector((state) => state.products);
   const dispatch = useDispatch();
-  
-
-  let search = useRef();
-  let select = useRef();
 
   useEffect(() => {
-    dispatch(getProducts());
+    if (name) {
+      dispatch(getProductsFilter(name));
+    } else {
+      dispatch(getProducts());
+    }
 
     // eslint-disable-next-line
   }, []);
 
-  let filter = () => {
-    let text = search.current.value;
-    let selectFil = select.current.value;
-    console.log(selectFil);
-    if (selectFil !== "asc" && selectFil !== "desc") {
-      dispatch(getProductsFilter({ order: "", value: text }));
-    } else {
-      dispatch(getProductsFilter({ order: selectFil, value: text }));
-    }
-  };
   return (
     <ScrollView style={styles.container}>
       <Image
@@ -53,10 +43,14 @@ export default function Store(props) {
         <Searchbar
           style={{ marginTop: 10 }}
           placeholder="Search"
-          onChangeText={filter}
+          onChangeText={(e) => {
+            setfirst(e);
+            let text = e;
+            dispatch(getProductsFilter({ name: text }));
+          }}
         />
       </View>
-      
+
       <View style={styles.select}>
         <SelectDropdown
           data={Filter}
@@ -76,25 +70,33 @@ export default function Store(props) {
         />
       </View>
       <View style={{ padding: 15 }}>
-      {products.map((item) => {
-        
-            return (
-
-        <Card style={{ marginBottom: 20 }} >
-          <Card.Content>
-            <Card.Cover source={{ uri: item.photo[0] }} />
-            <Title >{item.name}</Title>
-            <Paragraph >Category: {item.category}</Paragraph>
-            <Paragraph >Price: {item.price}</Paragraph>
-          </Card.Content >
-          <Card.Actions style={{ justifyContent: 'space-around' }}>
-            <Button style={{ backgroundColor:'gray' }} mode="contained" onPress={() => { props.navigation.navigate("Detail",{ idProduct: item._id }) }}>More info</Button>
-            <Button>❤</Button>
-            <Button>Add to cart</Button>
-          </Card.Actions>
-        </Card>
-            )
-          })}
+        {products.map((item) => {
+          return (
+            <Card style={{ marginBottom: 20 }}>
+              <Card.Content>
+                <Card.Cover source={{ uri: item.photo[0] }} />
+                <Title>{item.name}</Title>
+                <Paragraph>Category: {item.category}</Paragraph>
+                <Paragraph>Price: {item.price}</Paragraph>
+              </Card.Content>
+              <Card.Actions style={{ justifyContent: "space-around" }}>
+                <Button
+                  style={{ backgroundColor: "gray" }}
+                  mode="contained"
+                  onPress={() => {
+                    props.navigation.navigate("Detail", {
+                      idProduct: item._id,
+                    });
+                  }}
+                >
+                  More info
+                </Button>
+                <Button>❤</Button>
+                <Button>Add to cart</Button>
+              </Card.Actions>
+            </Card>
+          );
+        })}
       </View>
     </ScrollView>
   );
@@ -110,7 +112,7 @@ const styles = StyleSheet.create({
     marginTop: 30,
     width: "100%",
     height: 150,
-    resizeMode:'stretch',
+    resizeMode: "stretch",
     backgroundColor: "white",
   },
   select: {
@@ -118,6 +120,4 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     alignItems: "center",
   },
-
-
 });
