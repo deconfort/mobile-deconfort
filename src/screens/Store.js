@@ -8,6 +8,8 @@ import { Searchbar, Button, Card, Title, Paragraph } from "react-native-paper";
 import usersAction from "../redux/actions/usersActions";
 import axios from "axios";
 import apiUrl from "../../url";
+import Favorite from "../components/Favorite";
+
 
 const Filter = [
   "Selec Filter",
@@ -144,14 +146,10 @@ export default function Store(props) {
                 >
                   More info
                 </Button>
-                <Button>❤</Button>
-                <Button  onPress={() => {
-                if (token) {
-                  addToCart();
-                } else {
-                  props.navigation.navigate("Login");
-                }
-              }}>Add to cart</Button>
+                <View style={styles.reactionContainer}>
+                  <Favorite productId={item._id}/>
+                </View>
+                <Button>Add to cart</Button>
               </Card.Actions>
             </Card>
           );
@@ -179,4 +177,10 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     alignItems: "center",
   },
+  reactionContainer: {
+    flexDirection: 'row',
+    justifyContent: 'center',
+    width: '100%',
+    marginTop: 20,
+},
 });

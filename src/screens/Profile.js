@@ -69,7 +69,7 @@ const ProfileScreen = (props) => {
       </View>
 
       <View style={styles.infoBoxWrapper}>
-        <TouchableRipple >
+        <TouchableRipple   onPress={() => props.navigation.navigate("MyFavorites")}>
           <View style={styles.menuItem}>
           <Feather name="heart" size={24} color="#5c195d" />
             <Text style={styles.menuItemText}>My Favorites</Text>
