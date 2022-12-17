@@ -124,13 +124,7 @@ export default function Store(props) {
             <Card
               style={{ marginBottom: 20 }}
               key={item._id}
-              onPress={() => {
-                if (token) {
-                  addToCart();
-                } else {
-                  props.navigation.navigate("Login");
-                }
-              }}
+             
             >
 
 
@@ -151,7 +145,13 @@ export default function Store(props) {
                   More info
                 </Button>
                 <Button>❤</Button>
-                <Button>Add to cart</Button>
+                <Button  onPress={() => {
+                if (token) {
+                  addToCart();
+                } else {
+                  props.navigation.navigate("Login");
+                }
+              }}>Add to cart</Button>
               </Card.Actions>
             </Card>
           );
