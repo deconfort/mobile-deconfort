@@ -34,7 +34,7 @@ const Detail = ({ route }) => {
     try {
       let res = await axios.get(`${apiUrl}api/products/${idProduct}`);
       setProduct(res.data.response);
-      setReload(!reload);
+      
 
       // eslint-disable-next-line
     } catch (error) {}
@@ -43,7 +43,7 @@ const Detail = ({ route }) => {
   useEffect(() => {
     getMyProduct();
     // eslint-disable-next-line
-  }, [reload]);
+  }, [product]);
 
 
   useEffect(() => {

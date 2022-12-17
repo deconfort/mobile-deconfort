@@ -15,7 +15,6 @@ import Forum from '../screens/Forum'
 // import Contact from '../screens/Contact'
 import Detail from "../screens/Detail";
 // import Contact from '../screens/Contact'
-import Detail from "../screens/Detail";
 import Cartprueba from "../screens/Cartprueba";
 
 
