@@ -4,12 +4,16 @@ import cartActions from "../redux/actions/cartActions";
 import userActions from "../redux/actions/usersActions";
 import apiUrl from "../../url";
 import axios from "axios";
-import React, { useEffect, useState } from "react";
+import React, {  useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { ScrollView } from "react-native-gesture-handler";
 import Pressable from "react-native/Libraries/Components/Pressable/Pressable";
 import { Ionicons } from "@expo/vector-icons";
-export default function Cartprueba() {
+import { useNavigation } from "@react-navigation/native";
+
+
+export default function Cartprueba(props) {
+ let navigation = useNavigation()
   const { changeAmount } = cartActions;
   const { getUser } = userActions;
   const [products, setProducts] = useState([]);
@@ -52,7 +56,7 @@ export default function Cartprueba() {
     (accumulator, currentValue) => accumulator + currentValue,
     initialprice
   );
-  
+
   function add(info) {
     dispatch(changeAmount(info));
     getProducts();
@@ -61,6 +65,11 @@ export default function Cartprueba() {
     dispatch(changeAmount(info));
     getProducts();
   }
+  
+  function checkout() {
+    navigation.navigate("Paypal")
+  }
+
   return (
     <>
       <View
@@ -82,9 +91,24 @@ export default function Cartprueba() {
             size={35}
             color="black"
           />
-        
-          <Text style={{backgroundColor:"red", position:"absolute", marginLeft:40, fontSize:21, height:23, marginTop:15,borderRadius:5, width:23, textAlign:"center",     borderWidth: 1,
-    borderColor:5}}>{cantProducts}</Text>
+
+          <Text
+            style={{
+              backgroundColor: "red",
+              position: "absolute",
+              marginLeft: 40,
+              fontSize: 21,
+              height: 23,
+              marginTop: 15,
+              borderRadius: 5,
+              width: 23,
+              textAlign: "center",
+              borderWidth: 1,
+              borderColor: 5,
+            }}
+          >
+            {cantProducts}
+          </Text>
         </View>
       </View>
       <ScrollView style={{ height: 200, backgroundColor: "#fdfaff" }}>
@@ -169,7 +193,9 @@ export default function Cartprueba() {
             ${sumWithInitial}
           </Text>
         </View>
-        <Pressable style={styles.button}>
+        <Pressable style={styles.button} onPress={()=>{
+          checkout()
+        }}>
           <Text style={styles.text}>Checkout</Text>
         </Pressable>
       </View>

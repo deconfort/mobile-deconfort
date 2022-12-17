@@ -16,6 +16,7 @@ import Forum from '../screens/Forum'
 import Detail from "../screens/Detail";
 // import Contact from '../screens/Contact'
 import Cartprueba from "../screens/Cartprueba";
+import Paypal from "../screens/Paypal";
 
 
 const Bottom = createBottomTabNavigator();
@@ -52,28 +53,23 @@ const Navigator = () => {
           } else if (route.name === "SignUp") {
             iconName = focused ? "person-add" : "person-add";
           } else if (route.name === "LogOut") {
-            iconName = focused ? "exit" : "exit";
+            {
+              iconName = focused ? "exit" : "exit";
+              return <Ionicons name={iconName} size={size} color={color} onPress={async ()=>{
+                try {
+                  let res = await dispatch(signOff(token))
+                  if (res.payload.success) {
+                      await AsyncStorage.removeItem('token');
+                      setReload(!reload)
+                  }
+              } catch (error) {
+                  console.log(error)
+              }
+              }}/>;
+            }
           } else if (route.name === "Cart") {
             iconName = focused ? "md-cart-sharp" : "md-cart-sharp";
 
-            return (
-              <Ionicons
-                name={iconName}
-                size={size}
-                color={color}
-                onPress={async () => {
-                  try {
-                    let res = await dispatch(signOff(token));
-                    if (res.payload.success) {
-                      await AsyncStorage.removeItem("token");
-                      setReload(!reload);
-                    }
-                  } catch (error) {
-                    console.log(error);
-                  }
-                }}
-              />
-            );
           } else if (route.name === "My Profile") {
             iconName = focused ? "person-circle-sharp" : "person-circle-sharp";
           }
@@ -164,6 +160,14 @@ const Navigator = () => {
               tabBarItemStyle: { display: "none" },
             }}
             component={Detail}
+          />
+           <Bottom.Screen
+            name="Paypal"
+            options={{
+              headerShown: false,
+              tabBarItemStyle: { display: "none" },
+            }}
+            component={Paypal}
           />
 
           
