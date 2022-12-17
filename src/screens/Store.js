@@ -1,48 +1,30 @@
-import { Image, ScrollView, StyleSheet, View } from "react-native";
-import React,{useEffect,useRef} from "react";
+import {
+  Image,
+  ScrollView,
+  StyleSheet,
+  View,
+  Text,
+} from "react-native";
+import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import productAction from "../redux/actions/productAction";
-import SelectDropdown from "react-native-select-dropdown";
 import { Searchbar, Button, Card, Title, Paragraph } from "react-native-paper";
 
-const Filter = [
-  "Selec Filter",
-  "Desk",
-  "Tables",
-  "Vases",
-  "Frames",
-  "Cushions",
-  "Diffuser",
-  "Mirrors",
-  "Blanckets",
-];
-
 export default function Store(props) {
-
-  const { getProducts, getProductsFilter } = productAction;
-  const {products} = useSelector((state) => state.products);
+  const [open2, setOpen2] = useState(false);
+  const { products } = useSelector((state) => state.products);
   const dispatch = useDispatch();
-  
-
-  let search = useRef();
-  let select = useRef();
+  const { getProducts } = productAction;
 
   useEffect(() => {
     dispatch(getProducts());
-
     // eslint-disable-next-line
   }, []);
 
-  let filter = () => {
-    let text = search.current.value;
-    let selectFil = select.current.value;
-    console.log(selectFil);
-    if (selectFil !== "asc" && selectFil !== "desc") {
-      dispatch(getProductsFilter({ order: "", value: text }));
-    } else {
-      dispatch(getProductsFilter({ order: selectFil, value: text }));
-    }
+  const handleOpen2 = () => {
+    open2 ? setOpen2(false) : setOpen2(true);
   };
+
   return (
     <ScrollView style={styles.container}>
       <Image
@@ -53,48 +35,110 @@ export default function Store(props) {
         <Searchbar
           style={{ marginTop: 10 }}
           placeholder="Search"
-          onChangeText={filter}
+          onChangeText={""}
         />
       </View>
       
-      <View style={styles.select}>
-        <SelectDropdown
-          data={Filter}
-          onSelect={(selectedItem, index) => {
-            console.log(selectedItem, index);
-          }}
-          buttonTextAfterSelection={(selectedItem, index) => {
-            // text represented after item is selected
-            // if data array is an array of objects then return selectedItem.property to render after item is selected
-            return selectedItem;
-          }}
-          rowTextForSelection={(item, index) => {
-            // text represented for each item in dropdown
-            // if data array is an array of objects then return item.property to represent item in dropdown
-            return item;
-          }}
-        />
-      </View>
       <View style={{ padding: 15 }}>
-      {products.map((item) => {
-        
-            return (
+      <Button mode="contained" onPress={handleOpen2}>Categories ⇓</Button>
+      {open2 ? (
+        <>
+          <Text
+            style={{ textAlign:'center',height:30, fontSize:15, marginTop:10 }}
+            onPress={() => {
+              props.navigation.navigate("Desk");
+            }}
+          >
+            Desk
+          </Text>
+          <Text
+            style={{ textAlign:'center',height:30, fontSize:15 }}
+            onPress={() => {
+              props.navigation.navigate("Tables");
+            }}
+          >
+            Tables
+          </Text>
+          <Text
+            style={{ textAlign:'center',height:30, fontSize:15 }}
+            onPress={() => {
+              props.navigation.navigate("Vases");
+            }}
+          >
+            Vases
+          </Text>
+          <Text
+            style={{ textAlign:'center',height:30, fontSize:15 }}
+            onPress={() => {
+              props.navigation.navigate("Frames");
+            }}
+          >
+            Frames
+          </Text>
+          <Text
+            style={{ textAlign:'center',height:30, fontSize:15 }}
+            onPress={() => {
+              props.navigation.navigate("Cushions");
+            }}
+          >
+            Cushions
+          </Text>
+          <Text
+            style={{ textAlign:'center',height:30, fontSize:15 }}
+            onPress={() => {
+              props.navigation.navigate("Diffuser");
+            }}
+          >
+            Diffuser
+          </Text>
+          <Text
+            style={{ textAlign:'center',height:30, fontSize:15 }}
+            onPress={() => {
+              props.navigation.navigate("Mirrors");
+            }}
+          >
+            Mirrors
+          </Text>
+          <Text
+            style={{ textAlign:'center',height:30, fontSize:15 }}
+            onPress={() => {
+              props.navigation.navigate("Blankets");
+            }}
+          >
+            Blankets
+          </Text>
+        </>
+      ) : null}
+      </View>
 
-        <Card style={{ marginBottom: 20 }} >
-          <Card.Content>
-            <Card.Cover source={{ uri: item.photo[0] }} />
-            <Title >{item.name}</Title>
-            <Paragraph >Category: {item.category}</Paragraph>
-            <Paragraph >Price: {item.price}</Paragraph>
-          </Card.Content >
-          <Card.Actions style={{ justifyContent: 'space-around' }}>
-            <Button style={{ backgroundColor:'gray' }} mode="contained" onPress={() => { props.navigation.navigate("Detail",{ idProduct: item._id }) }}>More info</Button>
-            <Button>❤</Button>
-            <Button>Add to cart</Button>
-          </Card.Actions>
-        </Card>
-            )
-          })}
+      <View style={{ padding: 15 }}>
+        {products.map((item) => {
+          return (
+            <Card style={{ marginBottom: 20 }}>
+              <Card.Content>
+                <Card.Cover source={{ uri: item.photo[0] }} />
+                <Title>{item.name}</Title>
+                <Paragraph>Category: {item.category}</Paragraph>
+                <Paragraph>Price: {item.price}</Paragraph>
+              </Card.Content>
+              <Card.Actions style={{ justifyContent: "space-around" }}>
+                <Button
+                  style={{ backgroundColor: "gray" }}
+                  mode="contained"
+                  onPress={() => {
+                    props.navigation.navigate("Detail", {
+                      idProduct: item._id,
+                    });
+                  }}
+                >
+                  More info
+                </Button>
+                <Button>❤</Button>
+                <Button>Add to cart</Button>
+              </Card.Actions>
+            </Card>
+          );
+        })}
       </View>
     </ScrollView>
   );
@@ -110,7 +154,7 @@ const styles = StyleSheet.create({
     marginTop: 30,
     width: "100%",
     height: 150,
-    resizeMode:'stretch',
+    resizeMode: "stretch",
     backgroundColor: "white",
   },
   select: {
@@ -118,6 +162,4 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     alignItems: "center",
   },
-
-
 });

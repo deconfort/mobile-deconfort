@@ -6,10 +6,10 @@ import { Card,Button } from 'react-native-paper';
 export default function Home(props) {
   return (
     <ScrollView style={styles.container}>
-      <Image
-        style={styles.img}
-        source={require("../../assets/decomfortLogo.png")}
-      ></Image>
+        <Image
+          style={styles.img}
+          source={require("../../assets/decomfortLogo.png")}
+        ></Image>
       <View  >
         <View style={{ flexDirection: "row", alignItems: "center",marginTop:20 }}>
           <View style={{ flex: 1, height: 1, backgroundColor: "black" }} />

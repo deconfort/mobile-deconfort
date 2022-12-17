@@ -52,11 +52,11 @@ const Detail = ({ route }) => {
       <View>
         {product && (
           <>
-            <View style={styles.cont3}>
-              <Text style={{ fontSize: 25, marginTop: 10 }}>Product</Text>
-              <Text style={styles.title}>{product.name}</Text>
               <Image source={{ uri: product.photo[0] }} style={styles.img} />
-              <Text style={{ fontSize: 25 }}>Description</Text>
+            <View style={styles.cont3}>
+              <Text style={styles.title}>{product.name}</Text>
+              {/* <Text style={{ fontSize: 25, marginTop: 10 }}>Product</Text> */}
+              {/* <Text style={{ fontSize: 25 }}>Description</Text> */}
               <Text style={styles.subtitle}>{product.description}</Text>
               <Text style={styles.text}>Price $ {product.price}</Text>
 
@@ -86,7 +86,7 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: "center",
     alignItems: "center",
-    // backgroundColor: "#121212",
+    backgroundColor: "#121212",
     marginTop: 30,
   },
   title: {

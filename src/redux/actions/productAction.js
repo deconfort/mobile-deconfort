@@ -68,6 +68,7 @@ const getProductsFilter = createAsyncThunk(
   }
 );
 
+
 const updateProduct = createAsyncThunk("updateProduct",async ({data, token})=>{
   let headers = {headers: { Authorization: `Bearer ${token}`}};
   try{
