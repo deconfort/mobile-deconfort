@@ -14,6 +14,10 @@ import Store from "../screens/Store";
 import Forum from '../screens/Forum'
 // import Contact from '../screens/Contact'
 import Detail from "../screens/Detail";
+// import Contact from '../screens/Contact'
+import Detail from "../screens/Detail";
+import Cartprueba from "../screens/Cartprueba";
+
 
 const Bottom = createBottomTabNavigator();
 
@@ -50,6 +54,9 @@ const Navigator = () => {
             iconName = focused ? "person-add" : "person-add";
           } else if (route.name === "LogOut") {
             iconName = focused ? "exit" : "exit";
+          } else if (route.name === "Cart") {
+            iconName = focused ? "md-cart-sharp" : "md-cart-sharp";
+
             return (
               <Ionicons
                 name={iconName}
@@ -75,7 +82,7 @@ const Navigator = () => {
           // You can return any component that you like here!
           return <Ionicons name={iconName} size={size} color={color} />;
         },
-        tabBarActiveTintColor: "#1c7cafe6",
+        tabBarActiveTintColor: "#5c195d",
         tabBarInactiveTintColor: "gray",
       })}
     >
@@ -94,7 +101,13 @@ const Navigator = () => {
           />
           <Bottom.Screen
             name="Detail"
-            options={{ tabBarItemStyle: { display: "none" } }}
+
+            options={{
+              headerShown: false,
+              tabBarItemStyle: { display: "none" },
+            }}
+
+
             component={Detail}
           />
 
@@ -108,7 +121,8 @@ const Navigator = () => {
             name="Forum"
             options={{ headerShown: false }}
             component={Forum}
-          /> 
+          />
+
           {/* <Bottom.Screen
             name="Contact"
             options={{ headerShown: false }}
@@ -127,20 +141,11 @@ const Navigator = () => {
             options={{ headerShown: false }}
             component={Home}
           />
-
           <Bottom.Screen
-            name="My Profile"
+            name="Cart"
             options={{ headerShown: false }}
-            component={ProfileScreen}
+            component={Cartprueba}
           />
-          {/* <Bottom.Screen
-            name="MyReactions"
-            options={{
-              headerShown: false,
-              tabBarItemStyle: { display: "none" },
-            }}
-            component={MyReactions}
-          /> */}
 
           <Bottom.Screen
             name="EditProfile"
@@ -149,26 +154,37 @@ const Navigator = () => {
           />
 
           <Bottom.Screen
-            name="LogOut"
-            options={{ headerShown: false }}
-            component={Home}
-          />
-          <Bottom.Screen
             name="Store"
             options={{ headerShown: false }}
             component={Store}
           />
           <Bottom.Screen
             name="Detail"
-            options={{ tabBarItemStyle: { display: "none" } }}
+            options={{
+              headerShown: false,
+              tabBarItemStyle: { display: "none" },
+            }}
             component={Detail}
           />
+
           
           <Bottom.Screen
             name="Forum"
             options={{ headerShown: false }}
             component={Forum}
           /> 
+
+          <Bottom.Screen
+            name="My Profile"
+            options={{ headerShown: false }}
+            component={ProfileScreen}
+          />
+          <Bottom.Screen
+            name="LogOut"
+            options={{ headerShown: false }}
+            component={Home}
+          />
+
         </>
       )}
     </Bottom.Navigator>

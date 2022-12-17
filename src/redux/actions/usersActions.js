@@ -32,7 +32,6 @@ const reEnter = createAsyncThunk("reEnter", async (token) => {
       token: token,
     };
   } catch (error) {
-    console.log(error.response);
     return {
       success: false,
       response: error.response.data.message,
@@ -49,7 +48,6 @@ const signOff = createAsyncThunk("signOff", async (token) => {
       response: user.data.message,
     };
   } catch (error) {
-    console.log(error.response);
     return {
       success: false,
       response: error.response.data.message,
@@ -66,7 +64,6 @@ const getUser = createAsyncThunk("getUser", async (id) => {
       response: res.data.response,
     };
   } catch (error) {
-    console.log(error);
     return {
       success: false,
       response: "ocurrió un error",
