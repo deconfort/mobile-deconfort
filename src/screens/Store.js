@@ -1,5 +1,6 @@
+
 import { Alert, Image, ScrollView, StyleSheet, View } from "react-native";
-import React, { useEffect, useRef } from "react";
+import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import productAction from "../redux/actions/productAction";
 import SelectDropdown from "react-native-select-dropdown";
@@ -21,35 +22,32 @@ const Filter = [
 ];
 
 export default function Store(props) {
+
   const { idUser, user, token } = useSelector((state) => state.user);
   const { getProducts, getProductsFilter } = productAction;
-  const { products } = useSelector((state) => state.products);
   const { getUser } = usersAction;
-  const dispatch = useDispatch();
+
   useEffect(() => {
     dispatch(getUser(idUser));
     // eslint-disable-next-line
   }, []);
 
-  let search = useRef();
-  let select = useRef();
+
+  const [first, setfirst] = useState("");
+  const { products, name } = useSelector((state) => state.products);
+  const dispatch = useDispatch();
+
 
   useEffect(() => {
-    dispatch(getProducts());
+    if (name) {
+      dispatch(getProductsFilter(name));
+    } else {
+      dispatch(getProducts());
+    }
 
     // eslint-disable-next-line
   }, []);
 
-  let filter = () => {
-    let text = search.current.value;
-    let selectFil = select.current.value;
-    console.log(selectFil);
-    if (selectFil !== "asc" && selectFil !== "desc") {
-      dispatch(getProductsFilter({ order: "", value: text }));
-    } else {
-      dispatch(getProductsFilter({ order: selectFil, value: text }));
-    }
-  };
   return (
     <ScrollView style={styles.container}>
       <Image
@@ -60,7 +58,11 @@ export default function Store(props) {
         <Searchbar
           style={{ marginTop: 10 }}
           placeholder="Search"
-          onChangeText={filter}
+          onChangeText={(e) => {
+            setfirst(e);
+            let text = e;
+            dispatch(getProductsFilter({ name: text }));
+          }}
         />
       </View>
 
@@ -130,6 +132,8 @@ export default function Store(props) {
                 }
               }}
             >
+
+
               <Card.Content>
                 <Card.Cover source={{ uri: item.photo[0] }} />
                 <Title>{item.name}</Title>
@@ -166,7 +170,8 @@ const styles = StyleSheet.create({
   img: {
     marginTop: 30,
     width: "100%",
-    height: 70,
+    height: 150,
+    resizeMode: "stretch",
     backgroundColor: "white",
   },
   select: {

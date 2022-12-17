@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+
 import {
   StyleSheet,
   Text,
@@ -7,6 +8,7 @@ import {
   ImageBackground,
   Alert,
 } from "react-native";
+
 import { TouchableOpacity } from "react-native-gesture-handler";
 import { Feather } from "@expo/vector-icons";
 import favoriteActions from "../redux/actions/favoriteActions";
@@ -16,15 +18,17 @@ import usersAction from "../redux/actions/usersActions";
 import { useNavigation } from "@react-navigation/native";
 import { useDispatch, useSelector } from "react-redux";
 
+
 const Detail = ({ route }) => {
   let { updateFavorite } = favoriteActions;
   const { idProduct } = route.params;
+
   const [product, setProduct] = useState();
   const navigation = useNavigation();
-  let [reload, setReload] = useState(true);
   const { getUser } = usersAction;
   const { idUser, user, token  } = useSelector((state) => state.user);
   const dispatch = useDispatch();
+
 
   async function getMyProduct() {
     try {
@@ -40,6 +44,7 @@ const Detail = ({ route }) => {
     getMyProduct();
     // eslint-disable-next-line
   }, [reload]);
+
 
   useEffect(() => {
     dispatch(getUser(idUser));
@@ -110,6 +115,7 @@ const Detail = ({ route }) => {
           </TouchableOpacity>
         </>
       )}
+
     </View>
   );
 };

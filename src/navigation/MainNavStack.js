@@ -98,10 +98,13 @@ const Navigator = () => {
           />
           <Bottom.Screen
             name="Detail"
+
             options={{
               headerShown: false,
               tabBarItemStyle: { display: "none" },
             }}
+
+
             component={Detail}
           />
 

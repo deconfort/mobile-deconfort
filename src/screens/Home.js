@@ -15,12 +15,14 @@ export default function Home(props) {
         >
           <View style={{ flex: 1, height: 1, backgroundColor: "black" }} />
           <View>
+
             <Text style={{ width: 180, textAlign: "center" }}>
               Free EU shipping over 150€
             </Text>
             <Text style={{ width: 180, textAlign: "center" }}>
               with DHL Express
             </Text>
+
           </View>
           <View style={{ flex: 1, height: 1, backgroundColor: "black" }} />
         </View>
@@ -30,12 +32,14 @@ export default function Home(props) {
         >
           <View style={{ flex: 1, height: 1, backgroundColor: "black" }} />
           <View>
+
             <Text style={{ width: 320, textAlign: "center" }}>
               Shop Your Local Store & Get It Faster
             </Text>
             <Text style={{ width: 320, textAlign: "center" }}>
               Come see us IRL or choose in-store pickup at checkout
             </Text>
+
           </View>
           <View style={{ flex: 1, height: 1, backgroundColor: "black" }} />
         </View>
@@ -43,12 +47,14 @@ export default function Home(props) {
         <View style={{ flexDirection: "row", alignItems: "center" }}>
           <View style={{ flex: 1, height: 1, backgroundColor: "black" }} />
           <View>
+
             <Text style={{ width: 330, textAlign: "center", marginTop: 15 }}>
               E-GIFT CARDS
             </Text>
             <Text style={{ width: 330, textAlign: "center" }}>
               Make it easy for them to pick out what they want
             </Text>
+
           </View>
           <View style={{ flex: 1, height: 1, backgroundColor: "black" }} />
         </View>
@@ -82,6 +88,7 @@ export default function Home(props) {
           </Card>
         </View>
         <View style={{ padding: 10 }}>
+
           <Button
             style={{ marginTop: 10, marginBottom: 15 }}
             mode="contained"
@@ -106,7 +113,7 @@ const styles = StyleSheet.create({
   },
   img: {
     width: "100%",
-    height: 100,
+    height: 200,
     backgroundColor: "white",
   },
   text_card: {
