@@ -68,7 +68,7 @@ const EditProfile = () => {
         <View
           style={{
             flexDirection: "column",
-            marginTop: 20,
+            marginTop: 90,
             alignItems: "center",
             justifyContent: "center",
           }}
@@ -129,7 +129,7 @@ const EditProfile = () => {
           <AntDesign
             name="edit"
             size={24}
-            color="#1c7cafe6"
+            color="#5c195d"
             style={{ marginLeft: 20, marginBottom: 20 }}
           />
         </View>
@@ -165,7 +165,7 @@ const EditProfile = () => {
           <AntDesign
             name="edit"
             size={24}
-            color="#1c7cafe6"
+            color="#5c195d"
             style={{ marginLeft: 20, marginBottom: 20 }}
           />
         </View>
@@ -199,7 +199,7 @@ const EditProfile = () => {
           <AntDesign
             name="edit"
             size={24}
-            color="#1c7cafe6"
+            color="#5c195d"
             style={{ marginLeft: 20, marginBottom: 20 }}
           />
         </View>
@@ -234,7 +234,7 @@ const EditProfile = () => {
           <AntDesign
             name="edit"
             size={24}
-            color="#1c7cafe6"
+            color="#5c195d"
             style={{ marginLeft: 20, marginBottom: 20 }}
           />
         </View>
@@ -269,47 +269,10 @@ const EditProfile = () => {
           <AntDesign
             name="edit"
             size={24}
-            color="#1c7cafe6"
+            color="#5c195d"
             style={{ marginLeft: 20, marginBottom: 20 }}
           />
         </View>
-        {/* <View style={styles.row}>
-          <Text
-            style={{
-              color: "#777777",
-              marginBottom: 26,
-              fontSize: 15,
-            }}
-            keyboardType="visible-password"
-          >
-            Password:
-          </Text>
-          <TextInput
-            style={{
-              color: "#777777",
-              marginLeft: 5,
-              marginBottom: 26,
-              fontSize: 15,
-              backgroundColor: "rgba(255, 255, 255, 0.50)",
-              width: "60%",
-              borderRadius: 10,
-              paddingBottom: 5,
-              paddingLeft: 15,
-              paddingRight: 15,
-              paddingTop: 6,
-              
-            }}
-            secureTextEntry={true} password={true}
-            defaultValue={user.password}
-            onChangeText={(e) => handlerInput(e, "password" , user.password)}
-          />
-          <AntDesign
-            name="edit"
-            size={24}
-            color="#1c7cafe6"
-            style={{ marginLeft: 20, marginBottom: 20 }}
-          />
-        </View> */}
         <View
           style={{
             justifyContent: "center",
@@ -386,7 +349,7 @@ const styles = StyleSheet.create({
     lineHeight: 26,
   },
   btCallToAction: {
-    backgroundColor: "rgb(169, 204, 227 )",
+    backgroundColor: "#5c195d",
     width: "35%",
     borderRadius: 15,
     padding: 15,
