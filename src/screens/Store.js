@@ -12,9 +12,10 @@ import { Searchbar, Button, Card, Title, Paragraph } from "react-native-paper";
 
 export default function Store(props) {
   const [open2, setOpen2] = useState(false);
-  const { products } = useSelector((state) => state.products);
+  const { products,name } = useSelector((state) => state.products);
   const dispatch = useDispatch();
   const { getProducts } = productAction;
+  const [first, setfirst] = useState("");
 
   useEffect(() => {
     dispatch(getProducts());
@@ -24,6 +25,18 @@ export default function Store(props) {
   const handleOpen2 = () => {
     open2 ? setOpen2(false) : setOpen2(true);
   };
+
+
+  useEffect(() => {
+    if (name) {
+      dispatch(getProductsFilter(name));
+    } else {
+      dispatch(getProducts());
+    }
+
+    // eslint-disable-next-line
+  }, []);
+
 
   return (
     <ScrollView style={styles.container}>
@@ -35,6 +48,7 @@ export default function Store(props) {
         <Searchbar
           style={{ marginTop: 10 }}
           placeholder="Search"
+
           onChangeText={""}
         />
       </View>
@@ -112,6 +126,35 @@ export default function Store(props) {
       </View>
 
       <View style={{ padding: 15 }}>
+
+          onChangeText={(e) => {
+            setfirst(e);
+            let text = e;
+            dispatch(getProductsFilter({ name: text }));
+          }}
+        
+      </View>
+
+      <View style={styles.select}>
+        <SelectDropdown
+          data={Filter}
+          onSelect={(selectedItem, index) => {
+            console.log(selectedItem, index);
+          }}
+          buttonTextAfterSelection={(selectedItem, index) => {
+            // text represented after item is selected
+            // if data array is an array of objects then return selectedItem.property to render after item is selected
+            return selectedItem;
+          }}
+          rowTextForSelection={(item, index) => {
+            // text represented for each item in dropdown
+            // if data array is an array of objects then return item.property to represent item in dropdown
+            return item;
+          }}
+        />
+      </View>
+      <View style={{ padding: 15 }}>
+
         {products.map((item) => {
           return (
             <Card style={{ marginBottom: 20 }}>
