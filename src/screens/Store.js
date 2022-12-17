@@ -1,9 +1,13 @@
-import { Image, ScrollView, StyleSheet, View } from "react-native";
+
+import { Alert, Image, ScrollView, StyleSheet, View } from "react-native";
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import productAction from "../redux/actions/productAction";
 import SelectDropdown from "react-native-select-dropdown";
 import { Searchbar, Button, Card, Title, Paragraph } from "react-native-paper";
+import usersAction from "../redux/actions/usersActions";
+import axios from "axios";
+import apiUrl from "../../url";
 
 const Filter = [
   "Selec Filter",
@@ -18,10 +22,21 @@ const Filter = [
 ];
 
 export default function Store(props) {
-  const [first, setfirst] = useState("");
+
+  const { idUser, user, token } = useSelector((state) => state.user);
   const { getProducts, getProductsFilter } = productAction;
+  const { getUser } = usersAction;
+
+  useEffect(() => {
+    dispatch(getUser(idUser));
+    // eslint-disable-next-line
+  }, []);
+
+
+  const [first, setfirst] = useState("");
   const { products, name } = useSelector((state) => state.products);
   const dispatch = useDispatch();
+
 
   useEffect(() => {
     if (name) {
@@ -71,8 +86,54 @@ export default function Store(props) {
       </View>
       <View style={{ padding: 15 }}>
         {products.map((item) => {
+          async function addToCart() {
+            let product = {
+              name: item.name,
+              photo: item.photo[0],
+              price: item.price,
+              productId: item._id,
+              userId: idUser,
+            };
+            try {
+              let res = await axios.post(`${apiUrl}api/shopping`, product);
+              console.log(res.data);
+              if (user && res.data.success) {
+                Alert.alert(user.name, `${res.data.message} 🛒`, [
+                  {
+                    text: "OK",
+                  },
+                ]);
+              }
+            } catch (error) {
+              console.log(error);
+              if (user && error) {
+                Alert.alert(
+                  user.name,
+                  "The product is already in the cart 🛒",
+                  [
+                    {
+                      text: "OK",
+                    },
+                  ]
+                );
+              }
+            }
+          }
+
           return (
-            <Card style={{ marginBottom: 20 }}>
+            <Card
+              style={{ marginBottom: 20 }}
+              key={item._id}
+              onPress={() => {
+                if (token) {
+                  addToCart();
+                } else {
+                  props.navigation.navigate("Login");
+                }
+              }}
+            >
+
+
               <Card.Content>
                 <Card.Cover source={{ uri: item.photo[0] }} />
                 <Title>{item.name}</Title>
@@ -81,8 +142,6 @@ export default function Store(props) {
               </Card.Content>
               <Card.Actions style={{ justifyContent: "space-around" }}>
                 <Button
-                  style={{ backgroundColor: "gray" }}
-                  mode="contained"
                   onPress={() => {
                     props.navigation.navigate("Detail", {
                       idProduct: item._id,

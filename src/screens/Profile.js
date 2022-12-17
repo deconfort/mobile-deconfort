@@ -51,19 +51,19 @@ const ProfileScreen = (props) => {
 
       <View style={styles.userInfoSection}>
         <View style={styles.row}>
-        <Ionicons name="person-outline" size={21} color="#1c7cafe6" />
+        <Ionicons name="person-outline" size={21} color="#5c195d" />
           <Text style={{color:"#777777", marginLeft: 20, marginBottom:26, fontSize:20}}>{user.name}, {user.lastName}</Text>
         </View>
         <View style={styles.row}>
-        <AntDesign name="profile" size={21} color="#1c7cafe6" />
+        <AntDesign name="profile" size={21} color="#5c195d" />
           <Text style={{color:"#777777", marginLeft: 20, marginBottom:26, fontSize:20}}>Age: {user.age}</Text>
         </View>
         <View style={styles.row}>
-        <Fontisto name="world" size={21} color="#1c7cafe6" />
+        <Fontisto name="world" size={21} color="#5c195d" />
           <Text style={{color:"#777777", marginLeft: 20, marginBottom:26, fontSize:20}}>Country: {user.country}</Text>
         </View>
         <View style={styles.row}>
-          <Icon name="email" color="#1c7cafe6" size={21}/>
+          <Icon name="email" color="#5c195d" size={21}/>
           <Text style={{color:"#777777", marginLeft: 20, marginBottom:26, fontSize:20}}>{user.mail}</Text>
         </View>
       </View>
@@ -71,13 +71,13 @@ const ProfileScreen = (props) => {
       <View style={styles.infoBoxWrapper}>
         <TouchableRipple >
           <View style={styles.menuItem}>
-          <Feather name="heart" size={24} color="#1c7cafe6" />
+          <Feather name="heart" size={24} color="#5c195d" />
             <Text style={styles.menuItemText}>My Favorites</Text>
           </View>
         </TouchableRipple>
         <TouchableRipple  onPress={() => props.navigation.navigate("EditProfile")}>
           <View style={styles.menuItem}>
-          <AntDesign name="edit" size={24} color="#1c7cafe6" />
+          <AntDesign name="edit" size={24} color="#5c195d" />
             <Text style={styles.menuItemText}>Edit Profile</Text>
           </View>
         </TouchableRipple>
