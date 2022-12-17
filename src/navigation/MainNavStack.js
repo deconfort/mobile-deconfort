@@ -11,10 +11,13 @@ import usersActions from "../redux/actions/usersActions";
 import { useDispatch, useSelector } from "react-redux";
 import Home from "../screens/Home";
 import Store from "../screens/Store";
-// import Forum from '../screens/Forum'
+import Forum from '../screens/Forum'
+// import Contact from '../screens/Contact'
+import Detail from "../screens/Detail";
 // import Contact from '../screens/Contact'
 import Detail from "../screens/Detail";
 import Cartprueba from "../screens/Cartprueba";
+
 
 const Bottom = createBottomTabNavigator();
 
@@ -114,11 +117,12 @@ const Navigator = () => {
             component={Login}
           />
 
-          {/* <Bottom.Screen
+           <Bottom.Screen
             name="Forum"
             options={{ headerShown: false }}
             component={Forum}
-          /> */}
+          />
+
           {/* <Bottom.Screen
             name="Contact"
             options={{ headerShown: false }}
@@ -162,6 +166,14 @@ const Navigator = () => {
             }}
             component={Detail}
           />
+
+          
+          <Bottom.Screen
+            name="Forum"
+            options={{ headerShown: false }}
+            component={Forum}
+          /> 
+
           <Bottom.Screen
             name="My Profile"
             options={{ headerShown: false }}
@@ -172,6 +184,7 @@ const Navigator = () => {
             options={{ headerShown: false }}
             component={Home}
           />
+
         </>
       )}
     </Bottom.Navigator>
