@@ -18,6 +18,7 @@ import Detail from "../screens/Detail";
 import Cartprueba from "../screens/Cartprueba";
 import Paypal from "../screens/Paypal";
 
+import MyFavs from "../screens/MyFavs";
 
 const Bottom = createBottomTabNavigator();
 
@@ -146,6 +147,12 @@ const Navigator = () => {
             name="EditProfile"
             options={{ tabBarItemStyle: { display: "none" } }}
             component={EditProfile}
+          />
+
+          <Bottom.Screen
+            name="MyFavorites"
+            options={{ tabBarItemStyle: { display: "none" }, headerShown: false }}
+            component={MyFavs}
           />
 
           <Bottom.Screen

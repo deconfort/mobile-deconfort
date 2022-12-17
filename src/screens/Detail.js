@@ -209,7 +209,6 @@ const styles = StyleSheet.create({
   cont3: {
     flex: 1,
     alignItems: "center",
-    justifyContent: "",
     height: 500,
     backgroundColor: "#fff",
     width: "100%",
