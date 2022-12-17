@@ -48,16 +48,14 @@ const editProduct = createAsyncThunk("editProduct", async (data) => {
 });
 
 const getProductsFilter = createAsyncThunk(
-  "getProductsFilter",
-  async ({  value, order }) => {
-    let url = `${apiUrl}api/products?name=${value}&order=${order}`;
-
+  "getHotelsFilter",
+  async ({name }) => {
+    let url = `${apiUrl}api/products?name=${name}`;
     try {
       const res = await axios.get(url);
       return {
         products: res.data.response,
-        value,
-        order
+        name,
       };
     } catch (error) {
       console.log(error);
