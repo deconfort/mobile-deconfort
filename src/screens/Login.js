@@ -111,7 +111,7 @@ export default function Login() {
 
 const styles = StyleSheet.create({
   textTittle: {
-    color: "rgb(111, 164, 198 )",
+    color: "#5c195d",
     fontSize: 50,
     textAlign: "center",
     fontWeight: "bold",
@@ -136,7 +136,6 @@ const styles = StyleSheet.create({
   inputSignUp: {
     backgroundColor: "rgba(255, 255, 255, 0.50)",
     width: "65%",
-    borderRadius: 30,
     paddingBottom: 5,
     paddingLeft: 15,
     paddingRight: 15,
@@ -147,7 +146,7 @@ const styles = StyleSheet.create({
   button: {
     marginTop: 90,
     marginBottom: 25,
-    backgroundColor: "rgb(111, 164, 198)",
+    backgroundColor: "#5c195d",
     width: "30%",
     borderRadius: 30,
     padding: 10,

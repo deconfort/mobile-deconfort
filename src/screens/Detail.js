@@ -1,77 +1,121 @@
 import React, { useState, useEffect } from "react";
-import { StyleSheet, Text, View, Image } from "react-native";
+
+import {
+  StyleSheet,
+  Text,
+  View,
+  Image,
+  ImageBackground,
+  Alert,
+} from "react-native";
+
 import { TouchableOpacity } from "react-native-gesture-handler";
 import { Feather } from "@expo/vector-icons";
 import favoriteActions from "../redux/actions/favoriteActions";
 import apiUrl from "../../url";
 import axios from "axios";
+import usersAction from "../redux/actions/usersActions";
 import { useNavigation } from "@react-navigation/native";
+import { useDispatch, useSelector } from "react-redux";
+
 
 const Detail = ({ route }) => {
   let { updateFavorite } = favoriteActions;
   const { idProduct } = route.params;
-  const [product, setProduct] = useState(null);
+
+  const [product, setProduct] = useState();
   const navigation = useNavigation();
-  let [reload, setReload] = useState(true);
-  let [number, setNumber] = useState(1);
+  const { getUser } = usersAction;
+  const { idUser, user, token  } = useSelector((state) => state.user);
+  const dispatch = useDispatch();
+
 
   async function getMyProduct() {
     try {
       let res = await axios.get(`${apiUrl}api/products/${idProduct}`);
       setProduct(res.data.response);
-      setReload(!reload);
+      
 
       // eslint-disable-next-line
     } catch (error) {}
   }
+
   useEffect(() => {
     getMyProduct();
-  }, [reload]);
+    // eslint-disable-next-line
+  }, []);
+
+
+  useEffect(() => {
+    dispatch(getUser(idUser));
+  }, []);
+
+  async function addToCart() {
+    let Oneproduct = {
+      name: product.name,
+      photo: product.photo,
+      price: product.price,
+      productId: product._id,
+      userId: idUser,
+    };
+    try {
+      let res = await axios.post(`${apiUrl}api/shopping`, Oneproduct);
+      if (res.data.success) {
+        Alert.alert(user.name, `${res.data.message} 🛒`, [
+          {
+            text: "OK",
+          },
+        ]);
+      }
+    } catch (error) {
+      Alert.alert(user.name, "The product is already in the cart 🛒", [
+        {
+          text: "OK",
+        },
+      ]);
+    }
+  }
+  const image = { uri: `${product?.photo[0]}` };
 
   return (
-    <View style={styles.container}>
-      <View style={styles.header}>
-        <TouchableOpacity onPress={() => navigation.navigate("Store")}>
-          <Feather name="chevron-left" color="#FFF" size={25}></Feather>
-        </TouchableOpacity>
-        <View style={styles.iconsview}>
-          <Feather
-            name="shopping-cart"
-            color="#FFF"
-            size={25}
-            style={styles.cart}
-          />
-          <Feather
-            name="heart"
-            color="#FFF"
-            size={25}
-            onPress={() => updateFavorite()}
-          />
-        </View>
-      </View>
-      <View>
-        {product && (
-          <>
-              <Image source={{ uri: product.photo[0] }} style={styles.img} />
-            <View style={styles.cont3}>
-              <Text style={styles.title}>{product.name}</Text>
-              {/* <Text style={{ fontSize: 25, marginTop: 10 }}>Product</Text> */}
-              {/* <Text style={{ fontSize: 25 }}>Description</Text> */}
-              <Text style={styles.subtitle}>{product.description}</Text>
-              <Text style={styles.text}>Price $ {product.price}</Text>
+    <View
+      style={{
+        backgroundColor: "#ffff",
+        flex: 1,
+        alignItems: "center",
+        justifyContent: "space-around",
+      }}
+    >
+      {product && (
+        <>
+          <ImageBackground
+            resizeMode="cover"
+            source={image}
+            style={styles.image}
+          >
+            <View style={styles.hero}></View>
+          </ImageBackground>
+          <View style={styles.cont3}>
+            <Text style={styles.title}>{product.name}</Text>
+            <Text style={styles.subtitle}>{product.description}</Text>
+            <Text style={styles.text}>Price $ {product.price}</Text>
+            <View style={styles.cont1}></View>
+          </View>
+          <TouchableOpacity  onPress={() => {
+                if (token) {
+                  addToCart();
+                } else {
+                  navigation.navigate("Login");
+                }
+              }} style={styles.btn}>
+            <Text style={styles.btnText}>
+              Add to cart{" "}
+              <Feather name="shopping-cart" size={24} color="black" />
+            </Text>
+          </TouchableOpacity>
+        </>
+      )}
 
-              <View style={styles.cont1}>
-                <TouchableOpacity
-                  onPress={() => props.navigation.navigate("Home")}
-                  style={styles.btn}
-                >
-                  <Text style={styles.btnText}>Add to cart</Text>
-                </TouchableOpacity>
-              </View>
-            </View>
-          </>
-        )}
-      </View>
     </View>
   );
 };
@@ -79,18 +123,18 @@ const Detail = ({ route }) => {
 export default Detail;
 
 const styles = StyleSheet.create({
+  hero: {
+    height: 380,
+    alignItems: "center",
+    justifyContent: "center",
+  },
+
   iconsview: {
     flexDirection: "row",
   },
-  container: {
-    flex: 1,
-    justifyContent: "center",
-    alignItems: "center",
-    backgroundColor: "#121212",
-    marginTop: 30,
-  },
+
   title: {
-    color: "#FFF",
+    color: "black",
     fontSize: 25,
     marginTop: 20,
   },
@@ -106,17 +150,17 @@ const styles = StyleSheet.create({
     paddingRight: 80,
     lineHeight: 25,
   },
+  image:{},
   btn: {
-    width: "100%",
+    marginTop: 90,
+    width: "50%",
     backgroundColor: "#303030",
     paddingHorizontal: 50,
     paddingVertical: 12,
     borderRadius: 30,
-    display: "flex",
-    alignItems: "center",
   },
   btnText: {
-    fontSize: 20,
+    fontSize: 16,
     color: "#FFF",
     textAlign: "center",
   },
@@ -161,25 +205,18 @@ const styles = StyleSheet.create({
     width: "100%",
     marginVertical: 25,
   },
-  header: {
-    flexDirection: "row",
-    alignItems: "center",
-    justifyContent: "space-between",
-    width: "100%",
-    paddingHorizontal: 20,
-    paddingTop: 25,
-  },
-  img: {
-    height: "45%",
-    width: "60%",
-  },
+
   cont3: {
     flex: 1,
-    backgroundColor: "#c1b8ae",
+    alignItems: "center",
+    height: 500,
+    backgroundColor: "#fff",
     width: "100%",
-    paddingHorizontal: 20,
+    paddingHorizontal: 50,
     borderTopLeftRadius: 20,
-    borderTopRightRadius: 20,
+    borderTopRightRadius: 30,
+    position: "absolute",
+    marginTop: 370,
   },
   colors: {
     color: "#303030",
