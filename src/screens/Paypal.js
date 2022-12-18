@@ -3,15 +3,13 @@ import React, { Component } from "react";
 import { View, Text,  ActivityIndicator  } from "react-native";
 
 
-
-export default class Paypal extends Component (){
-
+export default class Paypal extends Component{
     state = {
       accessToken: null,
       approvalUrl: null,
       paymentId: null,
     }
-
+  
    componentDidMount() {
       const dataDetail = {
         "intent": "sale",
@@ -20,12 +18,11 @@ export default class Paypal extends Component (){
         },
         "transactions": [
           {
-      
             "amount": {
-              "total": "200",
+              "total": "0.01",
               "currency": "USD",
               "details": {
-                "subtotal": "200",
+                "subtotal": "0.01",
                 "tax": "0",
                 "shipping": "0",
                 "handling_fee": "0",
@@ -44,12 +41,12 @@ export default class Paypal extends Component (){
         method: "POST",
         headers: {
           "Content-Type": "application/x-www-form-urlencoded",
-          "Authorization": `Bearer A21AAJ7ahXwtU1X3M_91oLUUXTG0vk2qCiG0tqIlzq7dapjjJlzJDASO-yW_UOmbWSim7CFo8uAhRdZKdIwHNAbRYwWe1cdLQ`,
+          "Authorization": `Bearer A21AAIgxPgBiw1rdPIRycB3t-P2eHiGBE74RKNZKWv2Wzu3DlxBsqUPoBV2g-HUyt6JiVfNbxJ_E7E5YZDt_-i9Rp1ZUmk9vg`,
         },
         body: "grant_type=client_credentials",
       })
-        .then(res => res.json())
-        .then(response => {
+        .then((res) => res.json())
+        .then((response) => {
           console.log("response====", response);
           this.setState({
             accessToken: response.access_token,
@@ -62,15 +59,15 @@ export default class Paypal extends Component (){
             },
             body: JSON.stringify(dataDetail),
           })
-            .then((res) => res.json())
-            .then((response) => {
+            .then(res => res.json())
+            .then(response => {
               console.log("response", response);
               const { id, links } = response;
-              const approvalUrl = links.find(data => data.rel == "approval_url");
+              const approvalUrl = links.find(data=>data.rel == "approval_url");
               console.log("approvalUrl", approvalUrl);
               this.setState({
                 paymentId: id,
-                approvalUrl: approvalUrl.href
+                approvalUrl: approvalUrl.href,
               });
             })
             .catch((err) => {
@@ -101,8 +98,8 @@ export default class Paypal extends Component (){
             },
           }
         )
-          .then(res => res.json())
-          .then(response => {
+          .then((res) => res.json())
+          .then((response) => {
             console.log("res", response);
             if (response.name === "INVALID_RESOURCE_ID") {
               alert("Payment Failed. Please Try Again!");
@@ -139,7 +136,7 @@ export default class Paypal extends Component (){
               <ActivityIndicator
                 color={"black"}
                 size={"large"}
-                style={{ alignSelf: "center", marginTop:50 }}
+                style={{ alignSelf: "center" }}
               />
             </View>
           )}
@@ -147,4 +144,3 @@ export default class Paypal extends Component (){
       );
     }
   }
-   
