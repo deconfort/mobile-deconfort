@@ -3,14 +3,16 @@ import React, { Component } from "react";
 import { View, Text,  ActivityIndicator  } from "react-native";
 
 
-export default class Paypal extends Component{
+export default class Paypal extends Component (props){
+   
     state = {
       accessToken: null,
       approvalUrl: null,
       paymentId: null,
     }
-  
+
    componentDidMount() {
+    console.log(props.item);
       const dataDetail = {
         "intent": "sale",
         "payer": {
@@ -18,14 +20,15 @@ export default class Paypal extends Component{
         },
         "transactions": [
           {
+      
             "amount": {
-              "total": "0.01",
+              "total": "200",
               "currency": "USD",
               "details": {
-                "subtotal": "0.01",
+                "subtotal": "200",
                 "tax": "0",
                 "shipping": "0",
-                "handling_free": "0",
+                "handling_fee": "0",
                 "shipping_discount": "0",
                 "insurance": "0",
               },
@@ -45,8 +48,8 @@ export default class Paypal extends Component{
         },
         body: "grant_type=client_credentials",
       })
-        .then((res) => res.json())
-        .then((response) => {
+        .then(res => res.json())
+        .then(response => {
           console.log("response====", response);
           this.setState({
             accessToken: response.access_token,
@@ -63,11 +66,11 @@ export default class Paypal extends Component{
             .then((response) => {
               console.log("response", response);
               const { id, links } = response;
-              const approvalUrl = links.find(data.rel == "approval_url");
+              const approvalUrl = links.find(data => data.rel == "approval_url");
               console.log("approvalUrl", approvalUrl);
               this.setState({
                 paymentId: id,
-                approvalUrl: approvalUrl.href,
+                approvalUrl: approvalUrl.href
               });
             })
             .catch((err) => {
@@ -88,7 +91,7 @@ export default class Paypal extends Component{
         const { PayerID, paymentId } = webViewState.url;
   
         fetch(
-          `https://api.sandbox.paypal.com/v1/payments/payment(${paymentId}/execute`,
+          `https://api.sandbox.paypal.com/v1/payments/payment/${paymentId}/execute`,
           {
             method: "POST",
             body: { payer_id: PayerID },
@@ -98,8 +101,8 @@ export default class Paypal extends Component{
             },
           }
         )
-          .then((res) => res.json())
-          .then((response) => {
+          .then(res => res.json())
+          .then(response => {
             console.log("res", response);
             if (response.name === "INVALID_RESOURCE_ID") {
               alert("Payment Failed. Please Try Again!");
@@ -136,7 +139,7 @@ export default class Paypal extends Component{
               <ActivityIndicator
                 color={"black"}
                 size={"large"}
-                style={{ alignSelf: "center" }}
+                style={{ alignSelf: "center", marginTop:50 }}
               />
             </View>
           )}
