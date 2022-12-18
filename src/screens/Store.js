@@ -14,13 +14,8 @@ export default function Store(props) {
   const [open2, setOpen2] = useState(false);
   const { products,name } = useSelector((state) => state.products);
   const dispatch = useDispatch();
-  const { getProducts } = productAction;
+  const { getProducts,getProductsFilter } = productAction;
   const [first, setfirst] = useState("");
-
-  useEffect(() => {
-    dispatch(getProducts());
-    // eslint-disable-next-line
-  }, []);
 
   const handleOpen2 = () => {
     open2 ? setOpen2(false) : setOpen2(true);
@@ -45,11 +40,14 @@ export default function Store(props) {
         source={require("../../assets/Store.png")}
       ></Image>
       <View style={{ padding: 15 }}>
-        <Searchbar
+      <Searchbar
           style={{ marginTop: 10 }}
           placeholder="Search"
-
-          onChangeText={""}
+          onChangeText={(e) => {
+            setfirst(e);
+            let text = e;
+            dispatch(getProductsFilter({ name: text }));
+          }}
         />
       </View>
       
@@ -125,33 +123,7 @@ export default function Store(props) {
       ) : null}
       </View>
 
-      <View style={{ padding: 15 }}>
-
-          onChangeText={(e) => {
-            setfirst(e);
-            let text = e;
-            dispatch(getProductsFilter({ name: text }));
-          }}
-        
-      </View>
-
       <View style={styles.select}>
-        <SelectDropdown
-          data={Filter}
-          onSelect={(selectedItem, index) => {
-            console.log(selectedItem, index);
-          }}
-          buttonTextAfterSelection={(selectedItem, index) => {
-            // text represented after item is selected
-            // if data array is an array of objects then return selectedItem.property to render after item is selected
-            return selectedItem;
-          }}
-          rowTextForSelection={(item, index) => {
-            // text represented for each item in dropdown
-            // if data array is an array of objects then return item.property to represent item in dropdown
-            return item;
-          }}
-        />
       </View>
       <View style={{ padding: 15 }}>
 

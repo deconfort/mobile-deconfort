@@ -48,7 +48,7 @@ const editProduct = createAsyncThunk("editProduct", async (data) => {
 });
 
 const getProductsFilter = createAsyncThunk(
-  "getHotelsFilter",
+  "getProductsFilter",
   async ({name }) => {
     let url = `${apiUrl}api/products?name=${name}`;
     try {
