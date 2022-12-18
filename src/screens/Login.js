@@ -6,6 +6,7 @@ import {
   TouchableOpacity,
   Pressable,
   Alert,
+  Image,
 } from "react-native";
 import React, { useState } from "react";
 import usersActions from "../redux/actions/usersActions";
@@ -58,7 +59,10 @@ export default function Login() {
   return (
     <>
       <View style={styles.containerr}>
-
+      <Image
+          style={styles.img}
+          source={require("../../assets/LoginBanner2.png")}
+        ></Image>
           <Text style={styles.textTittle}>Welcome!</Text>
           <TextInput
             placeholder="Email"
@@ -154,5 +158,12 @@ const styles = StyleSheet.create({
     alignItems: "center",
     alignContent: "space-between",
     height: "100%",
+  },
+  img: {
+    width: "100%",
+    height: 150,
+    resizeMode:'stretch',
+    backgroundColor: "white",
+    marginBottom:69
   },
 });

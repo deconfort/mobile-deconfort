@@ -4,7 +4,7 @@ import SingUp from "../screens/SingUp";
 import Login from "../screens/Login";
 import { Ionicons } from "@expo/vector-icons";
 import ProfileScreen from "../screens/Profile";
-// import MyReactions from "../screens/MyReactions";
+
 import EditProfile from "../screens/EditProfile";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import usersActions from "../redux/actions/usersActions";
@@ -12,11 +12,19 @@ import { useDispatch, useSelector } from "react-redux";
 import Home from "../screens/Home";
 import Store from "../screens/Store";
 import Forum from "../screens/Forum";
+import Desk from "../screens/Desk";
 // import Contact from '../screens/Contact'
 import Detail from "../screens/Detail";
-// import Contact from '../screens/Contact'
+import Blankets from "../screens/Blankets";
+import Mirrors from "../screens/Mirrors";
+import Diffuser from "../screens/Diffuser";
+import Cushions from "../screens/Cushions";
+import Frames from "../screens/Frames";
+import Vases from "../screens/Vases";
+import Tables from "../screens/Tables";
 import Cartprueba from "../screens/Cartprueba";
 import Paypal from "../screens/Paypal";
+import MyFavs from "../screens/MyFavs";
 
 const Bottom = createBottomTabNavigator();
 
@@ -99,7 +107,47 @@ const Navigator = () => {
             options={{ headerShown: false }}
             component={Store}
           />
-          <Bottom.Screen
+                    <Bottom.Screen
+            name="Desk"
+            options={{ tabBarItemStyle: { display: "none" } }}
+            component={Desk}
+          />
+                              <Bottom.Screen
+            name="Tables"
+            options={{ tabBarItemStyle: { display: "none" } }}
+            component={Tables}
+          />
+                              <Bottom.Screen
+            name="Vases"
+            options={{ tabBarItemStyle: { display: "none" } }}
+            component={Vases}
+          />
+                              <Bottom.Screen
+            name="Frames"
+            options={{ tabBarItemStyle: { display: "none" } }}
+            component={Frames}
+          />
+                              <Bottom.Screen
+            name="Cushions"
+            options={{ tabBarItemStyle: { display: "none" } }}
+            component={Cushions}
+          />
+                              <Bottom.Screen
+            name="Diffuser"
+            options={{ tabBarItemStyle: { display: "none" } }}
+            component={Diffuser}
+          />
+                              <Bottom.Screen
+            name="Mirrors"
+            options={{ tabBarItemStyle: { display: "none" } }}
+            component={Mirrors}
+          />
+                              <Bottom.Screen
+            name="Blankets"
+            options={{ tabBarItemStyle: { display: "none" } }}
+            component={Blankets}
+          />
+                    <Bottom.Screen
             name="Detail"
             options={{
               headerShown: false,
@@ -148,6 +196,12 @@ const Navigator = () => {
             name="EditProfile"
             options={{ tabBarItemStyle: { display: "none" } }}
             component={EditProfile}
+          />
+
+          <Bottom.Screen
+            name="MyFavorites"
+            options={{ tabBarItemStyle: { display: "none" }, headerShown: false }}
+            component={MyFavs}
           />
 
           <Bottom.Screen
