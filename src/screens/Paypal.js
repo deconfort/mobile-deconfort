@@ -3,8 +3,9 @@ import React, { Component } from "react";
 import { View, Text,  ActivityIndicator  } from "react-native";
 
 
-export default class Paypal extends Component (props){
-   
+
+export default class Paypal extends Component (){
+
     state = {
       accessToken: null,
       approvalUrl: null,
@@ -12,7 +13,6 @@ export default class Paypal extends Component (props){
     }
 
    componentDidMount() {
-    console.log(props.item);
       const dataDetail = {
         "intent": "sale",
         "payer": {
