@@ -10,10 +10,9 @@ import AsyncStorage from "@react-native-async-storage/async-storage";
 import usersActions from "../redux/actions/usersActions";
 import { useDispatch, useSelector } from "react-redux";
 import Home from "../screens/Home";
-
-import Store from '../screens/Store'
+import Store from "../screens/Store";
+import Forum from "../screens/Forum";
 import Desk from "../screens/Desk";
-// import Forum from '../screens/Forum'
 // import Contact from '../screens/Contact'
 import Detail from "../screens/Detail";
 import Blankets from "../screens/Blankets";
@@ -23,13 +22,8 @@ import Cushions from "../screens/Cushions";
 import Frames from "../screens/Frames";
 import Vases from "../screens/Vases";
 import Tables from "../screens/Tables";
-
-import Forum from '../screens/Forum'
-
 import Cartprueba from "../screens/Cartprueba";
 import Paypal from "../screens/Paypal";
-
-
 import MyFavs from "../screens/MyFavs";
 
 const Bottom = createBottomTabNavigator();
@@ -68,21 +62,27 @@ const Navigator = () => {
           } else if (route.name === "LogOut") {
             {
               iconName = focused ? "exit" : "exit";
-              return <Ionicons name={iconName} size={size} color={color} onPress={async ()=>{
-                try {
-                  let res = await dispatch(signOff(token))
-                  if (res.payload.success) {
-                      await AsyncStorage.removeItem('token');
-                      setReload(!reload)
-                  }
-              } catch (error) {
-                  console.log(error)
-              }
-              }}/>;
+              return (
+                <Ionicons
+                  name={iconName}
+                  size={size}
+                  color={color}
+                  onPress={async () => {
+                    try {
+                      let res = await dispatch(signOff(token));
+                      if (res.payload.success) {
+                        await AsyncStorage.removeItem("token");
+                        setReload(!reload);
+                      }
+                    } catch (error) {
+                      console.log(error);
+                    }
+                  }}
+                />
+              );
             }
           } else if (route.name === "Cart") {
             iconName = focused ? "md-cart-sharp" : "md-cart-sharp";
-
           } else if (route.name === "My Profile") {
             iconName = focused ? "person-circle-sharp" : "person-circle-sharp";
           }
@@ -162,7 +162,7 @@ const Navigator = () => {
             component={Login}
           />
 
-           <Bottom.Screen
+          <Bottom.Screen
             name="Forum"
             options={{ headerShown: false }}
             component={Forum}
@@ -217,7 +217,7 @@ const Navigator = () => {
             }}
             component={Detail}
           />
-           <Bottom.Screen
+          <Bottom.Screen
             name="Paypal"
             options={{
               headerShown: false,
@@ -226,12 +226,11 @@ const Navigator = () => {
             component={Paypal}
           />
 
-          
           <Bottom.Screen
             name="Forum"
             options={{ headerShown: false }}
             component={Forum}
-          /> 
+          />
 
           <Bottom.Screen
             name="My Profile"
@@ -243,7 +242,6 @@ const Navigator = () => {
             options={{ headerShown: false }}
             component={Home}
           />
-
         </>
       )}
     </Bottom.Navigator>

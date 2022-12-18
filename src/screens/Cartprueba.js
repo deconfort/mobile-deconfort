@@ -9,11 +9,11 @@ import { useDispatch, useSelector } from "react-redux";
 import { ScrollView } from "react-native-gesture-handler";
 import Pressable from "react-native/Libraries/Components/Pressable/Pressable";
 import { Ionicons } from "@expo/vector-icons";
-import { useNavigation } from "@react-navigation/native";
+import { useNavigation } from "@react-navigation/core";
 
 
-export default function Cartprueba(props) {
- let navigation = useNavigation()
+export default function Cartprueba() {
+  let navigation = useNavigation()
   const { changeAmount } = cartActions;
   const { getUser } = userActions;
   const [products, setProducts] = useState([]);
@@ -67,7 +67,10 @@ export default function Cartprueba(props) {
   }
   
   function checkout() {
-    navigation.navigate("Paypal")
+    navigation.navigate("Paypal",{
+      item:sumWithInitial,
+      
+    })
   }
 
   return (
