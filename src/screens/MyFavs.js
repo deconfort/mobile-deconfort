@@ -12,7 +12,7 @@ export default function Store(props) {
 
   useEffect(() => {
     getProduct()
-  }, [favorite])
+  }, [])
 
   async function getProduct() {
     try {
