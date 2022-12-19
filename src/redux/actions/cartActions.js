@@ -2,11 +2,28 @@ import { createAsyncThunk } from "@reduxjs/toolkit";
 import axios from "axios";
 import apiUrl from "../../../url";
 
+const getCartProduct = createAsyncThunk("getCartProduct", async (idUser) => {
+    let url = `${apiUrl}api/shopping?userId=${idUser}`;
+    try {
+      const res = await axios.get(url);
+      return {
+        success: true,
+        product: res.data.productsCart
+        
+      };
+    } catch (error) {
+  console.log(error.response);
+      return {
+        success: false,
+        response: error.response.data.message,
+      };
+    }
+  });
+
 const addToCart = createAsyncThunk("addToCart", async (datos) => {
     let url = `${apiUrl}api/shopping`;
     try {
       const res = await axios.post(url, datos.data);
-       console.log(res);
       return {
         success: true,
         product: res.response.data
@@ -69,7 +86,8 @@ const addToCart = createAsyncThunk("addToCart", async (datos) => {
 const cartActions = {
   addToCart, 
   changeAmount,
-  deleteProduct
+  deleteProduct,
+  getCartProduct
   };
   
   export default cartActions;
