@@ -25,7 +25,7 @@ export default function Cartprueba(props) {
     dispatch(getUser(idUser));
 
     // eslint-disable-next-line
-  }, [products]);
+  }, []);
 
   async function getProducts() {
     await axios

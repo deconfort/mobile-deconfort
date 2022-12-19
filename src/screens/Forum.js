@@ -93,109 +93,116 @@ export default function Forum() {
         style={styles.img}
         source={require("../../assets/ForumBanner.png")}
       ></Image>
-      <ScrollView >
-      <View>
+      <ScrollView>
         <View>
-          <View style={styles.containInput}>
-            <TextInput
-              placeholder="Leave your photo"
-              onChangeText={(e) => handlerInput(e, "photo")}
-            />
-            <TextInput
-              placeholder="Leave your comment"
-              id="comment"
-              style={styles.input}
-              color="black"
-              onChangeText={(e) => handlerInput(e, "comment")}
-            />
+          <View style={styles.viewInputComment}>
+            <View style={styles.containInput}>
+              <TextInput
+                style={styles.inputCommnets}
+                placeholder="Leave your photo"
+                onChangeText={(e) => handlerInput(e, "photo")}
+              />
+              <TextInput
+                placeholder="Leave your comment"
+                id="comment"
+                style={styles.inputCommnets}
+                color="black"
+                onChangeText={(e) => handlerInput(e, "comment")}
+              />
+            </View>
+            <View style={styles.containBtn}>
+              <TouchableOpacity style={styles.button}>
+                <Text style={styles.sendComment} onPress={submit}>
+                  Send comment
+                </Text>
+              </TouchableOpacity>
+            </View>
           </View>
-          <View style={styles.containBtn}>
-            <TouchableOpacity style={styles.button}>
-              <Text
-                style={{ textAlign: "center", color: "black", fontSize: 18 }}
-                onPress={submit}
-              >
-                Post
-              </Text>
-            </TouchableOpacity>
-          </View>
-        </View>
-        <View style={styles.containComme}>
-          {comments?.map((item) => {
-            return (
-              <View>
-                <Text className="dateForum">{item.date}</Text>
-                <Image
-                  style={styles.image}
-                  source={{ uri: item.photo }}
-                  alt="Happy"
-                />
-                <Text className="textForum">{item.comment}</Text>
-                <View>
+          <View style={styles.containComme}>
+            {comments?.map((item) => {
+              return (
+                <View style={styles.borderCommnets}>
+                  <Text className="dateForum">{item.date}</Text>
                   <Image
                     style={styles.image}
-                    source={{ uri: item?.userId?.photo }}
-                    alt=""
+                    source={{ uri: item.photo }}
+                    alt="Happy"
                   />
-                  <Text className="nameForum">{item?.userId?.name}</Text>
-                  {item.userId?._id === idUser ? (
-                    <>
-                      <View style={styles.containIcon}>
-                        <TouchableOpacity
-                          onPress={() =>
-                            Alert.alert(
-                              "Hi",
-                              "Are you sure to delete the comment?",
-                              [
-                                {
-                                  text: "OK",
-                                  onPress: async () => {
-                                    let headers = {
-                                      headers: {
-                                        Authorization: `Bearer ${token}`,
-                                      },
-                                    };
-                                    try {
-                                      await axios.delete(
-                                        `${apiUrl}api/comments/${item._id}`,
-                                        headers
-                                      );
-                                      setReload(!reload);
-                                    } catch {}
+                  <Text className="textForum">{item.comment}</Text>
+                  <View>
+                    <View style={styles.photoAndName}>
+                      <Image
+                        style={styles.imagenProfileComments}
+                        source={{ uri: item?.userId?.photo }}
+                        alt=""
+                      />
+                      <Text style={{ marginLeft: 10 }} className="nameForum">
+                        {item?.userId?.name}
+                      </Text>
+                    </View>
+                    {item.userId?._id === idUser ? (
+                      <>
+                        <View style={styles.containIcon}>
+                          <TouchableOpacity
+                            onPress={() =>
+                              Alert.alert(
+                                "Hi",
+                                "Are you sure to delete the comment?",
+                                [
+                                  {
+                                    text: "OK",
+                                    onPress: async () => {
+                                      let headers = {
+                                        headers: {
+                                          Authorization: `Bearer ${token}`,
+                                        },
+                                      };
+                                      try {
+                                        await axios.delete(
+                                          `${apiUrl}api/comments/${item._id}`,
+                                          headers
+                                        );
+                                        setReload(!reload);
+                                      } catch {}
+                                    },
                                   },
-                                },
-                                {
-                                  text: "Cancel",
-                                  style: "cancel",
-                                },
-                              ]
-                            )
-                          }
-                        >
-                          <Image
-                            source={require("../../assets/eliminar.png")}
-                            style={styles.edit}
-                          />
-                        </TouchableOpacity>
-                        <TouchableOpacity /* onPress={() => navigation.navigate('InputEdit', {commentId: item._id})} */
-                        >
-                          <Image
-                            source={require("../../assets/editar.png")}
-                            style={styles.edit}
-                          />
-                        </TouchableOpacity>
-                      </View>
-                    </>
-                  ) : (
-                    <Text className="buttonForum">Report comment</Text>
-                  )}
+                                  {
+                                    text: "Cancel",
+                                    style: "cancel",
+                                  },
+                                ]
+                              )
+                            }
+                          >
+                            <Image
+                              source={require("../../assets/eliminar.png")}
+                              style={styles.edit}
+                            />
+                          </TouchableOpacity>
+                          {/* onPress={() => navigation.navigate('InputEdit', {commentId: item._id})}  */}
+                          <TouchableOpacity>
+                            <Image
+                              source={require("../../assets/editar.png")}
+                              style={styles.edit}
+                            />
+                          </TouchableOpacity>
+                        </View>
+                      </>
+                    ) : (
+                      <Text
+                        className="buttonForum"
+                        style={styles.reportComments}
+                      >
+                        Report comment
+                      </Text>
+                    )}
+                  </View>
                 </View>
-              </View>
-            );
-          })}
+              );
+            })}
+          </View>
         </View>
-      </View>
-    </ScrollView>
+      </ScrollView>
     </View>
   );
 }
@@ -214,11 +221,27 @@ const styles = StyleSheet.create({
   },
 
   image: {
-    width: 20,
-    height: 20,
+    //etiqueta que maneja el tamaño de la imagen del post y profile//
+    width: 90,
+    height: 90,
+    borderRadius: 9,
+    alignItems: "center",
+    justifyContent: "center",
+    margin: 10,
+    paddingRight: 5,
+  },
+  imagenProfileComments: {
+    width: 30,
+    height: 30,
     alignItems: "center",
     justifyContent: "center",
     paddingRight: 5,
+  },
+  photoAndName: {
+    display: "flex",
+    flexDirection: "row",
+    alignItems: "center",
+    margin: 5,
   },
   edit: {
     width: 20,
@@ -231,11 +254,74 @@ const styles = StyleSheet.create({
     alignItems: "center",
     padding: 25,
   },
+
+  viewInputComment: {
+    display: "flex",
+    flexDirection: "column",
+    alignItems: "center",
+    borderColor: "black",
+    borderRadius: 10,
+    //shadow box//
+    shadowColor: "#a7aba8",
+    shadowOffset: {
+      width: 0,
+      height: 10,
+    },
+    shadowOpacity: 0.1,
+    shadowRadius: 10,
+    elevation: 10,
+    margin: 10,
+    padding: 10,
+  },
   containComme: {
+    display: "flex",
     flex: 1,
     flexDirection: "column",
-    justifyContent: "center",
     alignItems: "baseline",
     padding: 50,
+  },
+  inputCommnets: {
+    height: 40,
+    width: 300,
+    borderColor: "#5c195d",
+    borderRadius: 10,
+    borderWidth: 2,
+    marginBottom: 10,
+  },
+  sendComment: {
+    textAlign: "center",
+    color: "white",
+    fontSize: 18,
+    backgroundColor: "#5c195d",
+    borderRadius: 10,
+    width: 200,
+    height: 30,
+    marginBottom: 10,
+  },
+  borderCommnets: {
+    display: "flex",
+    alignItems: "center",
+    borderWidth: 3,
+    borderColor: "#5c195d",
+    borderRadius: 10,
+    width: "100%",
+    marginBottom: 10,
+  },
+  reportComments: {
+    textAlign: "center",
+    color: "white",
+    fontSize: 15,
+    backgroundColor: "#5c195d",
+    borderRadius: 10,
+    width: 200,
+    height: 25,
+    marginBottom: 10,
+  },
+  containIcon: {
+    width: "100%",
+    display: "flex",
+    marginLeft: 10,
+    flexDirection: "row",
+    marginBottom: 10,
   },
 });
