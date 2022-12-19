@@ -37,6 +37,7 @@ export default function Cartprueba() {
     let headers = { headers: { Authorization: `Bearer ${token}` } };
     try {
       await axios.delete(`${apiUrl}api/shopping/${id}`, headers);
+      getProducts()
     } catch (error) {
       console.log(error);
     }
