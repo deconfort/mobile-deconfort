@@ -131,8 +131,40 @@ export default function Frames(props) {
       <View style={styles.select}>
       </View>
       <View style={{ padding: 15 }}>
-
         {products.map((item) => {
+            async function addToCart() {
+              let product = {
+                name: item.name,
+                photo: item.photo[0],
+                price: item.price,
+                productId: item._id,
+                userId: idUser,
+              };
+              try {
+                let res = await axios.post(`${apiUrl}api/shopping`, product);
+                console.log(res.data);
+                if (user && res.data.success) {
+                  Alert.alert(user.name, `${res.data.message} 🛒`, [
+                    {
+                      text: "OK",
+                    },
+                  ]);
+                }
+              } catch (error) {
+                console.log(error);
+                if (user && error) {
+                  Alert.alert(
+                    user.name,
+                    "The product is already in the cart 🛒",
+                    [
+                      {
+                        text: "OK",
+                      },
+                    ]
+                  );
+                }
+              }
+            }
           return (
             <Card style={{ marginBottom: 20 }}>
               <Card.Content>
@@ -154,7 +186,13 @@ export default function Frames(props) {
                   More info
                 </Button>
                 <Button>❤</Button>
-                <Button>Add to cart</Button>
+                <Button onPress={() => {
+                if (token) {
+                  addToCart();
+                } else {
+                  Alert.alert('Ups!', 'You have to registered to add this product to your cart')
+                }
+              }}>Add to cart</Button>
               </Card.Actions>
             </Card>
           );
