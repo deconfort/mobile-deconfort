@@ -14,9 +14,10 @@ import { Feather } from '@expo/vector-icons';
 import { AntDesign } from '@expo/vector-icons'; 
 import { Ionicons } from '@expo/vector-icons'; 
 import { Fontisto } from '@expo/vector-icons'; 
-
+import favoriteActions from '../redux/actions/favoriteActions';
 
 const ProfileScreen = (props) => {
+  const { getUserFavs } = favoriteActions
   const dispatch = useDispatch();
   const {  user, idUser} = useSelector((state) => state.user);
   const { getUser} = usersAction;
@@ -26,6 +27,13 @@ const ProfileScreen = (props) => {
     // eslint-disable-next-line
   }, []);
 
+  async function getProduct() {
+    try {
+      await dispatch(getUserFavs(idUser))
+    } catch (error) {
+      console.log(error)
+    }
+  }
 
 
   return (
@@ -69,7 +77,10 @@ const ProfileScreen = (props) => {
       </View>
 
       <View style={styles.infoBoxWrapper}>
-        <TouchableRipple   onPress={() => props.navigation.navigate("MyFavorites")}>
+        <TouchableRipple   onPress={() => {
+          getProduct()
+          props.navigation.navigate("MyFavorites")
+          }}>
           <View style={styles.menuItem}>
           <Feather name="heart" size={24} color="#5c195d" />
             <Text style={styles.menuItemText}>My Favorites</Text>

@@ -4,20 +4,26 @@ import SingUp from "../screens/SingUp";
 import Login from "../screens/Login";
 import { Ionicons } from "@expo/vector-icons";
 import ProfileScreen from "../screens/Profile";
-// import MyReactions from "../screens/MyReactions";
+
 import EditProfile from "../screens/EditProfile";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import usersActions from "../redux/actions/usersActions";
 import { useDispatch, useSelector } from "react-redux";
 import Home from "../screens/Home";
 import Store from "../screens/Store";
-import Forum from '../screens/Forum'
+import Forum from "../screens/Forum";
+import Desk from "../screens/Desk";
 // import Contact from '../screens/Contact'
 import Detail from "../screens/Detail";
-// import Contact from '../screens/Contact'
+import Blankets from "../screens/Blankets";
+import Mirrors from "../screens/Mirrors";
+import Diffuser from "../screens/Diffuser";
+import Cushions from "../screens/Cushions";
+import Frames from "../screens/Frames";
+import Vases from "../screens/Vases";
+import Tables from "../screens/Tables";
 import Cartprueba from "../screens/Cartprueba";
 import Paypal from "../screens/Paypal";
-
 import MyFavs from "../screens/MyFavs";
 
 const Bottom = createBottomTabNavigator();
@@ -56,21 +62,27 @@ const Navigator = () => {
           } else if (route.name === "LogOut") {
             {
               iconName = focused ? "exit" : "exit";
-              return <Ionicons name={iconName} size={size} color={color} onPress={async ()=>{
-                try {
-                  let res = await dispatch(signOff(token))
-                  if (res.payload.success) {
-                      await AsyncStorage.removeItem('token');
-                      setReload(!reload)
-                  }
-              } catch (error) {
-                  console.log(error)
-              }
-              }}/>;
+              return (
+                <Ionicons
+                  name={iconName}
+                  size={size}
+                  color={color}
+                  onPress={async () => {
+                    try {
+                      let res = await dispatch(signOff(token));
+                      if (res.payload.success) {
+                        await AsyncStorage.removeItem("token");
+                        setReload(!reload);
+                      }
+                    } catch (error) {
+                      console.log(error);
+                    }
+                  }}
+                />
+              );
             }
           } else if (route.name === "Cart") {
             iconName = focused ? "md-cart-sharp" : "md-cart-sharp";
-
           } else if (route.name === "My Profile") {
             iconName = focused ? "person-circle-sharp" : "person-circle-sharp";
           }
@@ -95,15 +107,52 @@ const Navigator = () => {
             options={{ headerShown: false }}
             component={Store}
           />
-          <Bottom.Screen
+                    <Bottom.Screen
+            name="Desk"
+            options={{ tabBarItemStyle: { display: "none" } }}
+            component={Desk}
+          />
+                              <Bottom.Screen
+            name="Tables"
+            options={{ tabBarItemStyle: { display: "none" } }}
+            component={Tables}
+          />
+                              <Bottom.Screen
+            name="Vases"
+            options={{ tabBarItemStyle: { display: "none" } }}
+            component={Vases}
+          />
+                              <Bottom.Screen
+            name="Frames"
+            options={{ tabBarItemStyle: { display: "none" } }}
+            component={Frames}
+          />
+                              <Bottom.Screen
+            name="Cushions"
+            options={{ tabBarItemStyle: { display: "none" } }}
+            component={Cushions}
+          />
+                              <Bottom.Screen
+            name="Diffuser"
+            options={{ tabBarItemStyle: { display: "none" } }}
+            component={Diffuser}
+          />
+                              <Bottom.Screen
+            name="Mirrors"
+            options={{ tabBarItemStyle: { display: "none" } }}
+            component={Mirrors}
+          />
+                              <Bottom.Screen
+            name="Blankets"
+            options={{ tabBarItemStyle: { display: "none" } }}
+            component={Blankets}
+          />
+                    <Bottom.Screen
             name="Detail"
-
             options={{
               headerShown: false,
               tabBarItemStyle: { display: "none" },
             }}
-
-
             component={Detail}
           />
 
@@ -113,7 +162,7 @@ const Navigator = () => {
             component={Login}
           />
 
-           <Bottom.Screen
+          <Bottom.Screen
             name="Forum"
             options={{ headerShown: false }}
             component={Forum}
@@ -168,7 +217,7 @@ const Navigator = () => {
             }}
             component={Detail}
           />
-           <Bottom.Screen
+          <Bottom.Screen
             name="Paypal"
             options={{
               headerShown: false,
@@ -177,12 +226,11 @@ const Navigator = () => {
             component={Paypal}
           />
 
-          
           <Bottom.Screen
             name="Forum"
             options={{ headerShown: false }}
             component={Forum}
-          /> 
+          />
 
           <Bottom.Screen
             name="My Profile"
@@ -194,7 +242,6 @@ const Navigator = () => {
             options={{ headerShown: false }}
             component={Home}
           />
-
         </>
       )}
     </Bottom.Navigator>

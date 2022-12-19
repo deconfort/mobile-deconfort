@@ -1,29 +1,24 @@
-import { Alert, Image, ScrollView, StyleSheet, View,Text } from "react-native";
+import {
+  Image,
+  ScrollView,
+  StyleSheet,
+  View,
+  Text,
+} from "react-native";
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import productAction from "../redux/actions/productAction";
 import { Searchbar, Button, Card, Title, Paragraph } from "react-native-paper";
-import usersAction from "../redux/actions/usersActions";
-import axios from "axios";
 import apiUrl from "../../url";
-import Favorite from "../components/Favorite";
+import axios from "axios";
 
-
-export default function Store(props) {
-
+export default function Tables(props) {
   const [open2, setOpen2] = useState(false);
-  const { idUser, user, token } = useSelector((state) => state.user);
-  const { getProducts, getProductsFilter } = productAction;
-  const { getUser } = usersAction;
-  const [first, setfirst] = useState("");
-  const { products, name } = useSelector((state) => state.products);
+  const { name } = useSelector((state) => state.products);
   const dispatch = useDispatch();
-
-
-  useEffect(() => {
-    dispatch(getUser(idUser));
-    // eslint-disable-next-line
-  }, []);
+  const { getProductsFilter } = productAction;
+  const [first, setfirst] = useState("");
+  let [products, setProducts] = useState([])
 
   const handleOpen2 = () => {
     open2 ? setOpen2(false) : setOpen2(true);
@@ -34,7 +29,9 @@ export default function Store(props) {
     if (name) {
       dispatch(getProductsFilter(name));
     } else {
-      dispatch(getProducts());
+      axios
+      .get(`${apiUrl}api/products?category=tables`)
+      .then((res) => setProducts(res.data.response));
     }
 
     // eslint-disable-next-line
@@ -58,7 +55,6 @@ export default function Store(props) {
           }}
         />
       </View>
-      
       <View style={{ padding: 15 }}>
       <Button mode="contained" onPress={handleOpen2}>Categories ⇓</Button>
       {open2 ? (
@@ -130,11 +126,12 @@ export default function Store(props) {
         </>
       ) : null}
       </View>
+
       <View style={styles.select}>
       </View>
       <View style={{ padding: 15 }}>
         {products.map((item) => {
-          async function addToCart() {
+           async function addToCart() {
             let product = {
               name: item.name,
               photo: item.photo[0],
@@ -167,13 +164,8 @@ export default function Store(props) {
               }
             }
           }
-
           return (
-            <Card
-              style={{ marginBottom: 20 }}
-              key={item._id}
-             
-            >
+            <Card style={{ marginBottom: 20 }}>
               <Card.Content>
                 <Card.Cover source={{ uri: item.photo[0] }} />
                 <Title>{item.name}</Title>
@@ -182,6 +174,8 @@ export default function Store(props) {
               </Card.Content>
               <Card.Actions style={{ justifyContent: "space-around" }}>
                 <Button
+                  style={{ backgroundColor: "gray" }}
+                  mode="contained"
                   onPress={() => {
                     props.navigation.navigate("Detail", {
                       idProduct: item._id,
@@ -190,9 +184,7 @@ export default function Store(props) {
                 >
                   More info
                 </Button>
-                <View style={styles.reactionContainer}>
-                  <Favorite productId={item._id}/>
-                </View>
+                <Button>❤</Button>
                 <Button onPress={() => {
                 if (token) {
                   addToCart();
@@ -227,10 +219,4 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     alignItems: "center",
   },
-  reactionContainer: {
-    flexDirection: 'row',
-    justifyContent: 'center',
-    width: '100%',
-    marginTop: 20,
-},
 });
