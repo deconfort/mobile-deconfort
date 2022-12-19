@@ -7,7 +7,7 @@ import usersAction from "../redux/actions/usersActions";
 import axios from "axios";
 import apiUrl from "../../url";
 import Favorite from "../components/Favorite";
-
+import cartActions from "../redux/actions/cartActions";
 
 export default function Store(props) {
 
@@ -18,7 +18,7 @@ export default function Store(props) {
   const [first, setfirst] = useState("");
   const { products, name } = useSelector((state) => state.products);
   const dispatch = useDispatch();
-
+  const {getCartProduct} = cartActions
 
   useEffect(() => {
     dispatch(getUser(idUser));
@@ -40,6 +40,13 @@ export default function Store(props) {
     // eslint-disable-next-line
   }, []);
 
+  async function getCartProducts() {
+    try {
+      await dispatch(getCartProduct(idUser));
+    } catch (error) {
+      console.log(error);
+    }
+  }
 
   return (
     <ScrollView style={styles.container}>
@@ -196,6 +203,7 @@ export default function Store(props) {
                 <Button onPress={() => {
                 if (token) {
                   addToCart();
+                  getCartProducts();
                 } else {
                   Alert.alert('Ups!', 'You have to registered to add this product to your cart')
                 }

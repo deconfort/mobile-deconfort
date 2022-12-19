@@ -14,23 +14,25 @@ import { useNavigation } from "@react-navigation/core";
 
 export default function Cartprueba() {
   let navigation = useNavigation()
-  const { changeAmount } = cartActions;
+  const { changeAmount, getCartProduct } = cartActions;
   const { getUser } = userActions;
-  const [products, setProducts] = useState([]);
+
   const { idUser, token } = useSelector((state) => state.user);
+  const {cartProducts} = useSelector((state) => state.cart);
   let dispatch = useDispatch();
 
   useEffect(() => {
     getProducts();
     dispatch(getUser(idUser));
-
     // eslint-disable-next-line
   }, []);
 
   async function getProducts() {
-    await axios
-      .get(`${apiUrl}api/shopping?userId=${idUser}`)
-      .then((res) => setProducts(res.data.productsCart));
+    try {
+      await dispatch(getCartProduct(idUser));
+    } catch (error) {
+      console.log(error);
+    }
   }
 
   async function deleteProduct(id) {
@@ -43,8 +45,8 @@ export default function Cartprueba() {
     }
   }
 
-  let totalPrice = products.map((product) => product.price * product.amount);
-  let totalProducts = products?.map((product) => {
+  let totalPrice = cartProducts.map((product) => product.price * product.amount);
+  let totalProducts = cartProducts?.map((product) => {
     return product.amount;
   });
 
@@ -58,19 +60,27 @@ export default function Cartprueba() {
     initialprice
   );
 
-  function add(info) {
-    dispatch(changeAmount(info));
-    getProducts();
+  async function add(info) {
+    try {
+      await dispatch(changeAmount(info));
+      getProducts();
+    } catch (error) {
+      console.log(error)
+    }
   }
-  function del(info) {
-    dispatch(changeAmount(info));
-    getProducts();
+  async function del(info) {
+    try {
+      await dispatch(changeAmount(info));
+      getProducts();
+    } catch (error) {
+      console.log(error)
+    }
+    
   }
   
   function checkout() {
     navigation.navigate("Paypal",{
       item:sumWithInitial,
-      
     })
   }
 
@@ -116,7 +126,7 @@ export default function Cartprueba() {
         </View>
       </View>
       <ScrollView style={{ height: 200, backgroundColor: "#fdfaff" }}>
-        {products?.map((item) => {
+        {cartProducts?.map((item) => {
           return (
             <CartCard
               key={item._id}

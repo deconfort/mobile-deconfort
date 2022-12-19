@@ -9,7 +9,8 @@ const rootReducer = {
   favorites: favoriteReducers,
   user: usersReducers,
   products: productsReducer,
-  comments: commentsReducers
+  comments: commentsReducers,
+  cart: cartReducer,
 };
 
 
