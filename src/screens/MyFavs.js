@@ -9,11 +9,11 @@ export default function Store(props) {
   const dispatch = useDispatch()
   const { favorite } = useSelector((state) => state.favorites)
   const { idUser, token } = useSelector((state) => state.user)
-
+  
   useEffect(() => {
     getProduct()
-  }, [favorite])
-
+  }, [])
+  
   async function getProduct() {
     try {
       await dispatch(getUserFavs(idUser))

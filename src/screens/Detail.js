@@ -43,7 +43,7 @@ const Detail = ({ route }) => {
   useEffect(() => {
     getMyProduct();
     // eslint-disable-next-line
-  }, [product]);
+  }, []);
 
 
   useEffect(() => {

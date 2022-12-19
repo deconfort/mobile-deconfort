@@ -25,7 +25,7 @@ export default function Cartprueba(props) {
     dispatch(getUser(idUser));
 
     // eslint-disable-next-line
-  }, [products]);
+  }, []);
 
   async function getProducts() {
     await axios
@@ -37,6 +37,7 @@ export default function Cartprueba(props) {
     let headers = { headers: { Authorization: `Bearer ${token}` } };
     try {
       await axios.delete(`${apiUrl}api/shopping/${id}`, headers);
+      getProducts()
     } catch (error) {
       console.log(error);
     }
