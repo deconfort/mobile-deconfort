@@ -130,11 +130,9 @@ export default function Store(props) {
         </>
       ) : null}
       </View>
-
       <View style={styles.select}>
       </View>
       <View style={{ padding: 15 }}>
-
         {products.map((item) => {
           async function addToCart() {
             let product = {
@@ -176,8 +174,6 @@ export default function Store(props) {
               key={item._id}
              
             >
-
-
               <Card.Content>
                 <Card.Cover source={{ uri: item.photo[0] }} />
                 <Title>{item.name}</Title>
@@ -197,7 +193,13 @@ export default function Store(props) {
                 <View style={styles.reactionContainer}>
                   <Favorite productId={item._id}/>
                 </View>
-                <Button>Add to cart</Button>
+                <Button onPress={() => {
+                if (token) {
+                  addToCart();
+                } else {
+                  Alert.alert('Ups!', 'You have to registered to add this product to your cart')
+                }
+              }}>Add to cart</Button>
               </Card.Actions>
             </Card>
           );
