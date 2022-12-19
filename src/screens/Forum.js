@@ -8,6 +8,7 @@ import {
   TextInput,
   Alert,
 } from "react-native";
+import { Button } from "react-native-paper";
 import { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import commentsAction from "../redux/actions/commentAction";
@@ -121,13 +122,14 @@ export default function Forum() {
           <View style={styles.containComme}>
             {comments?.map((item) => {
               return (
-                <View style={styles.borderCommnets}>
-                  <Text className="dateForum">{item.date}</Text>
+                <View style={styles.borderCommnetsCard}>
+                  <Text style={{marginTop:30}} className="dateForum">{item.date}</Text>
                   <Image
                     style={styles.image}
                     source={{ uri: item.photo }}
                     alt="Happy"
                   />
+                  {/* <Text className="dateForum">{item.date}</Text> */}
                   <Text className="textForum">{item.comment}</Text>
                   <View>
                     <View style={styles.photoAndName}>
@@ -143,49 +145,76 @@ export default function Forum() {
                     {item.userId?._id === idUser ? (
                       <>
                         <View style={styles.containIcon}>
-                          <TouchableOpacity
-                            onPress={() =>
-                              Alert.alert(
-                                "Hi",
-                                "Are you sure to delete the comment?",
-                                [
-                                  {
-                                    text: "OK",
-                                    onPress: async () => {
-                                      let headers = {
-                                        headers: {
-                                          Authorization: `Bearer ${token}`,
-                                        },
-                                      };
-                                      try {
-                                        await axios.delete(
-                                          `${apiUrl}api/comments/${item._id}`,
-                                          headers
-                                        );
-                                        setReload(!reload);
-                                      } catch {}
+                          <View style={{display:"flex", flexDirection:"row", alignContent:"center", justifyContent:"center"}}>
+                            <TouchableOpacity
+                              onPress={() =>
+                                Alert.alert(
+                                  "Hi",
+                                  "Are you sure to delete the comment?",
+                                  [
+                                    {
+                                      text: "OK",
+                                      onPress: async () => {
+                                        let headers = {
+                                          headers: {
+                                            Authorization: `Bearer ${token}`,
+                                          },
+                                        };
+                                        try {
+                                          await axios.delete(
+                                            `${apiUrl}api/comments/${item._id}`,
+                                            headers
+                                          );
+                                          setReload(!reload);
+                                        } catch {}
+                                      },
                                     },
-                                  },
-                                  {
-                                    text: "Cancel",
-                                    style: "cancel",
-                                  },
-                                ]
-                              )
-                            }
-                          >
-                            <Image
-                              source={require("../../assets/eliminar.png")}
-                              style={styles.edit}
-                            />
-                          </TouchableOpacity>
-                          {/* onPress={() => navigation.navigate('InputEdit', {commentId: item._id})}  */}
-                          <TouchableOpacity>
-                            <Image
-                              source={require("../../assets/editar.png")}
-                              style={styles.edit}
-                            />
-                          </TouchableOpacity>
+                                    {
+                                      text: "Cancel",
+                                      style: "cancel",
+                                    },
+                                  ]
+                                )
+                              }
+                            >
+                              <Image
+                                source={require("../../assets/eliminar.png")}
+                                style={styles.edit}
+                              />
+                            </TouchableOpacity>
+                            <TouchableOpacity onPress={handleOpen2}>
+                              <Image
+                                source={require("../../assets/editar.png")}
+                                style={styles.edit}
+                              />
+                            </TouchableOpacity>
+                          </View>
+
+                          {open2 ? (
+                            <>
+                              <View>
+                                <TextInput
+                                  style={styles.inputBoxEdit}
+                                  placeholder="Leave your photo" 
+                                  onChangeText={(e) => handlerInput(e, "photo")}
+                                />
+                                <TextInput
+                                  placeholder="Leave your comment"
+                                  id="comment"
+                                  style={styles.inputBoxEdit}
+                                  color="black"
+                                  onChangeText={(e) =>
+                                    handlerInput(e, "comment")
+                                  }
+                                />
+                                <TouchableOpacity>
+                                  <Button mode="contained" style={styles.ButtonChangesEdit} onPress={submit}>
+                                    Save changes
+                                  </Button>
+                                </TouchableOpacity>
+                              </View>
+                            </>
+                          ) : null}
                         </View>
                       </>
                     ) : (
@@ -219,7 +248,13 @@ const styles = StyleSheet.create({
     height: 70,
     backgroundColor: "white",
   },
-
+  ButtonChangesEdit: {
+    backgroundColor: "#5c195d",
+    height: 40,
+    fontSize: 10,
+    borderRadius: 14,
+    marginBottom: 10,
+  },
   image: {
     //etiqueta que maneja el tamaño de la imagen del post y profile//
     width: 90,
@@ -240,13 +275,15 @@ const styles = StyleSheet.create({
   photoAndName: {
     display: "flex",
     flexDirection: "row",
+    justifyContent: "center",
     alignItems: "center",
-    margin: 5,
+    margin: 15,
   },
   edit: {
     width: 20,
     height: 20,
     marginRight: 10,
+    marginLeft: 11,
   },
 
   containInput: {
@@ -267,7 +304,7 @@ const styles = StyleSheet.create({
       width: 0,
       height: 10,
     },
-    shadowOpacity: 0.1,
+    shadowOpacity: 0.10,
     shadowRadius: 10,
     elevation: 10,
     margin: 10,
@@ -275,7 +312,6 @@ const styles = StyleSheet.create({
   },
   containComme: {
     display: "flex",
-    flex: 1,
     flexDirection: "column",
     alignItems: "baseline",
     padding: 50,
@@ -287,6 +323,16 @@ const styles = StyleSheet.create({
     borderRadius: 10,
     borderWidth: 2,
     marginBottom: 10,
+  },
+  inputBoxEdit:{
+    height: 40,
+    width: 200,
+    borderColor: "#5c195d",
+    borderRadius: 10,
+    borderWidth: 2,
+    marginBottom: 10,
+    marginTop: 5,
+    padding: 5,
   },
   sendComment: {
     textAlign: "center",
@@ -301,11 +347,37 @@ const styles = StyleSheet.create({
   borderCommnets: {
     display: "flex",
     alignItems: "center",
-    borderWidth: 3,
-    borderColor: "#5c195d",
+    // borderWidth: 3,
+    // borderColor: "#5c195d",
     borderRadius: 10,
     width: "100%",
     marginBottom: 10,
+    shadowColor: "#a7aba8",
+    shadowOffset: {
+      width: 20,
+      height: 10,
+    },
+    shadowOpacity: 0.1,
+    shadowRadius: 10,
+    elevation: 10,
+  },  
+  borderCommnetsCard: {
+    minHeight: 300,
+    display: "flex",
+    alignItems: "center",
+    // borderWidth: 3,
+    // borderColor: "#5c195d",
+    borderRadius: 10,
+    width: "100%",
+    marginBottom: 10,
+    shadowColor: "#a7aba8",
+    shadowOffset: {
+      width: 20,
+      height: 10,
+    },
+    shadowOpacity: 0.1,
+    shadowRadius: 10,
+    elevation: 10,
   },
   reportComments: {
     textAlign: "center",
@@ -321,7 +393,8 @@ const styles = StyleSheet.create({
     width: "100%",
     display: "flex",
     marginLeft: 10,
-    flexDirection: "row",
+    alignItems: "center",
+    flexDirection: "column",
     marginBottom: 10,
   },
 });
