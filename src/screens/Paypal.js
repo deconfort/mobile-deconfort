@@ -25,7 +25,7 @@ export default class Paypal extends Component{
                 "subtotal": "0.01",
                 "tax": "0",
                 "shipping": "0",
-                "handling_free": "0",
+                "handling_fee": "0",
                 "shipping_discount": "0",
                 "insurance": "0",
               },
@@ -41,7 +41,7 @@ export default class Paypal extends Component{
         method: "POST",
         headers: {
           "Content-Type": "application/x-www-form-urlencoded",
-          "Authorization": `Bearer A21AAJ7ahXwtU1X3M_91oLUUXTG0vk2qCiG0tqIlzq7dapjjJlzJDASO-yW_UOmbWSim7CFo8uAhRdZKdIwHNAbRYwWe1cdLQ`,
+          "Authorization": `Bearer A21AAKAMOcfopFUtCGGI7CRVwM39YMe1sdkJ24O-TcNYetXP5WpI0m2q2jwXxYHtTqtkss73PQ5I_wIsOeXCZmXb3c1BkPd9w`,
         },
         body: "grant_type=client_credentials",
       })
@@ -59,11 +59,11 @@ export default class Paypal extends Component{
             },
             body: JSON.stringify(dataDetail),
           })
-            .then((res) => res.json())
-            .then((response) => {
+            .then(res => res.json())
+            .then(response => {
               console.log("response", response);
               const { id, links } = response;
-              const approvalUrl = links.find(data.rel == "approval_url");
+              const approvalUrl = links.find(data=>data.rel == "approval_url");
               console.log("approvalUrl", approvalUrl);
               this.setState({
                 paymentId: id,
@@ -88,7 +88,7 @@ export default class Paypal extends Component{
         const { PayerID, paymentId } = webViewState.url;
   
         fetch(
-          `https://api.sandbox.paypal.com/v1/payments/payment(${paymentId}/execute`,
+          `https://api.sandbox.paypal.com/v1/payments/payment/${paymentId}/execute`,
           {
             method: "POST",
             body: { payer_id: PayerID },
@@ -144,4 +144,3 @@ export default class Paypal extends Component{
       );
     }
   }
-   

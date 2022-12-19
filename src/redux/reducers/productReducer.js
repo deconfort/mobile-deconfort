@@ -29,8 +29,7 @@ const productsReducer = createReducer(initialState, (builder) => {
         ...state,
         ...action.payload,
       };
-    });
-
+    })
     
 });
 

@@ -13,7 +13,7 @@ export default function Store(props) {
   useEffect(() => {
     getProduct()
   }, [])
-  
+
   async function getProduct() {
     try {
       await dispatch(getUserFavs(idUser))

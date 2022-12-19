@@ -48,7 +48,7 @@ const editProduct = createAsyncThunk("editProduct", async (data) => {
 });
 
 const getProductsFilter = createAsyncThunk(
-  "getHotelsFilter",
+  "getProductsFilter",
   async ({name }) => {
     let url = `${apiUrl}api/products?name=${name}`;
     try {
@@ -65,6 +65,7 @@ const getProductsFilter = createAsyncThunk(
     }
   }
 );
+
 
 const updateProduct = createAsyncThunk("updateProduct",async ({data, token})=>{
   let headers = {headers: { Authorization: `Bearer ${token}`}};

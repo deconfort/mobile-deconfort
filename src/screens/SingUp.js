@@ -6,6 +6,7 @@ import {
   TouchableOpacity,
   Text,
   Alert,
+  Image
 } from "react-native";
 import React, { useState } from "react";
 import axios from "axios";
@@ -75,6 +76,11 @@ export default function SingUp() {
 
   return (
     <View style={styles.contenedor}>
+
+<Image
+          style={styles.img}
+          source={require("../../assets/banerRegister.png")}
+        ></Image>
 
         <Text style={styles.textTittle}>Create an account</Text>
         <TextInput
@@ -212,6 +218,14 @@ const styles = StyleSheet.create({
     margin: 12,
     borderWidth: 1,
     padding: 10,
+  },
+  img: {
+    marginTop:20,
+    width: "100%",
+    height: 90,
+    resizeMode:'stretch',
+    backgroundColor: "white",
+    
   },
   dropdown1BtnStyle: {
     width: "65%",
