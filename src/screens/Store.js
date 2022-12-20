@@ -7,8 +7,8 @@ import usersAction from "../redux/actions/usersActions";
 import axios from "axios";
 import apiUrl from "../../url";
 import Favorite from "../components/Favorite";
-import cartActions from "../redux/actions/cartActions";
 import { Ionicons, MaterialCommunityIcons } from '@expo/vector-icons';
+import cartActions from "../redux/actions/cartActions";
 
 export default function Store(props) {
   const [open2, setOpen2] = useState(false);

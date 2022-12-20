@@ -61,8 +61,8 @@ export default function Store(props) {
 
               <Card.Actions>
               <Button
-                  style={{ backgroundColor: "gray" }}
-                  mode="contained"
+                  buttonColor="#5c195d"
+                  textColor="white"
                   onPress={() => {
                     props.navigation.navigate("Detail", {
                       idProduct: item._id,
@@ -72,8 +72,8 @@ export default function Store(props) {
                    More info <Ionicons name="information-circle-outline" size={21} color="white" />             
             </Button>
                 <Button
-                  style={{ backgroundColor: "gray" }}
-                  mode="contained"
+                  buttonColor="#5c195d"
+                  textColor="white"
                   onPress={() => {
                     pullReaction({id: item._id, name: item.name, token: token})
                   }}

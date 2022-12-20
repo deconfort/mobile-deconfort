@@ -8,7 +8,7 @@ import {
   TextInput,
   TouchableOpacity,
   Alert,
- 
+  ScrollView,
 } from "react-native";
 import { Avatar, Title, Text } from "react-native-paper";
 import { AntDesign } from "@expo/vector-icons";
@@ -64,6 +64,7 @@ const EditProfile = () => {
 
   return (
     <SafeAreaView style={styles.container}>
+      <ScrollView>
       <View style={styles.userInfoSection}>
         <View
           style={{
@@ -288,6 +289,7 @@ const EditProfile = () => {
           </TouchableOpacity>
         </View>
       </View>
+      </ScrollView>
     </SafeAreaView>
   );
 };
@@ -299,7 +301,6 @@ const styles = StyleSheet.create({
     flex: 1,
     height: 100,
     alignItems: "center",
-    justifyContent: "start",
   },
   userInfoSection: {
     paddingHorizontal: 30,

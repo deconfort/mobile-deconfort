@@ -264,10 +264,14 @@ export default function Forum() {
                                 />
                                 <TouchableOpacity
                                   onPress={() => submitTwo(item._id)}
-                                  mode="contained"
                                   style={styles.ButtonChangesEdit}
                                 >
-                                  <Button>Save changes</Button>
+                                  <Button
+                                    buttonColor="#5c195d"
+                                    textColor="white"
+                                  >
+                                    Save changes
+                                  </Button>
                                 </TouchableOpacity>
                               </View>
                             </>
@@ -307,7 +311,6 @@ const styles = StyleSheet.create({
     backgroundColor: "white",
   },
   ButtonChangesEdit: {
-    backgroundColor: "#5c195d",
     height: 40,
     fontSize: 10,
     borderRadius: 14,
