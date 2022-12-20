@@ -59,10 +59,6 @@ export default function Login() {
   return (
     <>
       <View style={styles.containerr}>
-      <Image
-          style={styles.img}
-          source={require("../../assets/LoginBanner2.png")}
-        ></Image>
           <Text style={styles.textTittle}>Welcome!</Text>
           <TextInput
             placeholder="Email"

@@ -7,7 +7,7 @@
     "icon": "./assets/icon.png",
     "userInterfaceStyle": "light",
     "splash": {
-      "image": "./assets/decomfortLogoeste.png",
+      "image": "./assets/logodeco.png",
       "resizeMode": "contain",
       "backgroundColor": "#ffffff"
     },
@@ -22,7 +22,7 @@
     },
     "android": {
       "adaptiveIcon": {
-        "foregroundImage": "./assets/decomfortLogoeste.png",
+        "foregroundImage": "./assets/logodeco.png",
         "backgroundColor": "#FFFFFF"
       }
     },

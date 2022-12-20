@@ -195,7 +195,7 @@ export default function Cartprueba() {
             flex: 1,
             justifyContent: "center",
             alignContent: "center",
-            padding: 18,
+            padding: 5,
           }}
         >
           <Text
