@@ -23,7 +23,6 @@ import Frames from "../screens/Frames";
 import Vases from "../screens/Vases";
 import Tables from "../screens/Tables";
 import Cartprueba from "../screens/Cartprueba";
-import Paypal from "../screens/Paypal";
 import MyFavs from "../screens/MyFavs";
 
 const Bottom = createBottomTabNavigator();
@@ -53,6 +52,8 @@ const Navigator = () => {
             iconName = focused ? "home" : "home";
           } else if (route.name === "Store") {
             iconName = focused ? "grid" : "grid";
+          }else if (route.name === "Forum") {
+            iconName = focused ? "newspaper" : "newspaper";
           } else if (route.name === "Detail") {
             iconName = focused ? "create-sharp" : "create-sharp";
           } else if (route.name === "Login") {
@@ -217,15 +218,6 @@ const Navigator = () => {
             }}
             component={Detail}
           />
-          <Bottom.Screen
-            name="Paypal"
-            options={{
-              headerShown: false,
-              tabBarItemStyle: { display: "none" },
-            }}
-            component={Paypal}
-          />
-
           <Bottom.Screen
             name="Forum"
             options={{ headerShown: false }}

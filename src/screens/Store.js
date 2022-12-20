@@ -1,4 +1,4 @@
-import { Alert, Image, ScrollView, StyleSheet, View,Text } from "react-native";
+import { Alert, Image, ScrollView, StyleSheet, View, Text } from "react-native";
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import productAction from "../redux/actions/productAction";
@@ -7,10 +7,10 @@ import usersAction from "../redux/actions/usersActions";
 import axios from "axios";
 import apiUrl from "../../url";
 import Favorite from "../components/Favorite";
-
+import cartActions from "../redux/actions/cartActions";
+import { Ionicons } from '@expo/vector-icons';
 
 export default function Store(props) {
-
   const [open2, setOpen2] = useState(false);
   const { idUser, user, token } = useSelector((state) => state.user);
   const { getProducts, getProductsFilter } = productAction;
@@ -18,7 +18,7 @@ export default function Store(props) {
   const [first, setfirst] = useState("");
   const { products, name } = useSelector((state) => state.products);
   const dispatch = useDispatch();
-
+  const { getCartProduct } = cartActions;
 
   useEffect(() => {
     dispatch(getUser(idUser));
@@ -28,7 +28,6 @@ export default function Store(props) {
   const handleOpen2 = () => {
     open2 ? setOpen2(false) : setOpen2(true);
   };
-
 
   useEffect(() => {
     if (name) {
@@ -40,15 +39,22 @@ export default function Store(props) {
     // eslint-disable-next-line
   }, []);
 
+  async function getCartProducts() {
+    try {
+      await dispatch(getCartProduct(idUser));
+    } catch (error) {
+      console.log(error);
+    }
+  }
 
   return (
     <ScrollView style={styles.container}>
       <Image
         style={styles.img}
-        source={require("../../assets/Store.png")}
+        source={require("../../assets/StoreSirve.png")}
       ></Image>
       <View style={{ padding: 15 }}>
-      <Searchbar
+        <Searchbar
           style={{ marginTop: 10 }}
           placeholder="Search"
           onChangeText={(e) => {
@@ -58,80 +64,88 @@ export default function Store(props) {
           }}
         />
       </View>
-      
-      <View style={{ padding: 15 }}>
-      <Button mode="contained" onPress={handleOpen2}>Categories ⇓</Button>
-      {open2 ? (
-        <>
-          <Text
-            style={{ textAlign:'center',height:30, fontSize:15, marginTop:10 }}
-            onPress={() => {
-              props.navigation.navigate("Desk");
-            }}
-          >
-            Desk
-          </Text>
-          <Text
-            style={{ textAlign:'center',height:30, fontSize:15 }}
-            onPress={() => {
-              props.navigation.navigate("Tables");
-            }}
-          >
-            Tables
-          </Text>
-          <Text
-            style={{ textAlign:'center',height:30, fontSize:15 }}
-            onPress={() => {
-              props.navigation.navigate("Vases");
-            }}
-          >
-            Vases
-          </Text>
-          <Text
-            style={{ textAlign:'center',height:30, fontSize:15 }}
-            onPress={() => {
-              props.navigation.navigate("Frames");
-            }}
-          >
-            Frames
-          </Text>
-          <Text
-            style={{ textAlign:'center',height:30, fontSize:15 }}
-            onPress={() => {
-              props.navigation.navigate("Cushions");
-            }}
-          >
-            Cushions
-          </Text>
-          <Text
-            style={{ textAlign:'center',height:30, fontSize:15 }}
-            onPress={() => {
-              props.navigation.navigate("Diffuser");
-            }}
-          >
-            Diffuser
-          </Text>
-          <Text
-            style={{ textAlign:'center',height:30, fontSize:15 }}
-            onPress={() => {
-              props.navigation.navigate("Mirrors");
-            }}
-          >
-            Mirrors
-          </Text>
-          <Text
-            style={{ textAlign:'center',height:30, fontSize:15 }}
-            onPress={() => {
-              props.navigation.navigate("Blankets");
-            }}
-          >
-            Blankets
-          </Text>
-        </>
-      ) : null}
+
+      <View style={{ padding: 15, }}>
+        <Button
+        style={{ backgroundColor: "#5c195d"}}
+         mode="contained" onPress={handleOpen2}>
+          Categories ⇓
+        </Button>
+        {open2 ? (
+          <>
+            <Text
+              style={{
+                textAlign: "center",
+                height: 30,
+                fontSize: 15,
+                marginTop: 10,
+              }}
+              onPress={() => {
+                props.navigation.navigate("Desk");
+              }}
+            >
+              Desk
+            </Text>
+            <Text
+              style={{ textAlign: "center", height: 30, fontSize: 15 }}
+              onPress={() => {
+                props.navigation.navigate("Tables");
+              }}
+            >
+              Tables
+            </Text>
+            <Text
+              style={{ textAlign: "center", height: 30, fontSize: 15 }}
+              onPress={() => {
+                props.navigation.navigate("Vases");
+              }}
+            >
+              Vases
+            </Text>
+            <Text
+              style={{ textAlign: "center", height: 30, fontSize: 15 }}
+              onPress={() => {
+                props.navigation.navigate("Frames");
+              }}
+            >
+              Frames
+            </Text>
+            <Text
+              style={{ textAlign: "center", height: 30, fontSize: 15 }}
+              onPress={() => {
+                props.navigation.navigate("Cushions");
+              }}
+            >
+              Cushions
+            </Text>
+            <Text
+              style={{ textAlign: "center", height: 30, fontSize: 15 }}
+              onPress={() => {
+                props.navigation.navigate("Diffuser");
+              }}
+            >
+              Diffuser
+            </Text>
+            <Text
+              style={{ textAlign: "center", height: 30, fontSize: 15 }}
+              onPress={() => {
+                props.navigation.navigate("Mirrors");
+              }}
+            >
+              Mirrors
+            </Text>
+            <Text
+              style={{ textAlign: "center", height: 30, fontSize: 15 }}
+              onPress={() => {
+                props.navigation.navigate("Blankets");
+              }}
+            >
+              Blankets
+            </Text>
+          </>
+        ) : null}
       </View>
-      <View style={styles.select}>
-      </View>
+      <View style={styles.select}></View>
       <View style={{ padding: 15 }}>
         {products.map((item) => {
           async function addToCart() {
@@ -169,46 +183,53 @@ export default function Store(props) {
           }
 
           return (
-            <Card
-              style={{ marginBottom: 20 }}
-              key={item._id}
-             
-            >
-              <View>
-                  <Favorite style={{top: 60,  }} productId={item._id} />
-                </View>
-              <Card.Content>
 
-                <Card.Cover style={styles.image_card} source={{ uri: item.photo[0] }} />
+            <Card style={styles.styleGeneralCard} key={item._id}>
+              <Card.Content>
+                <Card.Cover
+                  style={styles.image_card}
+                  source={{ uri: item.photo[0] }}
+                />
+                <View style={styles.reactionContainer}>
+                  <Favorite productId={item._id} />
+                </View>
+
                 <Title>{item.name}</Title>
                 <Paragraph>Category: {item.category}</Paragraph>
                 <Paragraph>Price: {item.price}</Paragraph>
               </Card.Content>
-              <Card.Actions style={{ justifyContent: "space-around",  }}>
-                <Button
-                style={{  backgroundColor:'gray' }}
-                mode="elevated"   
-                  onPress={() => {
-                    props.navigation.navigate("Detail", {
-                      idProduct: item._id,
-                    });
-                  }}
-                >
-                  More info
-                </Button>
 
-               
-                <Button 
-                buttonColor='gray'
-                
-                onPress={() => {
-                if (token) {
-                  addToCart();
-                } else {
-                  Alert.alert('Ups!', 'You have to registered to add this product to your cart')
-                }
-              }}>Add to cart</Button>
-              </Card.Actions>
+              
+                <Card.Actions>
+                  <Button
+                   style={{ backgroundColor: "#5c195d", }}
+                  mode="contained"
+                    onPress={() => {
+                      props.navigation.navigate("Detail", {
+                        idProduct: item._id,
+                      });
+                    }}
+                  >
+                    More info
+                  </Button>
+                  <Button
+                    style={{ marginTop: 10, marginBottom: 15, backgroundColor: "#5c195d", }}
+                    mode="contained"
+                    onPress={() => {
+                      if (token) {
+                        addToCart();
+                        getCartProducts();
+                      } else {
+                        Alert.alert(
+                          "Ups!",
+                          "You have to registered to add this product to your cart"
+                        );
+                      }
+                    }}
+                  >
+                    Add to cart <Ionicons name="cart-outline" size={24} color="white" />
+                  </Button>
+                </Card.Actions>
             </Card>
           );
         })}
@@ -237,17 +258,24 @@ const styles = StyleSheet.create({
   },
   reactionContainer: {
     position: "absolute",
-    fontSize: 60,
-    color: "white",
-    textAlign: "center",
-    top: 60,
-    backgroundColor: "black",
-    width: "100%",
+    top: 20,
+    left: 40,
+    width: 70,
   },
-  image_card:{
-width:'70%',
-left:105,
-borderBottomLeftRadius:150,
-borderBottomRightRadius:30,
-  }
+  //De aca para abajo es para el estilo de la card
+  styleGeneralCard: {
+    margin: 10,
+    minHeight: 150,
+  },
+
+  image_card: {
+    // position: "relative",
+    top: -16,
+    // left:109,
+    width: "70%",
+    left: 105,
+    height: 260,
+    borderBottomLeftRadius: 150,
+    borderBottomRightRadius: 30,
+  },
 });

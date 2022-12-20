@@ -1,50 +1,54 @@
-import { View, Text, Image, StyleSheet } from "react-native";
+import { View, Text, Image, StyleSheet, Linking } from "react-native";
 import CartCard from "../components/CartCard";
 import cartActions from "../redux/actions/cartActions";
 import userActions from "../redux/actions/usersActions";
 import apiUrl from "../../url";
 import axios from "axios";
-import React, {  useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { ScrollView } from "react-native-gesture-handler";
 import Pressable from "react-native/Libraries/Components/Pressable/Pressable";
 import { Ionicons } from "@expo/vector-icons";
 import { useNavigation } from "@react-navigation/core";
-
+import { WebView } from "react-native-webview";
 
 export default function Cartprueba() {
-  let navigation = useNavigation()
-  const { changeAmount } = cartActions;
+  let navigation = useNavigation();
+  const { changeAmount, getCartProduct } = cartActions;
   const { getUser } = userActions;
-  const [products, setProducts] = useState([]);
+
   const { idUser, token } = useSelector((state) => state.user);
+  const { cartProducts } = useSelector((state) => state.cart);
   let dispatch = useDispatch();
 
   useEffect(() => {
     getProducts();
     dispatch(getUser(idUser));
-
     // eslint-disable-next-line
   }, []);
 
   async function getProducts() {
-    await axios
-      .get(`${apiUrl}api/shopping?userId=${idUser}`)
-      .then((res) => setProducts(res.data.productsCart));
+    try {
+      await dispatch(getCartProduct(idUser));
+    } catch (error) {
+      console.log(error);
+    }
   }
 
   async function deleteProduct(id) {
     let headers = { headers: { Authorization: `Bearer ${token}` } };
     try {
       await axios.delete(`${apiUrl}api/shopping/${id}`, headers);
-      getProducts()
+      getProducts();
     } catch (error) {
       console.log(error);
     }
   }
 
-  let totalPrice = products.map((product) => product.price * product.amount);
-  let totalProducts = products?.map((product) => {
+  let totalPrice = cartProducts.map(
+    (product) => product.price * product.amount
+  );
+  let totalProducts = cartProducts?.map((product) => {
     return product.amount;
   });
 
@@ -58,20 +62,27 @@ export default function Cartprueba() {
     initialprice
   );
 
-  function add(info) {
-    dispatch(changeAmount(info));
-    getProducts();
+  async function add(info) {
+    try {
+      await dispatch(changeAmount(info));
+      getProducts();
+    } catch (error) {
+      console.log(error);
+    }
   }
-  function del(info) {
-    dispatch(changeAmount(info));
-    getProducts();
+  async function del(info) {
+    try {
+      await dispatch(changeAmount(info));
+      getProducts();
+    } catch (error) {
+      console.log(error);
+    }
   }
-  
+
   function checkout() {
-    navigation.navigate("Paypal",{
-      item:sumWithInitial,
-      
-    })
+    navigation.navigate("Paypal", {
+      item: sumWithInitial,
+    });
   }
 
   return (
@@ -116,7 +127,7 @@ export default function Cartprueba() {
         </View>
       </View>
       <ScrollView style={{ height: 200, backgroundColor: "#fdfaff" }}>
-        {products?.map((item) => {
+        {cartProducts?.map((item) => {
           return (
             <CartCard
               key={item._id}
@@ -151,16 +162,17 @@ export default function Cartprueba() {
             />
           );
         })}
+
       </ScrollView>
-      <View
+<View
         style={{
-          height: 500,
+          height: 150,
           borderTopLeftRadius: 50,
           borderTopRightRadius: 50,
           backgroundColor: "white",
-          flex: 1,
           flexDirection: "column",
           alignItems: "center",
+          marginTop:10
         }}
       >
         <Text
@@ -197,25 +209,58 @@ export default function Cartprueba() {
             ${sumWithInitial}
           </Text>
         </View>
-        <Pressable style={styles.button} onPress={()=>{
-          checkout()
-        }}>
+        </View>
+<View style={{paddingStart:20, paddingLeft:20, paddingRight:20 }}>
+        <Pressable
+          style={styles.button}
+          onPress={async () => {
+            const preference = {
+              items: cartProducts.map((item) => {
+                return {
+                  title: "Deconfort Products ",
+                  unit_price: item.price,
+                  quantity: item.amount,
+                  currency_id: "ARS",
+                  id: item._id,
+                };
+              }),
+            };
+            let response = await axios.post(
+              "https://api.mercadopago.com/checkout/preferences",
+              preference,
+              {
+                headers: {
+                  "Content-Type": "application/json",
+                  Authorization: `Bearer APP_USR-537691465530679-121318-8bbc230b0af6d8f1705e1a22a96b0d63-1262875102`,
+                },
+              }
+            );
+            try {
+              await Linking.openURL(response.data.init_point);
+              console.log(Linking.openURL);
+            } catch (error) {
+              console.log(error);
+            }
+          }}
+        >
           <Text style={styles.text}>Checkout</Text>
         </Pressable>
-      </View>
+
+</View>
     </>
   );
 }
 const styles = StyleSheet.create({
   button: {
+marginTop:10,
     alignItems: "center",
     justifyContent: "center",
-    paddingVertical: 15,
-    paddingHorizontal: 140,
+    padding:10,
     borderRadius: 30,
     elevation: 3,
-    backgroundColor: "black",
-    marginBottom: 30,
+    backgroundColor: "#5c195d",
+    marginBottom: 10,
+    
   },
   text: {
     fontSize: 16,
@@ -223,5 +268,6 @@ const styles = StyleSheet.create({
     fontWeight: "bold",
     letterSpacing: 0.25,
     color: "white",
+    
   },
 });

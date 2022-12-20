@@ -123,13 +123,14 @@ export default function Forum() {
             {comments?.map((item) => {
               return (
                 <View style={styles.borderCommnetsCard}>
-                  <Text style={{marginTop:30}} className="dateForum">{item.date}</Text>
+                  <Text style={{ marginTop: 30 }} className="dateForum">
+                    {item.date}
+                  </Text>
                   <Image
                     style={styles.image}
                     source={{ uri: item.photo }}
                     alt="Happy"
                   />
-                  {/* <Text className="dateForum">{item.date}</Text> */}
                   <Text className="textForum">{item.comment}</Text>
                   <View>
                     <View style={styles.photoAndName}>
@@ -145,7 +146,14 @@ export default function Forum() {
                     {item.userId?._id === idUser ? (
                       <>
                         <View style={styles.containIcon}>
-                          <View style={{display:"flex", flexDirection:"row", alignContent:"center", justifyContent:"center"}}>
+                          <View
+                            style={{
+                              display: "flex",
+                              flexDirection: "row",
+                              alignContent: "center",
+                              justifyContent: "center",
+                            }}
+                          >
                             <TouchableOpacity
                               onPress={() =>
                                 Alert.alert(
@@ -195,7 +203,7 @@ export default function Forum() {
                               <View>
                                 <TextInput
                                   style={styles.inputBoxEdit}
-                                  placeholder="Leave your photo" 
+                                  placeholder="Leave your photo"
                                   onChangeText={(e) => handlerInput(e, "photo")}
                                 />
                                 <TextInput
@@ -208,7 +216,11 @@ export default function Forum() {
                                   }
                                 />
                                 <TouchableOpacity>
-                                  <Button mode="contained" style={styles.ButtonChangesEdit} onPress={submit}>
+                                  <Button
+                                    mode="contained"
+                                    style={styles.ButtonChangesEdit}
+                                    onPress={submit}
+                                  >
                                     Save changes
                                   </Button>
                                 </TouchableOpacity>
@@ -245,7 +257,8 @@ const styles = StyleSheet.create({
   img: {
     marginTop: 30,
     width: "100%",
-    height: 70,
+    height: 120,
+    resizeMode: "stretch",
     backgroundColor: "white",
   },
   ButtonChangesEdit: {
@@ -304,7 +317,7 @@ const styles = StyleSheet.create({
       width: 0,
       height: 10,
     },
-    shadowOpacity: 0.10,
+    shadowOpacity: 0.1,
     shadowRadius: 10,
     elevation: 10,
     margin: 10,
@@ -323,8 +336,9 @@ const styles = StyleSheet.create({
     borderRadius: 10,
     borderWidth: 2,
     marginBottom: 10,
+    padding: 5,
   },
-  inputBoxEdit:{
+  inputBoxEdit: {
     height: 40,
     width: 200,
     borderColor: "#5c195d",
@@ -360,7 +374,7 @@ const styles = StyleSheet.create({
     shadowOpacity: 0.1,
     shadowRadius: 10,
     elevation: 10,
-  },  
+  },
   borderCommnetsCard: {
     minHeight: 300,
     display: "flex",
