@@ -130,11 +130,9 @@ export default function Store(props) {
         </>
       ) : null}
       </View>
-
       <View style={styles.select}>
       </View>
       <View style={{ padding: 15 }}>
-
         {products.map((item) => {
           async function addToCart() {
             let product = {
@@ -176,16 +174,20 @@ export default function Store(props) {
               key={item._id}
              
             >
-
-
+              <View>
+                  <Favorite style={{top: 60,  }} productId={item._id} />
+                </View>
               <Card.Content>
-                <Card.Cover source={{ uri: item.photo[0] }} />
+
+                <Card.Cover style={styles.image_card} source={{ uri: item.photo[0] }} />
                 <Title>{item.name}</Title>
                 <Paragraph>Category: {item.category}</Paragraph>
                 <Paragraph>Price: {item.price}</Paragraph>
               </Card.Content>
-              <Card.Actions style={{ justifyContent: "space-around" }}>
+              <Card.Actions style={{ justifyContent: "space-around",  }}>
                 <Button
+                style={{  backgroundColor:'gray' }}
+                mode="elevated"   
                   onPress={() => {
                     props.navigation.navigate("Detail", {
                       idProduct: item._id,
@@ -194,10 +196,18 @@ export default function Store(props) {
                 >
                   More info
                 </Button>
-                <View style={styles.reactionContainer}>
-                  <Favorite productId={item._id}/>
-                </View>
-                <Button>Add to cart</Button>
+
+               
+                <Button 
+                buttonColor='gray'
+                
+                onPress={() => {
+                if (token) {
+                  addToCart();
+                } else {
+                  Alert.alert('Ups!', 'You have to registered to add this product to your cart')
+                }
+              }}>Add to cart</Button>
               </Card.Actions>
             </Card>
           );
@@ -226,9 +236,18 @@ const styles = StyleSheet.create({
     alignItems: "center",
   },
   reactionContainer: {
-    flexDirection: 'row',
-    justifyContent: 'center',
-    width: '100%',
-    marginTop: 20,
-},
+    position: "absolute",
+    fontSize: 60,
+    color: "white",
+    textAlign: "center",
+    top: 60,
+    backgroundColor: "black",
+    width: "100%",
+  },
+  image_card:{
+width:'70%',
+left:105,
+borderBottomLeftRadius:150,
+borderBottomRightRadius:30,
+  }
 });
