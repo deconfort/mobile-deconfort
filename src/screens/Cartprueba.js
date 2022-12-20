@@ -1,24 +1,24 @@
-import { View, Text, Image, StyleSheet } from "react-native";
+import { View, Text, Image, StyleSheet, Linking } from "react-native";
 import CartCard from "../components/CartCard";
 import cartActions from "../redux/actions/cartActions";
 import userActions from "../redux/actions/usersActions";
 import apiUrl from "../../url";
 import axios from "axios";
-import React, {  useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { ScrollView } from "react-native-gesture-handler";
 import Pressable from "react-native/Libraries/Components/Pressable/Pressable";
 import { Ionicons } from "@expo/vector-icons";
 import { useNavigation } from "@react-navigation/core";
-
+import { WebView } from "react-native-webview";
 
 export default function Cartprueba() {
-  let navigation = useNavigation()
+  let navigation = useNavigation();
   const { changeAmount, getCartProduct } = cartActions;
   const { getUser } = userActions;
 
   const { idUser, token } = useSelector((state) => state.user);
-  const {cartProducts} = useSelector((state) => state.cart);
+  const { cartProducts } = useSelector((state) => state.cart);
   let dispatch = useDispatch();
 
   useEffect(() => {
@@ -39,13 +39,15 @@ export default function Cartprueba() {
     let headers = { headers: { Authorization: `Bearer ${token}` } };
     try {
       await axios.delete(`${apiUrl}api/shopping/${id}`, headers);
-      getProducts()
+      getProducts();
     } catch (error) {
       console.log(error);
     }
   }
 
-  let totalPrice = cartProducts.map((product) => product.price * product.amount);
+  let totalPrice = cartProducts.map(
+    (product) => product.price * product.amount
+  );
   let totalProducts = cartProducts?.map((product) => {
     return product.amount;
   });
@@ -65,7 +67,7 @@ export default function Cartprueba() {
       await dispatch(changeAmount(info));
       getProducts();
     } catch (error) {
-      console.log(error)
+      console.log(error);
     }
   }
   async function del(info) {
@@ -73,15 +75,14 @@ export default function Cartprueba() {
       await dispatch(changeAmount(info));
       getProducts();
     } catch (error) {
-      console.log(error)
+      console.log(error);
     }
-    
   }
-  
+
   function checkout() {
-    navigation.navigate("Paypal",{
-      item:sumWithInitial,
-    })
+    navigation.navigate("Paypal", {
+      item: sumWithInitial,
+    });
   }
 
   return (
@@ -207,9 +208,38 @@ export default function Cartprueba() {
             ${sumWithInitial}
           </Text>
         </View>
-        <Pressable style={styles.button} onPress={()=>{
-          checkout()
-        }}>
+        <Pressable
+          style={styles.button}
+          onPress={async () => {
+            const preference = {
+              items: cartProducts.map((item) => {
+                return {
+                  title: "Deconfort Products ",
+                  unit_price: item.price,
+                  quantity: item.amount,
+                  currency_id: "ARS",
+                  id: item._id,
+                };
+              }),
+            };
+            let response = await axios.post(
+              "https://api.mercadopago.com/checkout/preferences",
+              preference,
+              {
+                headers: {
+                  "Content-Type": "application/json",
+                  Authorization: `Bearer APP_USR-537691465530679-121318-8bbc230b0af6d8f1705e1a22a96b0d63-1262875102`,
+                },
+              }
+            );
+            try {
+              await Linking.openURL(response.data.init_point);
+              console.log(Linking.openURL);
+            } catch (error) {
+              console.log(error);
+            }
+          }}
+        >
           <Text style={styles.text}>Checkout</Text>
         </Pressable>
       </View>
