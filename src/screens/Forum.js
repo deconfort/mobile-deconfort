@@ -29,6 +29,12 @@ export default function Forum() {
     photo: "",
     date: new Date(),
   });
+  const [edit, setEdit] = useState({
+    userId: idUser,
+    comment: "",
+    photo: "",
+    date: new Date(),
+  });
 
   const handleOpen2 = () => {
     open2 ? setOpen2(false) : setOpen2(true);
@@ -51,6 +57,13 @@ export default function Forum() {
     });
   };
 
+  const handlerInputTwo = (e, campo, value) => {
+    setEdit({
+      ...edit,
+      [campo]: e || value,
+    });
+  };
+
   const submit = async () => {
     let inputs = Object.values(create).some((input) => input === "");
     let headers = { headers: { Authorization: `Bearer ${token}` } };
@@ -61,6 +74,39 @@ export default function Forum() {
       };
       try {
         let res = await axios.post(`${apiUrl}api/comments`, create, headers);
+        console.log(res);
+        setReload(!reload);
+        if (res.data.success) {
+          Alert.alert("Hi", "The comment was created successfully 🤩", [
+            {
+              text: "OK",
+            },
+          ]);
+        } else {
+          Alert.alert("Error", "Your comment could not be posted☹️", [
+            {
+              text: "OK",
+            },
+          ]);
+        }
+      } catch (e) {
+        console.log(e);
+      }
+    } else {
+      Alert.alert("Error", "All the fields are required! ☹️", [
+        {
+          text: "OK",
+        },
+      ]);
+    }
+  };
+
+  const submitTwo = async (id) => {
+    let inputs = Object.values(edit).some((input) => input === "");
+    let headers = { headers: { Authorization: `Bearer ${token}` } };
+    if (!inputs) {
+      try {
+        let res = await axios.put(`${apiUrl}api/comments`, edit, headers);
         console.log(res);
         setReload(!reload);
         if (res.data.success) {
@@ -204,7 +250,7 @@ export default function Forum() {
                                 <TextInput
                                   style={styles.inputBoxEdit}
                                   placeholder="Leave your photo"
-                                  onChangeText={(e) => handlerInput(e, "photo")}
+                                  onChangeText={(e) => handlerInputTwo(e, "photo")}
                                 />
                                 <TextInput
                                   placeholder="Leave your comment"
@@ -212,14 +258,14 @@ export default function Forum() {
                                   style={styles.inputBoxEdit}
                                   color="black"
                                   onChangeText={(e) =>
-                                    handlerInput(e, "comment")
+                                    handlerInputTwo(e, "comment")
                                   }
                                 />
                                 <TouchableOpacity>
                                   <Button
                                     mode="contained"
                                     style={styles.ButtonChangesEdit}
-                                    onPress={submit}
+                                    onPress={submitTwo}
                                   >
                                     Save changes
                                   </Button>
