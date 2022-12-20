@@ -23,7 +23,6 @@ import Frames from "../screens/Frames";
 import Vases from "../screens/Vases";
 import Tables from "../screens/Tables";
 import Cartprueba from "../screens/Cartprueba";
-import Paypal from "../screens/Paypal";
 import MyFavs from "../screens/MyFavs";
 
 const Bottom = createBottomTabNavigator();
@@ -217,15 +216,6 @@ const Navigator = () => {
             }}
             component={Detail}
           />
-          <Bottom.Screen
-            name="Paypal"
-            options={{
-              headerShown: false,
-              tabBarItemStyle: { display: "none" },
-            }}
-            component={Paypal}
-          />
-
           <Bottom.Screen
             name="Forum"
             options={{ headerShown: false }}

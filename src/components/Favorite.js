@@ -53,8 +53,8 @@ export default function Favorite(props) {
 
     const styles = StyleSheet.create({
         icon: {
-            width: 25,
-            height: 25,
+            width: 34,
+            height: 34,
         }
     });
 

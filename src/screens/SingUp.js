@@ -220,9 +220,9 @@ const styles = StyleSheet.create({
     padding: 10,
   },
   img: {
-    marginTop:20,
+    marginTop:30,
     width: "100%",
-    height: 90,
+    height: 150,
     resizeMode:'stretch',
     backgroundColor: "white",
     
