@@ -13,7 +13,7 @@ import cartActions from "../redux/actions/cartActions";
 export default function Store(props) {
   const [open2, setOpen2] = useState(false);
   const { idUser, user, token } = useSelector((state) => state.user);
-  const { getProducts, getProductsFilter } = productAction;
+  const { getProducts, getProductsFilter, getOneProduct } = productAction;
   const { getUser } = usersAction;
   const [first, setfirst] = useState("");
   const { products, name } = useSelector((state) => state.products);
@@ -47,6 +47,13 @@ export default function Store(props) {
     }
   }
 
+  async function pushoneProduct(idProduct) {
+    try {
+      await dispatch(getOneProduct(idProduct));
+    } catch (error) {
+      console.log(error);
+    }
+  }
   return (
     <ScrollView style={styles.container}>
       <Image
@@ -204,6 +211,7 @@ export default function Store(props) {
                   buttonColor="#5c195d"
                   textColor="white"
                     onPress={() => {
+                      pushoneProduct(item._id);
                       props.navigation.navigate("Detail", {
                         idProduct: item._id,
                       });

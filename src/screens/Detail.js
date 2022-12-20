@@ -21,7 +21,6 @@ import productAction from "../redux/actions/productAction";
 const Detail = ({ route }) => {
   const { idProduct } = route.params;
   const {getOneProduct} = productAction;
-  const [product, setProduct] = useState();
   const navigation = useNavigation();
   const { getUser } = usersAction;
   const { idUser, user, token  } = useSelector((state) => state.user);
@@ -31,9 +30,7 @@ const Detail = ({ route }) => {
   console.log(oneProduct)
   async function getMyProduct() {
     try {
-      let res = await axios.get(`${apiUrl}api/products/${idProduct}`);
-      setProduct(res.data.response);
-      dispatch(getOneProduct(idProduct))
+      await dispatch(getOneProduct(idProduct))
       // eslint-disable-next-line
     } catch (error) {}
   }
@@ -51,10 +48,10 @@ const Detail = ({ route }) => {
 
   async function addToCart() {
     let Oneproduct = {
-      name: product.name,
-      photo: product.photo,
-      price: product.price,
-      productId: product._id,
+      name: oneProduct.name,
+      photo: oneProduct.photo,
+      price: oneProduct.price,
+      productId: oneProduct._id,
       userId: idUser,
     };
     try {
@@ -85,19 +82,19 @@ const Detail = ({ route }) => {
         justifyContent: "space-around",
       }}
     >
-      {product && (
+      {oneProduct && (
         <>
           <ImageBackground
             resizeMode="cover"
-            source={{uri: product.photo[0]}}
+            source={{uri: oneProduct.photo[0]}}
             style={styles.image}
           >
             <View style={styles.hero}></View>
           </ImageBackground>
           <View style={styles.cont3}>
-            <Text style={styles.title}>{product.name}</Text>
-            <Text style={styles.subtitle}>{product.description}</Text>
-            <Text style={styles.text}>Price $ {product.price}</Text>
+            <Text style={styles.title}>{oneProduct.name}</Text>
+            <Text style={styles.subtitle}>{oneProduct.description}</Text>
+            <Text style={styles.text}>Price $ {oneProduct.price}</Text>
             <View style={styles.cont1}></View>
           </View>
           <TouchableOpacity  onPress={() => {
