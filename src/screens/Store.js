@@ -8,7 +8,7 @@ import axios from "axios";
 import apiUrl from "../../url";
 import Favorite from "../components/Favorite";
 import cartActions from "../redux/actions/cartActions";
-import { Ionicons } from '@expo/vector-icons';
+import { Ionicons, MaterialCommunityIcons } from '@expo/vector-icons';
 
 export default function Store(props) {
   const [open2, setOpen2] = useState(false);
@@ -183,7 +183,6 @@ export default function Store(props) {
           }
 
           return (
-
             <Card style={styles.styleGeneralCard} key={item._id}>
               <Card.Content>
                 <Card.Cover
@@ -202,19 +201,19 @@ export default function Store(props) {
               
                 <Card.Actions>
                   <Button
-                   style={{ backgroundColor: "#5c195d", }}
-                  mode="contained"
+                  buttonColor="#5c195d"
+                  textColor="white"
                     onPress={() => {
                       props.navigation.navigate("Detail", {
                         idProduct: item._id,
                       });
                     }}
                   >
-                    More info
+                    More info <Ionicons name="information-circle-outline" size={21} color="white" />
                   </Button>
                   <Button
-                    style={{ marginTop: 10, marginBottom: 15, backgroundColor: "#5c195d", }}
-                    mode="contained"
+                  buttonColor="#5c195d"
+                  textColor="white"
                     onPress={() => {
                       if (token) {
                         addToCart();

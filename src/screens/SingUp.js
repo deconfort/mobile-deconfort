@@ -76,12 +76,6 @@ export default function SingUp() {
 
   return (
     <View style={styles.contenedor}>
-
-<Image
-          style={styles.img}
-          source={require("../../assets/banerRegister.png")}
-        ></Image>
-
         <Text style={styles.textTittle}>Create an account</Text>
         <TextInput
           style={styles.inputSignUp}
