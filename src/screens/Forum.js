@@ -140,31 +140,33 @@ export default function Forum() {
         style={styles.img}
         source={require("../../assets/ForumBanner.png")}
       ></Image>
-      <ScrollView>
-        <View>
-          <View style={styles.viewInputComment}>
-            <View style={styles.containInput}>
-              <TextInput
-                style={styles.inputCommnets}
-                placeholder="Leave your photo"
-                onChangeText={(e) => handlerInput(e, "photo")}
-              />
-              <TextInput
-                placeholder="Leave your comment"
-                id="comment"
-                style={styles.inputCommnets}
-                color="black"
-                onChangeText={(e) => handlerInput(e, "comment")}
-              />
-            </View>
-            <View style={styles.containBtn}>
-              <TouchableOpacity style={styles.button}>
-                <Text style={styles.sendComment} onPress={submit}>
-                  Send comment
-                </Text>
-              </TouchableOpacity>
-            </View>
+      {/* <ScrollView> */}
+      <View>
+        <View style={styles.viewInputComment}>
+          <View style={styles.containInput}>
+            <TextInput
+              style={styles.inputCommnets}
+              placeholder="Leave your photo"
+              onChangeText={(e) => handlerInput(e, "photo")}
+            />
+            <TextInput
+              placeholder="Leave your comment"
+              id="comment"
+              style={styles.inputCommnets}
+              color="black"
+              onChangeText={(e) => handlerInput(e, "comment")}
+            />
           </View>
+          <View style={styles.containBtn}>
+            <TouchableOpacity style={styles.button}>
+              <Text style={styles.sendComment} onPress={submit}>
+                Send comment
+              </Text>
+            </TouchableOpacity>
+          </View>
+        </View>
+        {/* Container for the comments */}
+        <ScrollView>
           <View style={styles.containComme}>
             {comments?.map((item) => {
               return (
@@ -291,8 +293,10 @@ export default function Forum() {
               );
             })}
           </View>
-        </View>
-      </ScrollView>
+        </ScrollView>
+        {/* termina aca los comentarios */}
+      </View>
+      {/* </ScrollView> */}
     </View>
   );
 }
@@ -428,10 +432,10 @@ const styles = StyleSheet.create({
     display: "flex",
     alignItems: "center",
     // borderWidth: 3,
-    // borderColor: "#5c195d",
+    //  borderColor: "#5c195d",
     borderRadius: 10,
     width: "100%",
-    marginBottom: 10,
+    marginBottom: 45,
     shadowColor: "#a7aba8",
     shadowOffset: {
       width: 20,
