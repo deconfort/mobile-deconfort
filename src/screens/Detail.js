@@ -38,6 +38,7 @@ const Detail = ({ route }) => {
     } catch (error) {}
   }
 
+
   useEffect(() => {
     getMyProduct();
     // eslint-disable-next-line
@@ -73,7 +74,7 @@ const Detail = ({ route }) => {
       ]);
     }
   }
-  const image = { uri: `${product?.photo[0]}` };
+ 
 
   return (
     <View
@@ -88,7 +89,7 @@ const Detail = ({ route }) => {
         <>
           <ImageBackground
             resizeMode="cover"
-            source={image}
+            source={{uri: product.photo[0]}}
             style={styles.image}
           >
             <View style={styles.hero}></View>
@@ -122,7 +123,7 @@ export default Detail;
 
 const styles = StyleSheet.create({
   hero: {
-    height: 380,
+    height:380,
     alignItems: "center",
     justifyContent: "center",
   },
@@ -148,7 +149,10 @@ const styles = StyleSheet.create({
     paddingRight: 80,
     lineHeight: 25,
   },
-  image:{},
+  image:{
+    width: "100%",
+    height: "80%",
+  },
   btn: {
     marginTop: 90,
     width: "50%",
