@@ -53,7 +53,7 @@ export default function Store(props) {
           return (
             <Card style={styles.styleGeneralCard} key={item._id}>
               <Card.Content>
-              <Card.Cover style={styles.image_card} source={{ uri: item.productId.photo[0] }} />
+              <Card.Cover style={styles.image_card} source={{ uri: item.productId.photo[0]}} />
               <Title>{item.productId.name}</Title>
                 <Paragraph>Category: {item.productId.category}</Paragraph>
                 <Paragraph>Price: {item.productId.price}</Paragraph>
