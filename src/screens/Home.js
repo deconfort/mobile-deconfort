@@ -51,52 +51,104 @@ export default function Home(props) {
         >
           {ImagesCarousel.map((e, index) => (
             <Image
-            key={e}
-            resizeMode="stretch"
-            style={styles.wrap}
-            source={{ uri: e }}
+              key={e}
+              resizeMode="stretch"
+              style={styles.wrap}
+              source={{ uri: e }}
             />
-            ))}
+          ))}
         </ScrollView>
         <View style={styles.wrapDot}>
           {ImagesCarousel.map((e, index) => (
             <Text
-            key={e}
-            style={imgActive == index ? styles.dotActive : styles.dot}
+              key={e}
+              style={imgActive == index ? styles.dotActive : styles.dot}
             >
               ●
             </Text>
           ))}
         </View>
       </View>
-      <View
-        style={{
-          display: "flex",
-          flexDirection: "row",
-          justifyContent: "space-around",
-          alignItems: "center",
-          minHeight: 150,
-          marginTop: 3,
-        }}
+      {/* Container main */}
+      <ScrollView>
+        {/* primer view */}
+        <View
+          style={{
+            display: "flex",
+            flexDirection: "row",
+            justifyContent: "space-around",
+            alignItems: "center",
+            minHeight: 150,
+            marginTop: 3,
+          }}
         >
-        <View>
-          <Image
-            style={{ width: 160, height: 195, borderRadius: 9, marginTop: 15}}
-            source={{uri: "https://images-negozona-argentina.s3.amazonaws.com/uploads/picture/image/35443/IMG-4715.webp"}}
-          ></Image>
+          <View>
+            <Image
+              style={{ width: 160, height: 160, marginTop: 2 }}
+              source={{
+                uri: "https://images-negozona-argentina.s3.amazonaws.com/uploads/picture/image/35443/IMG-4715.webp",
+              }}
+            ></Image>
+          </View>
+          <View
+            style={{
+              display: "flex",
+              alignContent: "center",
+              alignItems: "center",
+              justifyContent: "center",
+              paddingLeft: 15,
+            }}
+          >
+            <Text style={{ textAlign: "center" }}>Mission</Text>
+            <Paragraph style={{ fontSize: 10 }}>
+              Our mission is to offer the best design {"\n"}and decoration
+              solutions, maintaining {"\n"}high quality standards, respecting
+              {"\n"} the environment and seeking processes{"\n"} that allow us
+              to be more productive, {"\n"}obtaining greater benefits for {"\n"}
+              our clients and collaborators.
+            </Paragraph>
+          </View>
         </View>
-        <View style={{display:"flex",alignContent:"center", alignItems:"center", justifyContent:"center", paddingLeft:15}}>
-        <Text style={{textAlign:"center"}}>Mission</Text>
-          <Paragraph style={{fontSize:11}}>
-            Our mission is to offer the best {'\n'} design and decoration solutions,{'\n'}
-            maintaining the highest quality {'\n'} standards, respecting the{'\n'}
-            environment and constantly searching {'\n'} for processes that allow us to{'\n'}
-            be more productive and competitive {'\n'} in the market, obtaining greater{'\n'}
-            benefits for our clients, collaborators. {'\n'} and our own reason for
-            being.
-          </Paragraph>
+        {/* segundo view */}
+        <View
+          style={{
+            display: "flex",
+            flexDirection: "row",
+            justifyContent: "space-around",
+            alignItems: "center",
+            minHeight: 150,
+            marginTop: 3,
+          }}
+        >
+          <View
+            style={{
+              display: "flex",
+              alignContent: "center",
+              alignItems: "center",
+              justifyContent: "center",
+              paddingLeft: 15,
+            }}
+          >
+            <Text style={{ textAlign: "center" }}>Vision</Text>
+            <Paragraph style={{ fontSize: 10 }}>
+              Our vision is a leading company in{"\n"}
+              interiorsolutions,decoration and{"\n"}accessories,using modern
+              {"\n"}methodologiesandrespectingthe needs{"\n"}
+              of ourcustomers,thusproviding maximum{"\n"}
+              addedvalue,providingthem with{"\n"}confidenceand security.
+            </Paragraph>
+          </View>
+          <View>
+            <Image
+              style={{ width: 160, height: 160, marginTop: 4 }}
+              source={{
+                uri: "https://cdn.shopify.com/s/files/1/0259/4835/6663/files/About_us_3x2_1_600x_09285351-ea72-48d0-a08a-ab5ca7d1b6ca.png?v=1659443205",
+              }}
+            ></Image>
+          </View>
         </View>
-      </View>
+      </ScrollView>
+      {/* termina el main view */}
       <View style={{ padding: 10 }}>
         <Button
           style={{
