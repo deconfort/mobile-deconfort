@@ -11,31 +11,29 @@ import {
 
 import { TouchableOpacity } from "react-native-gesture-handler";
 import { Feather } from "@expo/vector-icons";
-import favoriteActions from "../redux/actions/favoriteActions";
 import apiUrl from "../../url";
 import axios from "axios";
 import usersAction from "../redux/actions/usersActions";
 import { useNavigation } from "@react-navigation/native";
 import { useDispatch, useSelector } from "react-redux";
-
+import productAction from "../redux/actions/productAction";
 
 const Detail = ({ route }) => {
-  let { updateFavorite } = favoriteActions;
   const { idProduct } = route.params;
-
+  const {getOneProduct} = productAction;
   const [product, setProduct] = useState();
   const navigation = useNavigation();
   const { getUser } = usersAction;
   const { idUser, user, token  } = useSelector((state) => state.user);
+  const {oneProduct} = useSelector((state) => state.products);
   const dispatch = useDispatch();
 
-
+  console.log(oneProduct)
   async function getMyProduct() {
     try {
       let res = await axios.get(`${apiUrl}api/products/${idProduct}`);
       setProduct(res.data.response);
-      
-
+      dispatch(getOneProduct(idProduct))
       // eslint-disable-next-line
     } catch (error) {}
   }
