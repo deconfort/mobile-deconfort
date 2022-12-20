@@ -70,7 +70,7 @@ style={styles.wrap}
         <View style={{ padding: 10 }}>
 
           <Button
-            style={{ marginTop: 10, marginBottom: 15, backgroundColor:'gray' }}
+            style={{ marginTop: 10, marginBottom: 15, backgroundColor: "#5c195d", }}
             mode="contained"
             onPress={() => {
               props.navigation.navigate("Store");
@@ -125,3 +125,4 @@ const styles = StyleSheet.create({
     color:'#888'
   }
 });
+

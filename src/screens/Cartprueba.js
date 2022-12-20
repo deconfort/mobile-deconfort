@@ -162,16 +162,17 @@ export default function Cartprueba() {
             />
           );
         })}
+
       </ScrollView>
-      <View
+<View
         style={{
-          height: 500,
+          height: 150,
           borderTopLeftRadius: 50,
           borderTopRightRadius: 50,
           backgroundColor: "white",
-          flex: 1,
           flexDirection: "column",
           alignItems: "center",
+          marginTop:10
         }}
       >
         <Text
@@ -208,6 +209,8 @@ export default function Cartprueba() {
             ${sumWithInitial}
           </Text>
         </View>
+        </View>
+<View style={{paddingStart:20, paddingLeft:20, paddingRight:20 }}>
         <Pressable
           style={styles.button}
           onPress={async () => {
@@ -242,20 +245,22 @@ export default function Cartprueba() {
         >
           <Text style={styles.text}>Checkout</Text>
         </Pressable>
-      </View>
+
+</View>
     </>
   );
 }
 const styles = StyleSheet.create({
   button: {
+marginTop:10,
     alignItems: "center",
     justifyContent: "center",
-    paddingVertical: 15,
-    paddingHorizontal: 140,
+    padding:10,
     borderRadius: 30,
     elevation: 3,
-    backgroundColor: "black",
-    marginBottom: 30,
+    backgroundColor: "#5c195d",
+    marginBottom: 10,
+    
   },
   text: {
     fontSize: 16,
@@ -263,5 +268,6 @@ const styles = StyleSheet.create({
     fontWeight: "bold",
     letterSpacing: 0.25,
     color: "white",
+    
   },
 });
