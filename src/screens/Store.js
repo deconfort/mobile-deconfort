@@ -194,7 +194,6 @@ export default function Store(props) {
                 <Paragraph>Category: {item.category}</Paragraph>
                 <Paragraph>Price: {item.price}</Paragraph>
               </Card.Content>
-              {/* <View style={styles.CardAntiosStyles}> */}
                 <Card.Actions style={styles.CardAntiosStyles}>
                   <Button 
                   mode="contained"
@@ -223,7 +222,6 @@ export default function Store(props) {
                     Add to cart <Ionicons name="cart-outline" size={24} color="white" />
                   </Button>
                 </Card.Actions>
-              {/* </View> */}
             </Card>
           );
         })}
