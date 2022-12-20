@@ -106,17 +106,17 @@ export default function Forum() {
     let headers = { headers: { Authorization: `Bearer ${token}` } };
     if (!inputs) {
       try {
-        let res = await axios.put(`${apiUrl}api/comments`, edit, headers);
+        let res = await axios.put(`${apiUrl}api/comments/${id}`, edit, headers);
         console.log(res);
-        setReload(!reload);
+        getMyComments();
         if (res.data.success) {
-          Alert.alert("Hi", "The comment was created successfully 🤩", [
+          Alert.alert("Hi", "The comment has been successfully edited 🤩", [
             {
               text: "OK",
             },
           ]);
         } else {
-          Alert.alert("Error", "Your comment could not be posted☹️", [
+          Alert.alert("Error", "Your comment could not be edited☹️", [
             {
               text: "OK",
             },
@@ -243,14 +243,15 @@ export default function Forum() {
                               />
                             </TouchableOpacity>
                           </View>
-
                           {open2 ? (
                             <>
                               <View>
                                 <TextInput
                                   style={styles.inputBoxEdit}
                                   placeholder="Leave your photo"
-                                  onChangeText={(e) => handlerInputTwo(e, "photo")}
+                                  onChangeText={(e) =>
+                                    handlerInputTwo(e, "photo")
+                                  }
                                 />
                                 <TextInput
                                   placeholder="Leave your comment"
@@ -261,14 +262,12 @@ export default function Forum() {
                                     handlerInputTwo(e, "comment")
                                   }
                                 />
-                                <TouchableOpacity>
-                                  <Button
-                                    mode="contained"
-                                    style={styles.ButtonChangesEdit}
-                                    onPress={submitTwo}
-                                  >
-                                    Save changes
-                                  </Button>
+                                <TouchableOpacity
+                                  onPress={() => submitTwo(item._id)}
+                                  mode="contained"
+                                  style={styles.ButtonChangesEdit}
+                                >
+                                  <Button>Save changes</Button>
                                 </TouchableOpacity>
                               </View>
                             </>
