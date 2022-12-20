@@ -12,15 +12,17 @@ import productAction from "../redux/actions/productAction";
 import { Searchbar, Button, Card, Title, Paragraph } from "react-native-paper";
 import apiUrl from "../../url";
 import axios from "axios";
+import cartActions from "../redux/actions/cartActions";
 
 export default function Blankets(props) {
-  const { token } = useSelector((state) => state.user);
+  const { token, idUser } = useSelector((state) => state.user);
   const [open2, setOpen2] = useState(false);
   const { name } = useSelector((state) => state.products);
   const dispatch = useDispatch();
   const { getProductsFilter } = productAction;
   const [first, setfirst] = useState("");
   let [products, setProducts] = useState([])
+  const {getCartProduct} = cartActions
 
   const handleOpen2 = () => {
     open2 ? setOpen2(false) : setOpen2(true);
@@ -38,6 +40,14 @@ export default function Blankets(props) {
 
     // eslint-disable-next-line
   }, []);
+
+  async function getCartProducts() {
+    try {
+      await dispatch(getCartProduct(idUser));
+    } catch (error) {
+      console.log(error);
+    }
+  }
 
 
   return (
@@ -193,6 +203,7 @@ export default function Blankets(props) {
                 onPress={() => {
                   if (token) {
                     addToCart();
+                    getCartProducts();
                   } else {
                     Alert.alert("Ups", "You have to registered to add this product to your cart")
                   }

@@ -65,8 +65,10 @@ export default function Store(props) {
         />
       </View>
 
-      <View style={{ padding: 15 }}>
-        <Button mode="contained" onPress={handleOpen2}>
+      <View style={{ padding: 15, }}>
+        <Button
+        style={{ backgroundColor: "#5c195d"}}
+         mode="contained" onPress={handleOpen2}>
           Categories ⇓
         </Button>
         {open2 ? (
@@ -181,6 +183,7 @@ export default function Store(props) {
           }
 
           return (
+
             <Card style={styles.styleGeneralCard} key={item._id}>
               <Card.Content>
                 <Card.Cover
@@ -190,12 +193,16 @@ export default function Store(props) {
                 <View style={styles.reactionContainer}>
                   <Favorite productId={item._id} />
                 </View>
+
                 <Title>{item.name}</Title>
                 <Paragraph>Category: {item.category}</Paragraph>
                 <Paragraph>Price: {item.price}</Paragraph>
               </Card.Content>
-                <Card.Actions style={styles.CardAntiosStyles}>
-                  <Button 
+
+              
+                <Card.Actions>
+                  <Button
+                   style={{ backgroundColor: "#5c195d", }}
                   mode="contained"
                     onPress={() => {
                       props.navigation.navigate("Detail", {
@@ -206,7 +213,8 @@ export default function Store(props) {
                     More info
                   </Button>
                   <Button
-                  mode="contained"
+                    style={{ marginTop: 10, marginBottom: 15, backgroundColor: "#5c195d", }}
+                    mode="contained"
                     onPress={() => {
                       if (token) {
                         addToCart();
@@ -259,12 +267,7 @@ const styles = StyleSheet.create({
     margin: 10,
     minHeight: 150,
   },
-  CardAntiosStyles: {
-    // borderColor: "black",
-    // borderWidth: 1,
-    paddingLeft: 50,
-    marginLeft: 100,
-  },
+
   image_card: {
     // position: "relative",
     top: -16,

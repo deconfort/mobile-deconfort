@@ -52,6 +52,8 @@ const Navigator = () => {
             iconName = focused ? "home" : "home";
           } else if (route.name === "Store") {
             iconName = focused ? "grid" : "grid";
+          }else if (route.name === "Forum") {
+            iconName = focused ? "newspaper" : "newspaper";
           } else if (route.name === "Detail") {
             iconName = focused ? "create-sharp" : "create-sharp";
           } else if (route.name === "Login") {
