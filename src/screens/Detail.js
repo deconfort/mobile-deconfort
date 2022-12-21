@@ -4,7 +4,7 @@ import {
   StyleSheet,
   Text,
   View,
-  Image,
+  ActivityIndicator,
   ImageBackground,
   Alert,
 } from "react-native";
@@ -15,14 +15,14 @@ import { useDispatch, useSelector } from "react-redux";
 import productAction from "../redux/actions/productAction";
 import cartActions from "../redux/actions/cartActions";
 import { Ionicons, MaterialCommunityIcons } from "@expo/vector-icons";
-import {Button} from "react-native-paper";
+import { Button } from "react-native-paper";
 
 
 const Detail = ({ route }) => {
   const { idProduct } = route.params;
-  const {getOneProduct} = productAction;
-  const { idUser, user, token  } = useSelector((state) => state.user);
-  const {oneProduct} = useSelector((state) => state.products);
+  const { getOneProduct } = productAction;
+  const { idUser, user, token } = useSelector((state) => state.user);
+  const { oneProduct } = useSelector((state) => state.products);
   const dispatch = useDispatch();
   const { getCartProduct } = cartActions;
   let [time, setTime] = useState(true)
@@ -32,16 +32,16 @@ const Detail = ({ route }) => {
     getMyProduct();
     // eslint-disable-next-line
   }, []);
-  
-  
+
+
 
   async function getMyProduct() {
     try {
       await dispatch(getOneProduct(idProduct));
       setTimeout(() => {
-    setTime(false)
-}, 500);
-    } catch (error) {}
+        setTime(false)
+      }, 500);
+    } catch (error) { }
   }
 
 
@@ -79,68 +79,72 @@ const Detail = ({ route }) => {
       ]);
     }
   }
-  if(time){
-    return(
+  if (time) {
+    return (
       <View
-      style={{
-        backgroundColor: "#ffff",
-        flex: 1,
-        alignItems: "center",
-        justifyContent: "space-around",
-      }}
-    >
-      <Text>Loading...</Text>
-    </View>
+        style={{
+          backgroundColor: "#ffff",
+          flex: 1,
+          alignItems: "center",
+          justifyContent: "space-around",
+        }}
+      >
+        <ActivityIndicator
+          color={"black"}
+          size={"large"}
+          style={{ alignSelf: "center" }}
+        />
+      </View>
     )
   } else {
 
-  return (
-    <View
-      style={{
-        backgroundColor: "#ffff",
-        flex: 1,
-        alignItems: "center",
-        justifyContent: "space-around",
-      }}
-    >
-      {oneProduct && (
-        <>
-          { time ? <Text>Loading...</Text> :
-            <ImageBackground
-            resizeMode="cover"
-            source={{uri: oneProduct.photo[0]}}
-            style={styles.image}
-          >
-            <View style={styles.hero}></View>
-          </ImageBackground>
-          }
-          <View style={styles.cont3}>
-            <Text style={styles.title}>{oneProduct.name}</Text>
-            <Text style={styles.subtitle}>{oneProduct.description}</Text>
-            <Text style={styles.text}>Price $ {oneProduct.price}</Text>
-            <View style={styles.cont1}></View>
-          </View>
-          <Button
-            buttonColor="#5c195d"
-            textColor="white"
-            onPress={() => {
-              if (token) {
-                addToCart();
-              } else {
-                Alert.alert(
-                  "Ups!",
-                  "You have to registered to add this product to your cart"
-                );
-              }
-            }}
-          >
-            Add to cart <Ionicons name="cart-outline" size={24} color="white" />
-          </Button>
-        </>
-      )}
-    </View>
-  );
-}
+    return (
+      <View
+        style={{
+          backgroundColor: "#ffff",
+          flex: 1,
+          alignItems: "center",
+          justifyContent: "space-around",
+        }}
+      >
+        {oneProduct && (
+          <>
+            {time ? <Text>Loading...</Text> :
+              <ImageBackground
+                resizeMode="cover"
+                source={{ uri: oneProduct.photo[0] }}
+                style={styles.image}
+              >
+                <View style={styles.hero}></View>
+              </ImageBackground>
+            }
+            <View style={styles.cont3}>
+              <Text style={styles.title}>{oneProduct.name}</Text>
+              <Text style={styles.subtitle}>{oneProduct.description}</Text>
+              <Text style={styles.text}>Price $ {oneProduct.price}</Text>
+              <View style={styles.cont1}></View>
+            </View>
+            <Button
+              buttonColor="#5c195d"
+              textColor="white"
+              onPress={() => {
+                if (token) {
+                  addToCart();
+                } else {
+                  Alert.alert(
+                    "Ups!",
+                    "You have to registered to add this product to your cart"
+                  );
+                }
+              }}
+            >
+              Add to cart <Ionicons name="cart-outline" size={24} color="white" />
+            </Button>
+          </>
+        )}
+      </View>
+    );
+  }
 
 };
 
