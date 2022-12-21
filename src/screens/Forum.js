@@ -140,7 +140,6 @@ export default function Forum() {
         style={styles.img}
         source={require("../../assets/ForumBanner.png")}
       ></Image>
-      {/* <ScrollView> */}
       <View>
         <View style={styles.viewInputComment}>
           <View style={styles.containInput}>
@@ -165,7 +164,6 @@ export default function Forum() {
             </TouchableOpacity>
           </View>
         </View>
-        {/* Container for the comments */}
         <ScrollView>
           <View style={styles.containComme}>
             {comments?.map((item) => {
@@ -179,7 +177,7 @@ export default function Forum() {
                     source={{ uri: item.photo }}
                     alt="Happy"
                   />
-                  <Text className="textForum">{item.comment}</Text>
+                  <Text style={styles.textComment}>{item.comment}</Text>
                   <View>
                     <View style={styles.photoAndName}>
                       <Image
@@ -294,9 +292,7 @@ export default function Forum() {
             })}
           </View>
         </ScrollView>
-        {/* termina aca los comentarios */}
       </View>
-      {/* </ScrollView> */}
     </View>
   );
 }
@@ -306,6 +302,10 @@ const styles = StyleSheet.create({
     display: "flex",
     height: "100%",
     backgroundColor: "white",
+  },
+  textComment: {
+    textAlign: "center",
+    padding: 15,
   },
   img: {
     marginTop: 30,
