@@ -28,8 +28,7 @@ export default function Cartprueba() {
 
   async function getProducts() {
     try {
-      let res = await dispatch(getCartProduct(idUser));
-      console.log(res.payload);
+      await dispatch(getCartProduct(idUser));
     } catch (error) {
       console.log(error);
     }
