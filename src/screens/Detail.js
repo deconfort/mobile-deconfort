@@ -9,8 +9,6 @@ import {
   Alert,
 } from "react-native";
 
-import { TouchableOpacity } from "react-native-gesture-handler";
-import { Feather } from "@expo/vector-icons";
 import apiUrl from "../../url";
 import axios from "axios";
 import usersAction from "../redux/actions/usersActions";
@@ -32,7 +30,6 @@ const Detail = ({ route }) => {
   const dispatch = useDispatch();
   const { getCartProduct } = cartActions;
 
-  console.log(oneProduct)
   async function getMyProduct() {
     try {
       await dispatch(getOneProduct(idProduct))
@@ -49,9 +46,9 @@ const Detail = ({ route }) => {
     dispatch(getUser(idUser));
   }, []);
 
-  async function getCartProducts() {
+  async function pushCartProducts() {
     try {
-      await dispatch(getCartProduct(idUser));
+      let res = await dispatch(getCartProduct(idUser));
     } catch (error) {
       console.log(error);
     }
@@ -60,7 +57,7 @@ const Detail = ({ route }) => {
   async function addToCart() {
     let Oneproduct = {
       name: oneProduct.name,
-      photo: oneProduct.photo,
+      photo: oneProduct.photo[0],
       price: oneProduct.price,
       productId: oneProduct._id,
       userId: idUser,
@@ -68,12 +65,12 @@ const Detail = ({ route }) => {
     try {
       let res = await axios.post(`${apiUrl}api/shopping`, Oneproduct);
       if (res.data.success) {
+        pushCartProducts()
         Alert.alert(user.name, `${res.data.message} 🛒`, [
           {
             text: "OK",
           },
         ]);
-
       }
     } catch (error) {
       Alert.alert(user.name, "The product is already in the cart 🛒", [

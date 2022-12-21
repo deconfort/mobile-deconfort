@@ -41,7 +41,8 @@ export default function Store(props) {
 
   async function getCartProducts() {
     try {
-      await dispatch(getCartProduct(idUser));
+      let res = await dispatch(getCartProduct(idUser));
+      console.log(res.payload)
     } catch (error) {
       console.log(error);
     }
@@ -165,8 +166,8 @@ export default function Store(props) {
             };
             try {
               let res = await axios.post(`${apiUrl}api/shopping`, product);
-              console.log(res.data);
               if (user && res.data.success) {
+                getCartProducts();
                 Alert.alert(user.name, `${res.data.message} 🛒`, [
                   {
                     text: "OK",
@@ -225,7 +226,7 @@ export default function Store(props) {
                     onPress={() => {
                       if (token) {
                         addToCart();
-                        getCartProducts();
+
                       } else {
                         Alert.alert(
                           "Ups!",
