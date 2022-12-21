@@ -3,7 +3,8 @@ import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import favoriteActions from "../redux/actions/favoriteActions";
 import { Button, Card, Title, Paragraph } from "react-native-paper";
-import { Ionicons, MaterialCommunityIcons } from '@expo/vector-icons';
+import { Ionicons } from '@expo/vector-icons';
+import productAction from "../redux/actions/productAction";
 
 
 export default function Store(props) {
@@ -11,6 +12,7 @@ export default function Store(props) {
   const dispatch = useDispatch();
   const { favorite } = useSelector((state) => state.favorites);
   const { idUser, token } = useSelector((state) => state.user);
+  const { getOneProduct } = productAction;
 
   useEffect(() => {
     getProduct();
@@ -42,6 +44,14 @@ export default function Store(props) {
     }
   }
 
+  async function pushoneProduct(idProduct) {
+    try {
+      await dispatch(getOneProduct(idProduct));
+    } catch (error) {
+      console.log(error);
+    }
+  }
+
   return (
     <ScrollView style={styles.container}>
       <Image
@@ -53,29 +63,29 @@ export default function Store(props) {
           return (
             <Card style={styles.styleGeneralCard} key={item._id}>
               <Card.Content>
-              <Card.Cover style={styles.image_card} source={{ uri: item.productId.photo[0]}} />
-              <Title>{item.productId.name}</Title>
+                <Card.Cover style={styles.image_card} source={{ uri: item.productId.photo[0] }} />
+                <Title>{item.productId.name}</Title>
                 <Paragraph>Category: {item.productId.category}</Paragraph>
                 <Paragraph>Price: {item.productId.price}</Paragraph>
               </Card.Content>
-
               <Card.Actions>
-              <Button
-                  buttonColor="#5c195d"
-                  textColor="white"
-                  onPress={() => {
-                    props.navigation.navigate("Detail", {
-                      idProduct: item._id,
-                    });
-                   }}
-                 >
-                   More info <Ionicons name="information-circle-outline" size={21} color="white" />             
-            </Button>
                 <Button
                   buttonColor="#5c195d"
                   textColor="white"
                   onPress={() => {
-                    pullReaction({id: item._id, name: item.name, token: token})
+                    pushoneProduct(item.productId._id);
+                    props.navigation.navigate("Detail", {
+                      idProduct: item._id,
+                    });
+                  }}
+                >
+                  More info <Ionicons name="information-circle-outline" size={21} color="white" />
+                </Button>
+                <Button
+                  buttonColor="#5c195d"
+                  textColor="white"
+                  onPress={() => {
+                    pullReaction({ id: item._id, name: item.name, token: token })
                   }}
                 >
                   Delete <Ionicons name="md-trash-outline" size={24} color="white" />
@@ -88,7 +98,6 @@ export default function Store(props) {
     </ScrollView>
   );
 }
-
 
 const styles = StyleSheet.create({
   container: {

@@ -8,6 +8,7 @@ import axios from "axios";
 import apiUrl from "../../url";
 import Favorite from "../components/Favorite";
 import { Ionicons, MaterialCommunityIcons } from "@expo/vector-icons";
+import { Ionicons } from '@expo/vector-icons';
 import cartActions from "../redux/actions/cartActions";
 
 
