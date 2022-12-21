@@ -10,7 +10,6 @@ import { ScrollView } from "react-native-gesture-handler";
 import Pressable from "react-native/Libraries/Components/Pressable/Pressable";
 import { Ionicons } from "@expo/vector-icons";
 import { useNavigation } from "@react-navigation/core";
-import { WebView } from "react-native-webview";
 
 export default function Cartprueba() {
   let navigation = useNavigation();

@@ -36,7 +36,7 @@ const Navigator = () => {
     let token = await AsyncStorage.getItem("token");
     token = token ? JSON.parse(token) : undefined;
     if (token) {
-      dispatchEvent(reEnter(token.token.user));
+      dispatch(reEnter(token.token.user));
     }
   };
   useEffect(() => {

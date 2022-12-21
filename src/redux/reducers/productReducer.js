@@ -21,7 +21,7 @@ const productsReducer = createReducer(initialState, (builder) => {
     .addCase(getOneProduct.fulfilled, (state, action) => {
       return {
         ...state,
-        oneProduct: action.payload,
+        oneProduct: action.payload.response,
       };
     })
     .addCase(getProductsFilter.fulfilled, (state, action) => {

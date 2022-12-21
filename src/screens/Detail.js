@@ -9,57 +9,62 @@ import {
   Alert,
 } from "react-native";
 
-import { TouchableOpacity } from "react-native-gesture-handler";
-import { Feather } from "@expo/vector-icons";
-import favoriteActions from "../redux/actions/favoriteActions";
 import apiUrl from "../../url";
 import axios from "axios";
-import usersAction from "../redux/actions/usersActions";
-import { useNavigation } from "@react-navigation/native";
 import { useDispatch, useSelector } from "react-redux";
+import productAction from "../redux/actions/productAction";
+import cartActions from "../redux/actions/cartActions";
 import { Ionicons, MaterialCommunityIcons } from "@expo/vector-icons";
 import {Button} from "react-native-paper";
 
 
 const Detail = ({ route }) => {
-  let { updateFavorite } = favoriteActions;
   const { idProduct } = route.params;
-
-  const [product, setProduct] = useState();
-  const navigation = useNavigation();
-  const { getUser } = usersAction;
-  const { idUser, user, token } = useSelector((state) => state.user);
+  const {getOneProduct} = productAction;
+  const { idUser, user, token  } = useSelector((state) => state.user);
+  const {oneProduct} = useSelector((state) => state.products);
   const dispatch = useDispatch();
+  const { getCartProduct } = cartActions;
+  let [time, setTime] = useState(true)
 
-  async function getMyProduct() {
-    try {
-      let res = await axios.get(`${apiUrl}api/products/${idProduct}`);
-      setProduct(res.data.response);
-
-      // eslint-disable-next-line
-    } catch (error) {}
-  }
 
   useEffect(() => {
     getMyProduct();
     // eslint-disable-next-line
   }, []);
+  
+  
 
-  useEffect(() => {
-    dispatch(getUser(idUser));
-  }, []);
+  async function getMyProduct() {
+    try {
+      await dispatch(getOneProduct(idProduct));
+      setTimeout(() => {
+    setTime(false)
+}, 500);
+    } catch (error) {}
+  }
+
+
+  async function pushCartProducts() {
+    try {
+      await dispatch(getCartProduct(idUser));
+    } catch (error) {
+      console.log(error);
+    }
+  }
 
   async function addToCart() {
     let Oneproduct = {
-      name: product.name,
-      photo: product.photo,
-      price: product.price,
-      productId: product._id,
+      name: oneProduct.name,
+      photo: oneProduct.photo[0],
+      price: oneProduct.price,
+      productId: oneProduct._id,
       userId: idUser,
     };
     try {
       let res = await axios.post(`${apiUrl}api/shopping`, Oneproduct);
       if (res.data.success) {
+        pushCartProducts()
         Alert.alert(user.name, `${res.data.message} 🛒`, [
           {
             text: "OK",
@@ -74,6 +79,20 @@ const Detail = ({ route }) => {
       ]);
     }
   }
+  if(time){
+    return(
+      <View
+      style={{
+        backgroundColor: "#ffff",
+        flex: 1,
+        alignItems: "center",
+        justifyContent: "space-around",
+      }}
+    >
+      <Text>Loading...</Text>
+    </View>
+    )
+  } else {
 
   return (
     <View
@@ -84,19 +103,21 @@ const Detail = ({ route }) => {
         justifyContent: "space-around",
       }}
     >
-      {product && (
+      {oneProduct && (
         <>
-          <ImageBackground
+          { time ? <Text>Loading...</Text> :
+            <ImageBackground
             resizeMode="cover"
-            source={{ uri: product.photo[0] }}
+            source={{uri: oneProduct.photo[0]}}
             style={styles.image}
           >
             <View style={styles.hero}></View>
           </ImageBackground>
+          }
           <View style={styles.cont3}>
-            <Text style={styles.title}>{product.name}</Text>
-            <Text style={styles.subtitle}>{product.description}</Text>
-            <Text style={styles.text}>Price $ {product.price}</Text>
+            <Text style={styles.title}>{oneProduct.name}</Text>
+            <Text style={styles.subtitle}>{oneProduct.description}</Text>
+            <Text style={styles.text}>Price $ {oneProduct.price}</Text>
             <View style={styles.cont1}></View>
           </View>
           <Button
@@ -119,6 +140,8 @@ const Detail = ({ route }) => {
       )}
     </View>
   );
+}
+
 };
 
 export default Detail;
