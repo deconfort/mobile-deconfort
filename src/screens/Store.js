@@ -7,8 +7,10 @@ import usersAction from "../redux/actions/usersActions";
 import axios from "axios";
 import apiUrl from "../../url";
 import Favorite from "../components/Favorite";
+import { Ionicons, MaterialCommunityIcons } from "@expo/vector-icons";
 import { Ionicons } from '@expo/vector-icons';
 import cartActions from "../redux/actions/cartActions";
+
 
 export default function Store(props) {
   const [open2, setOpen2] = useState(false);
@@ -42,7 +44,7 @@ export default function Store(props) {
   async function getCartProducts() {
     try {
       let res = await dispatch(getCartProduct(idUser));
-      console.log(res.payload)
+      console.log(res.payload);
     } catch (error) {
       console.log(error);
     }
@@ -73,10 +75,12 @@ export default function Store(props) {
         />
       </View>
 
-      <View style={{ padding: 15, }}>
+      <View style={{ padding: 15 }}>
         <Button
-        style={{ backgroundColor: "#5c195d"}}
-         mode="contained" onPress={handleOpen2}>
+          style={{ backgroundColor: "#5c195d" }}
+          mode="contained"
+          onPress={handleOpen2}
+        >
           Categories ⇓
         </Button>
         {open2 ? (
@@ -206,38 +210,49 @@ export default function Store(props) {
                 <Paragraph>Price: {item.price}</Paragraph>
               </Card.Content>
 
-              
-                <Card.Actions>
-                  <Button
+              <Card.Actions>
+                <Button
                   buttonColor="#5c195d"
                   textColor="white"
-                    onPress={() => {
-                      pushoneProduct(item._id);
-                      props.navigation.navigate("Detail", {
-                        idProduct: item._id,
-                      });
-                    }}
-                  >
-                    More info <Ionicons name="information-circle-outline" size={21} color="white" />
-                  </Button>
-                  <Button
+                  onPress={() => {
+                    pushoneProduct(item._id);
+                    props.navigation.navigate("Detail", {
+                      idProduct: item._id,
+                    });
+                  }}
+                >
+                  More info{" "}
+                  <Ionicons
+                    name="information-circle-outline"
+                    size={21}
+                    color="white"
+                  />
+                </Button>
+                <Button
                   buttonColor="#5c195d"
                   textColor="white"
-                    onPress={() => {
-                      if (token) {
+                  onPress={() => {
+                    if (token) {
+                      if (item.stock > 0) {
                         addToCart();
-
                       } else {
                         Alert.alert(
                           "Ups!",
-                          "You have to registered to add this product to your cart"
+                          "At the moment we do not have stock of this product"
                         );
                       }
-                    }}
-                  >
-                    Add to cart <Ionicons name="cart-outline" size={24} color="white" />
-                  </Button>
-                </Card.Actions>
+                    } else {
+                      Alert.alert(
+                        "Ups!",
+                        "You have to registered to add this product to your cart"
+                      );
+                    }
+                  }}
+                >
+                  Add to cart{" "}
+                  <Ionicons name="cart-outline" size={24} color="white" />
+                </Button>
+              </Card.Actions>
             </Card>
           );
         })}

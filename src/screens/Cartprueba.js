@@ -1,4 +1,4 @@
-import { View, Text, Image, StyleSheet, Linking } from "react-native";
+import { View, Text, Image, StyleSheet, Linking, Alert } from "react-native";
 import CartCard from "../components/CartCard";
 import cartActions from "../redux/actions/cartActions";
 import userActions from "../redux/actions/usersActions";
@@ -62,11 +62,19 @@ export default function Cartprueba() {
   );
 
   async function add(info) {
-    try {
-      await dispatch(changeAmount(info));
-      getProducts();
-    } catch (error) {
-      console.log(error);
+    if (cartProducts.stock > 0) {
+      try {
+        await dispatch(changeAmount(info));
+        getProducts();
+      } catch (error) {
+        console.log(error);
+      }
+    } else {
+      Alert.alert("Hi", "At the moment we do not have stock of this product", [
+        {
+          text: "OK",
+        },
+      ]);
     }
   }
   async function del(info) {
@@ -161,9 +169,8 @@ export default function Cartprueba() {
             />
           );
         })}
-
       </ScrollView>
-<View
+      <View
         style={{
           height: 150,
           borderTopLeftRadius: 50,
@@ -171,7 +178,7 @@ export default function Cartprueba() {
           backgroundColor: "white",
           flexDirection: "column",
           alignItems: "center",
-          marginTop:10
+          marginTop: 10,
         }}
       >
         <Text
@@ -208,8 +215,8 @@ export default function Cartprueba() {
             ${sumWithInitial}
           </Text>
         </View>
-        </View>
-<View style={{paddingStart:20, paddingLeft:20, paddingRight:20 }}>
+      </View>
+      <View style={{ paddingStart: 20, paddingLeft: 20, paddingRight: 20 }}>
         <Pressable
           style={styles.button}
           onPress={async () => {
@@ -244,22 +251,20 @@ export default function Cartprueba() {
         >
           <Text style={styles.text}>Checkout</Text>
         </Pressable>
-
-</View>
+      </View>
     </>
   );
 }
 const styles = StyleSheet.create({
   button: {
-marginTop:10,
+    marginTop: 10,
     alignItems: "center",
     justifyContent: "center",
-    padding:10,
+    padding: 10,
     borderRadius: 30,
     elevation: 3,
     backgroundColor: "#5c195d",
     marginBottom: 10,
-    
   },
   text: {
     fontSize: 16,
@@ -267,6 +272,5 @@ marginTop:10,
     fontWeight: "bold",
     letterSpacing: 0.25,
     color: "white",
-    
   },
 });
