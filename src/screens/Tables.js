@@ -209,8 +209,15 @@ export default function Tables(props) {
                   textColor="white"
                   onPress={() => {
                     if (token) {
-                      addToCart();
-                      getCartProducts();
+                      if(item.stock > 0){
+                        addToCart();
+                         getCartProducts();
+                         }else{
+                           Alert.alert(
+                             "Ups!",
+                             "At the moment we do not have stock of this product"
+                           );
+                         }
                     } else {
                       Alert.alert(
                         "Ups!",
