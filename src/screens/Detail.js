@@ -17,6 +17,7 @@ import usersAction from "../redux/actions/usersActions";
 import { useNavigation } from "@react-navigation/native";
 import { useDispatch, useSelector } from "react-redux";
 import productAction from "../redux/actions/productAction";
+import cartActions from "../redux/actions/cartActions";
 
 const Detail = ({ route }) => {
   const { idProduct } = route.params;
@@ -26,6 +27,7 @@ const Detail = ({ route }) => {
   const { idUser, user, token  } = useSelector((state) => state.user);
   const {oneProduct} = useSelector((state) => state.products);
   const dispatch = useDispatch();
+  const { getCartProduct } = cartActions;
 
   console.log(oneProduct)
   async function getMyProduct() {
@@ -46,6 +48,14 @@ const Detail = ({ route }) => {
     dispatch(getUser(idUser));
   }, []);
 
+  async function getCartProducts() {
+    try {
+      await dispatch(getCartProduct(idUser));
+    } catch (error) {
+      console.log(error);
+    }
+  }
+
   async function addToCart() {
     let Oneproduct = {
       name: oneProduct.name,
@@ -62,6 +72,7 @@ const Detail = ({ route }) => {
             text: "OK",
           },
         ]);
+
       }
     } catch (error) {
       Alert.alert(user.name, "The product is already in the cart 🛒", [
@@ -86,7 +97,7 @@ const Detail = ({ route }) => {
         <>
           <ImageBackground
             resizeMode="cover"
-            source={{uri: oneProduct.photo[0]}}
+            source={{uri: oneProduct.photo}}
             style={styles.image}
           >
             <View style={styles.hero}></View>
@@ -97,14 +108,14 @@ const Detail = ({ route }) => {
             <Text style={styles.text}>Price $ {oneProduct.price}</Text>
             <View style={styles.cont1}></View>
           </View>
-          <TouchableOpacity  onPress={() => {
+          <TouchableOpacity style={styles.btn}>
+            <Text style={styles.btnText}  onPress={() => {
                 if (token) {
                   addToCart();
                 } else {
                   navigation.navigate("Login");
                 }
-              }} style={styles.btn}>
-            <Text style={styles.btnText}>
+              }} >
               Add to cart{" "}
               <Feather name="shopping-cart" size={24} color="black" />
             </Text>
