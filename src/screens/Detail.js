@@ -18,6 +18,9 @@ import { useNavigation } from "@react-navigation/native";
 import { useDispatch, useSelector } from "react-redux";
 import productAction from "../redux/actions/productAction";
 import cartActions from "../redux/actions/cartActions";
+import { Ionicons, MaterialCommunityIcons } from "@expo/vector-icons";
+import {Button} from "react-native-paper";
+
 
 const Detail = ({ route }) => {
   const { idProduct } = route.params;
@@ -37,12 +40,10 @@ const Detail = ({ route }) => {
     } catch (error) {}
   }
 
-
   useEffect(() => {
     getMyProduct();
     // eslint-disable-next-line
   }, []);
-
 
   useEffect(() => {
     dispatch(getUser(idUser));
@@ -82,7 +83,6 @@ const Detail = ({ route }) => {
       ]);
     }
   }
- 
 
   return (
     <View
@@ -108,21 +108,24 @@ const Detail = ({ route }) => {
             <Text style={styles.text}>Price $ {oneProduct.price}</Text>
             <View style={styles.cont1}></View>
           </View>
-          <TouchableOpacity style={styles.btn}>
-            <Text style={styles.btnText}  onPress={() => {
-                if (token) {
-                  addToCart();
-                } else {
-                  navigation.navigate("Login");
-                }
-              }} >
-              Add to cart{" "}
-              <Feather name="shopping-cart" size={24} color="black" />
-            </Text>
-          </TouchableOpacity>
+          <Button
+            buttonColor="#5c195d"
+            textColor="white"
+            onPress={() => {
+              if (token) {
+                addToCart();
+              } else {
+                Alert.alert(
+                  "Ups!",
+                  "You have to registered to add this product to your cart"
+                );
+              }
+            }}
+          >
+            Add to cart <Ionicons name="cart-outline" size={24} color="white" />
+          </Button>
         </>
       )}
-
     </View>
   );
 };
@@ -131,7 +134,7 @@ export default Detail;
 
 const styles = StyleSheet.create({
   hero: {
-    height:380,
+    height: 500,
     alignItems: "center",
     justifyContent: "center",
   },
@@ -151,13 +154,14 @@ const styles = StyleSheet.create({
     marginTop: 10,
   },
   text: {
+    marginLeft: 70,
     fontSize: 18,
     color: "#474747",
-    marginTop: 1,
+    marginTop: 5,
     paddingRight: 80,
     lineHeight: 25,
   },
-  image:{
+  image: {
     width: "100%",
     height: "80%",
   },
@@ -226,7 +230,7 @@ const styles = StyleSheet.create({
     borderTopLeftRadius: 20,
     borderTopRightRadius: 30,
     position: "absolute",
-    marginTop: 370,
+    marginTop: 470,
   },
   colors: {
     color: "#303030",
