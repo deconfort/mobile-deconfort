@@ -4,7 +4,6 @@ import SingUp from "../screens/SingUp";
 import Login from "../screens/Login";
 import { Ionicons } from "@expo/vector-icons";
 import ProfileScreen from "../screens/Profile";
-
 import EditProfile from "../screens/EditProfile";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import usersActions from "../redux/actions/usersActions";
