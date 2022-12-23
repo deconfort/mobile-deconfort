@@ -145,11 +145,11 @@ export default function Forum() {
           <View style={styles.containInput}>
             <TextInput
               style={styles.inputCommnets}
-              placeholder="Leave your photo"
+              placeholder="Post your photo"
               onChangeText={(e) => handlerInput(e, "photo")}
             />
             <TextInput
-              placeholder="Leave your comment"
+              placeholder="Enter your comment"
               id="comment"
               style={styles.inputCommnets}
               color="black"
@@ -248,13 +248,13 @@ export default function Forum() {
                               <View>
                                 <TextInput
                                   style={styles.inputBoxEdit}
-                                  placeholder="Leave your photo"
+                                  placeholder="Post your photo"
                                   onChangeText={(e) =>
                                     handlerInputTwo(e, "photo")
                                   }
                                 />
                                 <TextInput
-                                  placeholder="Leave your comment"
+                                  placeholder="Enter your comment"
                                   id="comment"
                                   style={styles.inputBoxEdit}
                                   color="black"
