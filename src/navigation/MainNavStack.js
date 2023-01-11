@@ -156,16 +156,16 @@ const Navigator = () => {
             component={Detail}
           />
 
-          <Bottom.Screen
-            name="Login"
-            options={{ headerShown: false }}
-            component={Login}
-          />
-
+          
           <Bottom.Screen
             name="Forum"
             options={{ headerShown: false }}
             component={Forum}
+          />
+<Bottom.Screen
+            name="Login"
+            options={{ headerShown: false }}
+            component={Login}
           />
 
           {/* <Bottom.Screen
@@ -186,6 +186,11 @@ const Navigator = () => {
             options={{ headerShown: false }}
             component={Home}
           />
+            <Bottom.Screen
+            name="Store"
+            options={{ headerShown: false }}
+            component={Store}
+          />
           <Bottom.Screen
             name="Cart"
             options={{ headerShown: false }}
@@ -204,11 +209,7 @@ const Navigator = () => {
             component={MyFavs}
           />
 
-          <Bottom.Screen
-            name="Store"
-            options={{ headerShown: false }}
-            component={Store}
-          />
+        
           <Bottom.Screen
             name="Detail"
             options={{
@@ -232,6 +233,46 @@ const Navigator = () => {
             name="LogOut"
             options={{ headerShown: false }}
             component={Home}
+          />
+                    <Bottom.Screen
+            name="Desk"
+            options={{ tabBarItemStyle: { display: "none" } }}
+            component={Desk}
+          />
+                              <Bottom.Screen
+            name="Tables"
+            options={{ tabBarItemStyle: { display: "none" } }}
+            component={Tables}
+          />
+                              <Bottom.Screen
+            name="Vases"
+            options={{ tabBarItemStyle: { display: "none" } }}
+            component={Vases}
+          />
+                              <Bottom.Screen
+            name="Frames"
+            options={{ tabBarItemStyle: { display: "none" } }}
+            component={Frames}
+          />
+                              <Bottom.Screen
+            name="Cushions"
+            options={{ tabBarItemStyle: { display: "none" } }}
+            component={Cushions}
+          />
+                              <Bottom.Screen
+            name="Diffuser"
+            options={{ tabBarItemStyle: { display: "none" } }}
+            component={Diffuser}
+          />
+                              <Bottom.Screen
+            name="Mirrors"
+            options={{ tabBarItemStyle: { display: "none" } }}
+            component={Mirrors}
+          />
+                              <Bottom.Screen
+            name="Blankets"
+            options={{ tabBarItemStyle: { display: "none" } }}
+            component={Blankets}
           />
         </>
       )}
